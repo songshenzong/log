@@ -2,7 +2,6 @@
 
 namespace Songshenzong\DataSource;
 
-use Songshenzong\DataSource\DataSource;
 use Songshenzong\Request\Log;
 use Songshenzong\Request\Request;
 use Songshenzong\Request\Timeline;
@@ -128,9 +127,9 @@ class LaravelDataSource extends DataSource {
 			$time = microtime(TRUE);
 			
 			$views -> addEvent('view ' . $view -> getName(), 'Rendering a view', $time, $time, [
-				                                               'name' => $view -> getName(),
-				                                               'data' => $that -> replaceUnserializable($view -> getData())
-			                                               ]);
+				'name' => $view -> getName(),
+				'data' => $that -> replaceUnserializable($view -> getData())
+			]);
 		});
 	}
 	
@@ -140,10 +139,8 @@ class LaravelDataSource extends DataSource {
 	protected function getController() {
 		$router = $this -> app['router'];
 		
-
-			$route      = $router -> current();
-			$controller = $route ? $route -> getActionName() : NULL;
-
+		$route      = $router -> current();
+		$controller = $route ? $route -> getActionName() : NULL;
 		
 		if ($controller instanceof Closure) {
 			$controller = 'anonymous function';

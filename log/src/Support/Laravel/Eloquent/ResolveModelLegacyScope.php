@@ -1,27 +1,25 @@
-<?php namespace Songshenzong\Support\Laravel\Eloquent;
+<?php
+
+namespace Songshenzong\Support\Laravel\Eloquent;
 
 use Songshenzong\DataSource\EloquentDataSource;
-
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ScopeInterface;
 
-class ResolveModelLegacyScope implements ScopeInterface
-{
+class ResolveModelLegacyScope implements ScopeInterface {
+	
 	protected $dataSource;
-
-	public function __construct(EloquentDataSource $dataSource)
-	{
-		$this->dataSource = $dataSource;
+	
+	public function __construct(EloquentDataSource $dataSource) {
+		$this -> dataSource = $dataSource;
 	}
-
-	public function apply(Builder $builder, Model $model)
-	{
-		$this->dataSource->nextQueryModel = get_class($model);
+	
+	public function apply(Builder $builder, Model $model) {
+		$this -> dataSource -> nextQueryModel = get_class($model);
 	}
-
-	public function remove(Builder $builder, Model $model)
-	{
+	
+	public function remove(Builder $builder, Model $model) {
 		// nothing to do here
 	}
 }

@@ -2,7 +2,6 @@
 
 namespace Songshenzong\Storage;
 
-use Songshenzong\Storage\StorageInterface;
 use Songshenzong\Request\Request;
 
 /**

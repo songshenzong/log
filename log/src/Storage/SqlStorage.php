@@ -46,54 +46,11 @@ class SqlStorage extends Storage {
 	 * will be returned
 	 */
 	public function retrieve($id = NULL, $last = NULL) {
-		if ( ! $id) {
-			$stmt = $this -> pdo -> prepare('SELECT (id, version, time, method, uri, headers, controller, getData, postData, sessionData, cookies, responseTime, responseStatus, responseDuration, databaseQueries, databaseDuration, timelineData, log, routes, emailsData, viewsData, userData) ' . "FROM {$this->table} ");
-			
-			$stmt -> execute();
-			$data = $stms -> fetchAll(PDO::FETCH_ASSOC);
-			
-			$requests = [];
-			
-			foreach ($data as $item) {
-				$requests[] = $this -> createRequestFromData($item);
-			}
-			
-			return $requests;
-		}
 		
-		$stmt = $this -> pdo -> prepare('SELECT id, version, time, method, uri, headers, controller, getData, postData, sessionData, cookies, responseTime, responseStatus, responseDuration, databaseQueries, databaseDuration, timelineData, log, routes, emailsData, viewsData, userData ' . "FROM {$this->table} " . 'WHERE id = :id');
+		$data = Sql ::find($id);
 		
-		$stmt -> execute(['id' => $id]);
-		$data = $stmt -> fetch(PDO::FETCH_ASSOC);
+		return \request() -> json($data);
 		
-		if ( ! $data) {
-			return NULL;
-		}
-		
-		if ( ! $last) {
-			return $this -> createRequestFromData($data);
-		}
-		
-		$stmt = $this -> pdo -> prepare('SELECT (id, version, time, method, uri, headers, controller, getData, postData, sessionData, cookies, responseTime, responseStatus, responseDuration, databaseQueries, databaseDuration, timelineData, log, routes, emailsData, viewsData, userData) ' . "FROM {$this->table} " . "WHERE id = :id");
-		
-		$stmt -> execute(['id' => $last]);
-		$last_data = $stmt -> fetch(PDO::FETCH_ASSOC);
-		
-		$stmt = $this -> pdo -> prepare('SELECT (id, version, time, method, uri, headers, controller, getData, postData, sessionData, cookies, responseTime, responseStatus, responseDuration, databaseQueries, databaseDuration, timelineData, log, routes, emailsData, viewsData, userData) ' . "FROM {$this->table} " . "WHERE time >= :from AND time <= :to");
-		
-		$stmt -> execute([
-			                 'from' => $data['time'],
-			                 'to'   => $last_data['time']
-		                 ]);
-		$data = $stmt -> fetchAll(PDO::FETCH_ASSOC);
-		
-		$requests = [];
-		
-		foreach ($data as $item) {
-			$requests[] = $this -> createRequestFromData($item);
-		}
-		
-		return $requests;
 	}
 	
 	/**
@@ -128,11 +85,4 @@ class SqlStorage extends Storage {
 		
 	}
 	
-	protected function createRequestFromData($data) {
-		foreach ($this -> needs_serialization as $key) {
-			$data[$key] = json_decode($data[$key], TRUE);
-		}
-		
-		return new Request($data);
-	}
 }

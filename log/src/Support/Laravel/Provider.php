@@ -6,16 +6,15 @@ use Songshenzong\Songshenzong;
 use Songshenzong\DataSource\PhpDataSource;
 use Songshenzong\DataSource\LaravelDataSource;
 use Songshenzong\DataSource\EloquentDataSource;
-
-use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
 
 class Provider extends ServiceProvider {
 	
 	public function boot() {
+		
+		// Don't bother registering event listeners as we are not collecting data
 		if ( ! $this -> app['songshenzong.support'] -> isCollectingData()) {
-			return; // Don't bother registering event listeners as we are not collecting data
+			return;
 		}
 		
 		$this -> app['songshenzong.eloquent'] -> listenToEvents();
@@ -23,8 +22,9 @@ class Provider extends ServiceProvider {
 		// create the songshenzong instance so all data sources are initialized at this point
 		$this -> app -> make('songshenzong');
 		
+		// Songshenzong is disabled, don't register the route
 		if ( ! $this -> app['songshenzong.support'] -> isEnabled()) {
-			return; // Songshenzong is disabled, don't register the route
+			return;
 		}
 		
 		$this -> app['router'] -> get('/__songshenzong/{id}',
