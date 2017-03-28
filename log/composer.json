@@ -1,6 +1,6 @@
 {
   "name": "songshenzong/log",
-  "description": "Server-side component of Clockwork, a Chrome extension for PHP development",
+  "description": "Server-side component of Songshenzong, a tool for PHP development",
   "keywords": [
     "debugging",
     "profiling",
@@ -17,7 +17,7 @@
     }
   ],
   "require": {
-    "php": ">=5.3.9",
+    "php": ">=5.6.30",
     "psr/log": "1.*"
   },
   "autoload": {

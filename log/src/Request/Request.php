@@ -102,7 +102,7 @@ class Request
 	public $viewsData = array();
 
 	/**
-	 * Custom user data (not used by Clockwork app)
+	 * Custom user data (not used by Songshenzong app)
 	 */
 	public $userData;
 

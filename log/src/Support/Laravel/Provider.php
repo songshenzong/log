@@ -14,77 +14,73 @@ use Illuminate\Support\Str;
 class Provider extends ServiceProvider {
 	
 	public function boot() {
-		if ( ! $this -> app['clockwork.support'] -> isCollectingData()) {
+		if ( ! $this -> app['songshenzong.support'] -> isCollectingData()) {
 			return; // Don't bother registering event listeners as we are not collecting data
 		}
 		
-		$this -> app['clockwork.eloquent'] -> listenToEvents();
+		$this -> app['songshenzong.eloquent'] -> listenToEvents();
 		
-		// create the clockwork instance so all data sources are initialized at this point
-		$this -> app -> make('clockwork');
+		// create the songshenzong instance so all data sources are initialized at this point
+		$this -> app -> make('songshenzong');
 		
-		if ( ! $this -> app['clockwork.support'] -> isEnabled()) {
-			return; // Clockwork is disabled, don't register the route
+		if ( ! $this -> app['songshenzong.support'] -> isEnabled()) {
+			return; // Songshenzong is disabled, don't register the route
 		}
 		
-		$this -> app['router'] -> get('/__clockwork/{id}',
-		                              'Clockwork\Support\Laravel\Controllers\CurrentController@getData')
+		$this -> app['router'] -> get('/__songshenzong/{id}',
+		                              'Songshenzong\Support\Laravel\Controllers\CurrentController@getData')
 		                       -> where('id', '[0-9\.]+');
 		
 	}
 	
 	public function register() {
 		
-		$this -> publishes([__DIR__ . '/config/clockwork.php' => config_path('clockwork.php')]);
-		
-		$this -> app -> singleton('clockwork.support', function ($app) {
+		$this -> app -> singleton('songshenzong.support', function ($app) {
 			return new Support($app);
 		});
 		
-		$this -> app -> singleton('clockwork.laravel', function ($app) {
+		$this -> app -> singleton('songshenzong.laravel', function ($app) {
 			return new LaravelDataSource($app);
 		});
 		
-		$this -> app -> singleton('clockwork.eloquent', function ($app) {
+		$this -> app -> singleton('songshenzong.eloquent', function ($app) {
 			return new EloquentDataSource($app['db'], $app['events']);
 		});
 		
-		foreach ($this -> app['clockwork.support'] -> getAdditionalDataSources() as $name => $callable) {
+		foreach ($this -> app['songshenzong.support'] -> getAdditionalDataSources() as $name => $callable) {
 			$this -> app -> singleton($name, $callable);
 		}
 		
-		$this -> app -> singleton('clockwork', function ($app) {
-			$clockwork = new Songshenzong();
+		$this -> app -> singleton('songshenzong', function ($app) {
+			$songshenzong = new Songshenzong();
 			
-			$clockwork -> addDataSource(new PhpDataSource())
-			           -> addDataSource($app['clockwork.laravel']);
+			$songshenzong -> addDataSource(new PhpDataSource())
+			              -> addDataSource($app['songshenzong.laravel']);
 			
-			if ($app['clockwork.support'] -> isCollectingDatabaseQueries()) {
-				$clockwork -> addDataSource($app['clockwork.eloquent']);
+			if ($app['songshenzong.support'] -> isCollectingDatabaseQueries()) {
+				$songshenzong -> addDataSource($app['songshenzong.eloquent']);
 			}
 			
-			foreach ($app['clockwork.support'] -> getAdditionalDataSources() as $name => $callable) {
-				$clockwork -> addDataSource($app[$name]);
+			foreach ($app['songshenzong.support'] -> getAdditionalDataSources() as $name => $callable) {
+				$songshenzong -> addDataSource($app[$name]);
 			}
 			
-			$clockwork -> setStorage($app['clockwork.support'] -> getStorage());
+			$songshenzong -> setStorage($app['songshenzong.support'] -> getStorage());
 			
-			return $clockwork;
+			return $songshenzong;
 		});
 		
-		$this -> app['clockwork.laravel'] -> listenToEvents();
+		$this -> app['songshenzong.laravel'] -> listenToEvents();
 		
-		// set up aliases for all Clockwork parts so they can be resolved by the IoC container
-		$this -> app -> alias('clockwork.support', 'Clockwork\Support\Laravel\ClockworkSupport');
-		$this -> app -> alias('clockwork.laravel', 'Clockwork\DataSource\LaravelDataSource');
-		$this -> app -> alias('clockwork.eloquent', 'Clockwork\DataSource\EloquentDataSource');
-		$this -> app -> alias('clockwork', 'Clockwork\Clockwork');
+		// set up aliases for all Songshenzong parts so they can be resolved by the IoC container
+		$this -> app -> alias('songshenzong.support', 'Songshenzong\Support\Laravel\Support');
+		$this -> app -> alias('songshenzong.laravel', 'Songshenzong\DataSource\LaravelDataSource');
+		$this -> app -> alias('songshenzong.eloquent', 'Songshenzong\DataSource\EloquentDataSource');
+		$this -> app -> alias('songshenzong', 'Songshenzong\Songshenzong');
 		
 		$this -> registerCommands();
 		
-		if ($this -> app['clockwork.support'] -> getConfig('register_helpers', TRUE)) {
-			require __DIR__ . '/helpers.php';
-		}
+		require __DIR__ . '/Helpers.php';
 		
 		
 	}
@@ -94,13 +90,13 @@ class Provider extends ServiceProvider {
 	 */
 	public function registerCommands() {
 		// Clean command
-		$this -> app -> bind('command.clockwork.clean', 'Clockwork\Support\Laravel\ClockworkCleanCommand');
+		$this -> app -> bind('command.songshenzong.clean', 'Songshenzong\Support\Laravel\CleanCommand');
 		
-		$this -> commands('command.clockwork.clean');
+		$this -> commands('command.songshenzong.clean');
 	}
 	
 	public function provides() {
-		return ['clockwork'];
+		return ['songshenzong'];
 	}
 	
 }

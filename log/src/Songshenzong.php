@@ -11,12 +11,12 @@ use Psr\Log\LogLevel;
 use Psr\Log\LoggerInterface;
 
 /**
- * Main Clockwork class
+ * Main Songshenzong class
  */
 class Songshenzong implements LoggerInterface
 {
 	/**
-	 * Clockwork version
+	 * Songshenzong version
 	 */
 	const VERSION = '1.13.1';
 
@@ -46,7 +46,7 @@ class Songshenzong implements LoggerInterface
 	protected $timeline;
 
 	/**
-	 * Create a new Clockwork instance with default request object
+	 * Create a new Songshenzong instance with default request object
 	 */
 	public function __construct()
 	{

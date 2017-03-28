@@ -96,10 +96,10 @@ class LaravelDataSource extends DataSource {
 			$timeline -> endEvent('boot');
 		});
 		
-		$this -> app['events'] -> listen('clockwork.controller.start', function () use ($timeline) {
+		$this -> app['events'] -> listen('songshenzong.controller.start', function () use ($timeline) {
 			$timeline -> startEvent('controller', 'Controller running.');
 		});
-		$this -> app['events'] -> listen('clockwork.controller.end', function () use ($timeline) {
+		$this -> app['events'] -> listen('songshenzong.controller.end', function () use ($timeline) {
 			$timeline -> endEvent('controller');
 		});
 		

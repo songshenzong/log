@@ -3,8 +3,6 @@
 namespace Songshenzong\Storage;
 
 use Songshenzong\Songshenzong;
-use Songshenzong\Storage\Sql;
-use Songshenzong\Clockwork;
 use Songshenzong\Request\Request;
 
 /**
@@ -13,7 +11,7 @@ use Songshenzong\Request\Request;
 class SqlStorage extends Storage {
 	
 	/**
-	 * Name of the table with Clockwork requests metadata
+	 * Name of the table with Songshenzong requests metadata
 	 */
 	protected $table;
 	
@@ -109,29 +107,19 @@ class SqlStorage extends Storage {
 		}
 		
 		$data['version'] = Songshenzong::VERSION;
-		$data            = Sql ::create($data);
+		Sql ::create($data);
 		
 		header("Content-Type:application/json");
-		
 		echo json_encode($request -> toArray());
-		
 		exit;
 	}
 	
 	/**
-	 * Create the Clockwork metadata table if it doesn't exist
+	 * Create the metadata table if it doesn't exist
 	 */
 	public function initialize() {
 		
-		if (Sql ::take(1)
-		        -> get()
-		) {
-			$initialized = TRUE;
-		} else {
-			$initialized = FALSE;
-		}
-		
-		if ($initialized !== FALSE) {
+		if (Sql ::  get()) {
 			return;
 		}
 		

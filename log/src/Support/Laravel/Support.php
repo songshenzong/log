@@ -1,7 +1,7 @@
 <?php
 namespace Songshenzong\Support\Laravel;
 
-use Songshenzong\Clockwork;
+use Songshenzong\Songshenzong;
 use Songshenzong\Storage\SqlStorage;
 
 use Illuminate\Foundation\Application;
@@ -23,12 +23,12 @@ class Support {
 	
 	public function getConfig($key, $default = NULL) {
 		
-		if ($this -> app['config'] -> has("clockwork::clockwork.{$key}")) {
-			// try to look for a value from clockwork.php configuration file first
-			return $this -> app['config'] -> get("clockwork::clockwork.{$key}");
+		if ($this -> app['config'] -> has("songshenzong::songshenzong.{$key}")) {
+			// try to look for a value from songshenzong.php configuration file first
+			return $this -> app['config'] -> get("songshenzong::songshenzong.{$key}");
 		} else {
 			// try to look for a value from config.php (pre 1.7) or return the default value
-			return $this -> app['config'] -> get("clockwork::config.{$key}", $default);
+			return $this -> app['config'] -> get("songshenzong::config.{$key}", $default);
 		}
 		
 	}
@@ -36,13 +36,13 @@ class Support {
 	public function getData($id = NULL, $last = NULL) {
 		$this -> app['session.store'] -> reflash();
 		
-		return new JsonResponse($this -> app['clockwork'] -> getStorage()
+		return new JsonResponse($this -> app['songshenzong'] -> getStorage()
 		                                                  -> retrieve($id, $last));
 	}
 	
 	public function getStorage() {
 		
-		$table = $this -> getConfig('storage_table', 'clockwork');
+		$table = $this -> getConfig('storage_table', 'songshenzong');
 		
 		$storage = new SqlStorage($table);
 		$storage -> initialize();
@@ -64,7 +64,7 @@ class Support {
 		// don't collect data for configured URIs
 		$request_uri   = $request -> getRequestUri();
 		$filter_uris   = $this -> getConfig('filter_uris', []);
-		$filter_uris[] = '/__clockwork/[0-9\.]+'; // don't collect data for Clockwork requests
+		$filter_uris[] = '/__songshenzong/[0-9\.]+'; // don't collect data for Songshenzong requests
 		
 		foreach ($filter_uris as $uri) {
 			$regexp = '#' . str_replace('#', '\#', $uri) . '#';
@@ -74,20 +74,20 @@ class Support {
 			}
 		}
 		
-		$this -> app['clockwork.laravel'] -> setResponse($response);
+		$this -> app['songshenzong.laravel'] -> setResponse($response);
 		
-		$this -> app['clockwork'] -> resolveRequest();
-		$this -> app['clockwork'] -> storeRequest();
+		$this -> app['songshenzong'] -> resolveRequest();
+		$this -> app['songshenzong'] -> storeRequest();
 		
 		if ( ! $this -> isEnabled()) {
-			return $response; // Clockwork is disabled, don't set the headers
+			return $response; // Songshenzong is disabled, don't set the headers
 		}
 		
-		$response -> headers -> set('X-Clockwork-Id', $this -> app['clockwork'] -> getRequest() -> id, TRUE);
-		$response -> headers -> set('X-Clockwork-Version', Clockwork::VERSION, TRUE);
+		$response -> headers -> set('X-Clockwork-Id', $this -> app['songshenzong'] -> getRequest() -> id, TRUE);
+		$response -> headers -> set('X-Clockwork-Version', Songshenzong::VERSION, TRUE);
 		
 		if ($request -> getBasePath()) {
-			$response -> headers -> set('X-Clockwork-Path', $request -> getBasePath() . '/__clockwork/', TRUE);
+			$response -> headers -> set('X-Clockwork-Path', $request -> getBasePath() . '/__songshenzong/', TRUE);
 		}
 		
 		$extra_headers = $this -> getConfig('headers', []);

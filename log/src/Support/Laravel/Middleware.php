@@ -1,7 +1,7 @@
 <?php
 namespace Songshenzong\Support\Laravel;
 
-use Clockwork\Clockwork;
+use Songshenzong\Songshenzong;
 
 use Closure;
 use Exception;
@@ -36,7 +36,7 @@ class Middleware
 	 */
 	public function handle($request, Closure $next)
 	{
-		$this->app['config']->set('clockwork::config.middleware', true);
+		$this->app['config']->set('songshenzong::config.middleware', true);
 
 		try {
 			$response = $next($request);
@@ -45,6 +45,6 @@ class Middleware
 			$response = $this->app['Illuminate\Contracts\Debug\ExceptionHandler']->render($request, $e);
 		}
 
-		return $this->app['clockwork.support']->process($request, $response);
+		return $this->app['songshenzong.support']->process($request, $response);
 	}
 }

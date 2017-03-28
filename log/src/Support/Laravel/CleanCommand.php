@@ -11,7 +11,7 @@ class CleanCommand extends Command
      *
      * @var string
      */
-    protected $name = 'clockwork:clean';
+    protected $name = 'songshenzong:clean';
 
     /**
      * The console command description.
@@ -44,7 +44,7 @@ class CleanCommand extends Command
      */
     public function fire()
     {
-        $data_dir = storage_path() . '/clockwork';
+        $data_dir = storage_path() . '/songshenzong';
 
         $this->info('Cleaning ' . $data_dir . ' ...');
 
