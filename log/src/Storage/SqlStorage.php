@@ -46,10 +46,18 @@ class SqlStorage extends Storage {
 	 * will be returned
 	 */
 	public function retrieve($id = NULL, $last = NULL) {
+		$log = Sql ::find($id);
 		
-		$data = Sql ::find($id);
+		if ($log) {
+			
+			foreach ($this -> needs_serialization as $key) {
+				$log[$key] = json_decode($log[$key]);
+			}
+			
+			
+		}
 		
-		return \request() -> json($data);
+		return $log;
 		
 	}
 	
@@ -61,15 +69,12 @@ class SqlStorage extends Storage {
 		$data = $this -> applyFilter($request -> toArray());
 		
 		foreach ($this -> needs_serialization as $key) {
-			$data[$key] = @json_encode($data[$key]);
+			$data[$key] = json_encode($data[$key]);
 		}
 		
 		$data['version'] = Songshenzong::VERSION;
-		Sql ::create($data);
 		
-		// header("Content-Type:application/json");
-		// echo json_encode($request);
-		// exit;
+		return Sql ::create($data);
 	}
 	
 	/**
@@ -77,11 +82,9 @@ class SqlStorage extends Storage {
 	 */
 	public function initialize() {
 		
-		if (Sql ::  get()) {
-			return;
+		if ( ! Sql ::  get()) {
+			\DB ::statement("CREATE TABLE {$this->table} (" . 'id VARCHAR(100), ' . 'version INTEGER, ' . 'time DOUBLE NULL, ' . 'method VARCHAR(10) NULL, ' . 'uri VARCHAR(250) NULL, ' . 'headers MEDIUMTEXT NULL, ' . 'controller VARCHAR(250) NULL, ' . 'getData MEDIUMTEXT NULL, ' . 'postData MEDIUMTEXT NULL, ' . 'sessionData MEDIUMTEXT NULL, ' . 'cookies MEDIUMTEXT NULL, ' . 'responseTime DOUBLE NULL, ' . 'responseStatus INTEGER NULL, ' . 'responseDuration DOUBLE NULL, ' . 'databaseQueries MEDIUMTEXT NULL, ' . 'databaseDuration DOUBLE NULL, ' . 'timelineData MEDIUMTEXT NULL, ' . 'log MEDIUMTEXT NULL, ' . 'routes MEDIUMTEXT NULL, ' . 'emailsData MEDIUMTEXT NULL, ' . 'viewsData MEDIUMTEXT NULL, ' . 'userData MEDIUMTEXT NULL' . ');');
 		}
-		
-		\DB ::statement("CREATE TABLE {$this->table} (" . 'id VARCHAR(100), ' . 'version INTEGER, ' . 'time DOUBLE NULL, ' . 'method VARCHAR(10) NULL, ' . 'uri VARCHAR(250) NULL, ' . 'headers MEDIUMTEXT NULL, ' . 'controller VARCHAR(250) NULL, ' . 'getData MEDIUMTEXT NULL, ' . 'postData MEDIUMTEXT NULL, ' . 'sessionData MEDIUMTEXT NULL, ' . 'cookies MEDIUMTEXT NULL, ' . 'responseTime DOUBLE NULL, ' . 'responseStatus INTEGER NULL, ' . 'responseDuration DOUBLE NULL, ' . 'databaseQueries MEDIUMTEXT NULL, ' . 'databaseDuration DOUBLE NULL, ' . 'timelineData MEDIUMTEXT NULL, ' . 'log MEDIUMTEXT NULL, ' . 'routes MEDIUMTEXT NULL, ' . 'emailsData MEDIUMTEXT NULL, ' . 'viewsData MEDIUMTEXT NULL, ' . 'userData MEDIUMTEXT NULL' . ');');
 		
 		
 	}

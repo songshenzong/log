@@ -27,7 +27,7 @@ class Provider extends ServiceProvider {
 			return;
 		}
 		
-		$this -> app['router'] -> get('/__songshenzong/{id}',
+		$this -> app['router'] -> get('/songshenzong/logs/{id}',
 		                              'Songshenzong\Support\Laravel\Controllers\CurrentController@getData')
 		                       -> where('id', '[0-9\.]+');
 		
