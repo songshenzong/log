@@ -9,7 +9,7 @@ if ( ! function_exists('songshenzong')) {
 	/**
 	 * Log a message to Songshenzong, returns Songshenzong instance when called with no arguments.
 	 */
-	function clock($message = SONGSHENZONG_NULL) {
+	function songshenzong($message = SONGSHENZONG_NULL) {
 		if ($message === SONGSHENZONG_NULL) {
 			return app('songshenzong');
 		} else {

@@ -57,6 +57,7 @@ class SqlStorage extends Storage {
 	 * Store the request in the database
 	 */
 	public function store(Request $request) {
+		
 		$data = $this -> applyFilter($request -> toArray());
 		
 		foreach ($this -> needs_serialization as $key) {
@@ -66,9 +67,9 @@ class SqlStorage extends Storage {
 		$data['version'] = Songshenzong::VERSION;
 		Sql ::create($data);
 		
-		header("Content-Type:application/json");
-		echo json_encode($request -> toArray());
-		exit;
+		// header("Content-Type:application/json");
+		// echo json_encode($request);
+		// exit;
 	}
 	
 	/**
