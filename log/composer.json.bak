@@ -1,0 +1,28 @@
+{
+  "name": "songshenzong/log",
+  "description": "Server-side component of Clockwork, a Chrome extension for PHP development",
+  "keywords": [
+    "debugging",
+    "profiling",
+    "logging",
+    "laravel"
+  ],
+  "homepage": "http://songshenzong.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "songshenzong",
+      "email": "connor.niu@gmail.com",
+      "homepage": "http://songshenzong.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.9",
+    "psr/log": "1.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Songshenzong\\": "src/"
+    }
+  }
+}

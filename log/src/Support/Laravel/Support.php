@@ -1,0 +1,119 @@
+<?php
+namespace Songshenzong\Support\Laravel;
+
+use Songshenzong\Clockwork;
+use Songshenzong\Storage\SqlStorage;
+
+use Illuminate\Foundation\Application;
+use Illuminate\Http\JsonResponse;
+
+class Support {
+	
+	protected $app;
+	
+	public function __construct(Application $app) {
+		
+		$this -> app = $app;
+		
+	}
+	
+	public function getAdditionalDataSources() {
+		return $this -> getConfig('additional_data_sources', []);
+	}
+	
+	public function getConfig($key, $default = NULL) {
+		
+		if ($this -> app['config'] -> has("clockwork::clockwork.{$key}")) {
+			// try to look for a value from clockwork.php configuration file first
+			return $this -> app['config'] -> get("clockwork::clockwork.{$key}");
+		} else {
+			// try to look for a value from config.php (pre 1.7) or return the default value
+			return $this -> app['config'] -> get("clockwork::config.{$key}", $default);
+		}
+		
+	}
+	
+	public function getData($id = NULL, $last = NULL) {
+		$this -> app['session.store'] -> reflash();
+		
+		return new JsonResponse($this -> app['clockwork'] -> getStorage()
+		                                                  -> retrieve($id, $last));
+	}
+	
+	public function getStorage() {
+		
+		$table = $this -> getConfig('storage_table', 'clockwork');
+		
+		$storage = new SqlStorage($table);
+		$storage -> initialize();
+		
+		$storage -> filter = $this -> getFilter();
+		
+		return $storage;
+	}
+	
+	public function getFilter() {
+		return $this -> getConfig('filter', []);
+	}
+	
+	public function process($request, $response) {
+		if ( ! $this -> isCollectingData()) {
+			return $response; // Collecting data is disabled, return immediately
+		}
+		
+		// don't collect data for configured URIs
+		$request_uri   = $request -> getRequestUri();
+		$filter_uris   = $this -> getConfig('filter_uris', []);
+		$filter_uris[] = '/__clockwork/[0-9\.]+'; // don't collect data for Clockwork requests
+		
+		foreach ($filter_uris as $uri) {
+			$regexp = '#' . str_replace('#', '\#', $uri) . '#';
+			
+			if (preg_match($regexp, $request_uri)) {
+				return $response;
+			}
+		}
+		
+		$this -> app['clockwork.laravel'] -> setResponse($response);
+		
+		$this -> app['clockwork'] -> resolveRequest();
+		$this -> app['clockwork'] -> storeRequest();
+		
+		if ( ! $this -> isEnabled()) {
+			return $response; // Clockwork is disabled, don't set the headers
+		}
+		
+		$response -> headers -> set('X-Clockwork-Id', $this -> app['clockwork'] -> getRequest() -> id, TRUE);
+		$response -> headers -> set('X-Clockwork-Version', Clockwork::VERSION, TRUE);
+		
+		if ($request -> getBasePath()) {
+			$response -> headers -> set('X-Clockwork-Path', $request -> getBasePath() . '/__clockwork/', TRUE);
+		}
+		
+		$extra_headers = $this -> getConfig('headers', []);
+		foreach ($extra_headers as $header_name => $header_value) {
+			$response -> headers -> set('X-Clockwork-Header-' . $header_name, $header_value);
+		}
+		
+		return $response;
+	}
+	
+	public function isEnabled() {
+		$is_enabled = $this -> getConfig('enable', NULL);
+		
+		if ($is_enabled === NULL) {
+			$is_enabled =env('APP_DEBUG');
+		}
+		
+		
+		return $is_enabled;
+	}
+	
+	public function isCollectingData() {
+		return $this -> isEnabled() || $this -> getConfig('collect_data_always', FALSE);
+	}
+	
+	public function isCollectingDatabaseQueries() {
+		return $this -> app['config'] -> get('database.default') && ! in_array('databaseQueries', $this -> getFilter());
+	}
+}
