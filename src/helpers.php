@@ -4,7 +4,7 @@ if (!function_exists('debugbar')) {
     /**
      * Get the Debugbar instance
      *
-     * @return \Barryvdh\Debugbar\LaravelDebugbar
+     * @return \Songshenzong\Log\LaravelDebugbar
      */
     function debugbar()
     {

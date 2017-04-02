@@ -40,7 +40,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
         );
 
-        $this -> app -> alias('debugbar', 'Barryvdh\Debugbar\LaravelDebugbar');
+        $this -> app -> alias('debugbar', 'Songshenzong\Log\LaravelDebugbar');
 
 
     }
@@ -69,17 +69,13 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
         $routeConfig = [
-            'namespace' => 'Barryvdh\Debugbar\Controllers',
+            'as'        => 'songshenzong::',
+            'namespace' => 'Songshenzong\Log\Controllers',
             'prefix'    => $this -> app['config'] -> get('debugbar.route_prefix'),
         ];
 
         $this -> getRouter() -> group($routeConfig, function ($router) {
-            $router -> get('', [
-                'as'   => 'songshenzong::',
-                'uses' => 'LogController@index',
-                'as'   => 'debugbar.openhandler',
-            ]);
-
+            $router -> get('', 'LogController@index');
 
             $router -> get('logs', 'LogController@getList');
 

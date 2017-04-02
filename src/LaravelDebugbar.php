@@ -118,7 +118,7 @@ class LaravelDebugbar extends DebugBar
             return;
         }
 
-        /** @var \Barryvdh\Debugbar\LaravelDebugbar $debugbar */
+        /** @var \Songshenzong\Log\LaravelDebugbar $debugbar */
         $debugbar = $this;
 
         /** @var Application $app */
@@ -221,7 +221,7 @@ class LaravelDebugbar extends DebugBar
 
         if (!$this -> isLumen() && $this -> shouldCollect('route')) {
             try {
-                $this -> addCollector($this -> app -> make('Barryvdh\Debugbar\DataCollector\IlluminateRouteCollector'));
+                $this -> addCollector($this -> app -> make('Songshenzong\Log\DataCollector\IlluminateRouteCollector'));
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
@@ -434,7 +434,7 @@ class LaravelDebugbar extends DebugBar
 
         if ($this -> shouldCollect('gate', false)) {
             try {
-                $gateCollector = $this -> app -> make('Barryvdh\Debugbar\DataCollector\GateCollector');
+                $gateCollector = $this -> app -> make('Songshenzong\Log\DataCollector\GateCollector');
                 $this -> addCollector($gateCollector);
             } catch (\Exception $e) {
                 // No Gate collector
@@ -724,7 +724,7 @@ class LaravelDebugbar extends DebugBar
                 'meta_method'   => $meta['method'],
             ];
 
-            \Barryvdh\Debugbar\SongshenzongLog ::create($data);
+            \Songshenzong\Log\SongshenzongLog ::create($data);
 
 
         }
@@ -838,7 +838,7 @@ class LaravelDebugbar extends DebugBar
                 'meta_method'   => $meta['method'],
             ];
 
-            \Barryvdh\Debugbar\SongshenzongLog ::create($data);
+            \Songshenzong\Log\SongshenzongLog ::create($data);
         }
 
         return $this -> data;
