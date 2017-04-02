@@ -1,29 +1,31 @@
 {
-  "name": "songshenzong/log",
-  "type": "library",
-  "description": "Server-side component of Songshenzong, a tool for PHP development",
-  "keywords": [
-    "debugging",
-    "profiling",
-    "logging",
-    "laravel"
-  ],
-  "homepage": "http://songshenzong.com",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "songshenzong",
-      "email": "connor.niu@gmail.com",
-      "homepage": "http://songshenzong.com"
+    "name": "songshenzong/log",
+    "description": "PHP Debugbar integration for Laravel",
+    "keywords": ["laravel", "debugbar", "profiler", "debug", "webprofiler"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Connor Niu",
+            "email": "connor.niu@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*",
+        "symfony/finder": "~2.7|~3.0",
+        "maximebf/debugbar": "~1.13.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Songshenzong\\Log\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3-dev"
+        }
     }
-  ],
-  "require": {
-    "php": ">=5.6.30",
-    "psr/log": "1.*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Songshenzong\\Log\\": "src/"
-    }
-  }
 }
