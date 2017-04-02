@@ -97,25 +97,6 @@
         }
 
 
-        var logsNum = 0;
-        var logsIncrease = 15;
-        function geocoder() {
-            jQuery.getJSON('http://appapi.lenovo.com.cn/action_log/geocoder?take=' + logsIncrease, function (result) {
-                    if (result.data.quantity) {
-                        logsNum = logsNum + result.data.quantity;
-                    } else {
-                        logsNum = logsNum + logsIncrease;
-                    }
-
-                    console.log(logsNum);
-
-                    geocoder();
-                }
-            );
-        }
-
-        geocoder();
-
     </script>
     <style>
         p {
