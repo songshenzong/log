@@ -17,9 +17,9 @@ class StackFrame
     public function __construct(array $data = [], $basePath = '')
     {
         foreach ($data as $key => $value) {
-            $this->$key = $value;
+            $this -> $key = $value;
         }
 
-        $this->shortPath = str_replace($basePath, '', $this->file);
+        $this -> shortPath = str_replace($basePath, '', $this -> file);
     }
 }
