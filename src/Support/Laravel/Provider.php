@@ -29,7 +29,7 @@ class Provider extends ServiceProvider {
 		
 		$this -> app['router'] -> group([
 			                                'as'        => 'songshenzong::',
-			                                'namespace' => 'Songshenzong\Support\Laravel\Controllers',
+			                                'namespace' => 'Songshenzong\Log\Support\Laravel\Controllers',
 			                                'prefix'    => 'songshenzong',
 		                                ], function ($router) {
 			$router -> get('', 'LogController@index');
