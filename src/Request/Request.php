@@ -148,36 +148,31 @@ class Request {
 	 */
 	public function toArray() {
 		return [
-			'id'               => $this -> id,
-			'time'             => $this -> time,
-			'method'           => $this -> method,
-			'uri'              => $this -> uri,
-			'headers'          => $this -> headers,
-			'controller'       => $this -> controller,
-			'getData'          => $this -> getData,
-			'postData'         => $this -> postData,
-			'sessionData'      => $this -> sessionData,
-			'cookies'          => $this -> cookies,
-			'responseTime'     => $this -> responseTime,
-			'responseStatus'   => $this -> responseStatus,
-			'responseDuration' => $this -> getResponseDuration(),
-			'databaseQueries'  => $this -> databaseQueries,
-			'databaseDuration' => $this -> getDatabaseDuration(),
-			'timelineData'     => $this -> timelineData,
-			'log'              => array_values($this -> log),
-			'routes'           => $this -> routes,
-			'emailsData'       => $this -> emailsData,
-			'viewsData'        => $this -> viewsData,
-			'userData'         => $this -> userData
+			'id'                => $this -> id,
+			'time'              => $this -> time,
+			'method'            => $this -> method,
+			'uri'               => $this -> uri,
+			'headers'           => $this -> headers,
+			'controller'        => $this -> controller,
+			'get_data'          => $this -> getData,
+			'post_data'         => $this -> postData,
+			'session_data'      => $this -> sessionData,
+			'cookies'           => $this -> cookies,
+			'response_time'     => $this -> responseTime,
+			'response_status'   => $this -> responseStatus,
+			'response_duration' => $this -> getResponseDuration(),
+			'database_queries'  => $this -> databaseQueries,
+			'database_duration' => $this -> getDatabaseDuration(),
+			'time_line_data'    => $this -> timelineData,
+			'log'               => array_values($this -> log),
+			'routes'            => $this -> routes,
+			'emails_data'       => $this -> emailsData,
+			'views_data'        => $this -> viewsData,
+			'user_data'         => $this -> userData
 		];
 	}
 	
-	/**
-	 * Return request data as a JSON string
-	 */
-	public function toJson() {
-		return json_encode($this -> toArray());
-	}
+
 	
 	/**
 	 * Generate unique request ID in form <current time>.<random number>

@@ -33,6 +33,7 @@ class Middleware {
 	 * @return mixed
 	 */
 	public function handle($request, Closure $next) {
+		
 		$this -> app['config'] -> set('songshenzong::config.middleware', TRUE);
 		
 		try {
@@ -44,4 +45,5 @@ class Middleware {
 		
 		return $this -> app['songshenzong.support'] -> process($request, $response);
 	}
+	
 }

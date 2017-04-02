@@ -25,8 +25,9 @@ abstract class Storage implements StorageInterface {
 		}
 		
 		if ( ! is_array($requests)) {
-			return $requests -> toJson();
+			return $requests -> toArray();
 		}
+
 		
 		foreach ($requests as &$request) {
 			$request = $request -> toArray();

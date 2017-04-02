@@ -27,13 +27,26 @@ class Provider extends ServiceProvider {
 			return;
 		}
 		
-		$this -> app['router'] -> get('/songshenzong/logs/{id}',
-		                              'Songshenzong\Support\Laravel\Controllers\CurrentController@getData')
-		                       -> where('id', '[0-9\.]+');
+		$this -> app['router'] -> group([
+			                                'as'        => 'songshenzong::',
+			                                'namespace' => 'Songshenzong\Support\Laravel\Controllers',
+			                                'prefix'    => 'songshenzong',
+		                                ], function ($router) {
+			$router -> get('', 'LogController@index');
+			
+			$router -> get('logs', 'LogController@getList');
+			
+			$router -> get('destroy', 'LogController@destroy');
+			
+			$router -> get('logs/{id}', 'LogController@getData') -> where('id', '[0-9\.]+');
+		});
+		
 		
 	}
 	
 	public function register() {
+		
+		$this -> publishes([__DIR__ . '/config/songshenzong.php' => config_path('songshenzong.php')]);
 		
 		$this -> app -> singleton('songshenzong.support', function ($app) {
 			return new Support($app);
@@ -54,8 +67,7 @@ class Provider extends ServiceProvider {
 		$this -> app -> singleton('songshenzong', function ($app) {
 			$songshenzong = new Songshenzong();
 			
-			$songshenzong -> addDataSource(new PhpDataSource())
-			              -> addDataSource($app['songshenzong.laravel']);
+			$songshenzong -> addDataSource(new PhpDataSource()) -> addDataSource($app['songshenzong.laravel']);
 			
 			if ($app['songshenzong.support'] -> isCollectingDatabaseQueries()) {
 				$songshenzong -> addDataSource($app['songshenzong.eloquent']);

@@ -59,8 +59,7 @@ class Support {
 	public function getData($id = NULL, $last = NULL) {
 		$this -> app['session.store'] -> reflash();
 		
-		return new JsonResponse($this -> app['songshenzong'] -> getStorage()
-		                                                     -> retrieve($id, $last));
+		return new JsonResponse($this -> app['songshenzong'] -> getStorage() -> retrieve($id, $last));
 	}
 	
 	/**
@@ -68,10 +67,7 @@ class Support {
 	 */
 	public function getStorage() {
 		
-		$table = $this -> getConfig('storage_table', 'songshenzong');
-		
-		$storage = new SqlStorage($table);
-		$storage -> initialize();
+		$storage = new SqlStorage();
 		
 		$storage -> filter = $this -> getFilter();
 		
@@ -86,12 +82,34 @@ class Support {
 	}
 	
 	/**
+	 * Determine if the request has a URI that should pass through verification.
+	 *
+	 *
+	 * @return bool
+	 */
+	protected function shouldPassThrough() {
+		
+		$name = $this -> app['router'] -> currentRouteName();
+		
+		if ($name == 'songshenzong::') {
+			return TRUE;
+		}
+		
+		return FALSE;
+	}
+	
+	/**
 	 * @param $request
 	 * @param $response
 	 *
 	 * @return mixed
 	 */
 	public function process($request, $response) {
+		
+		if ($this -> shouldPassThrough()) {
+			return $response;
+		}
+		
 		if ( ! $this -> isCollectingData()) {
 			return $response; // Collecting data is disabled, return immediately
 		}

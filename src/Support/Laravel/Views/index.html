@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>Songshenzong</title>
+    <meta name="robots" content="noindex,nofollow">
+    <script src='http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js'></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+    <script>
+
+
+        var List;
+        var loading;
+
+
+        /**---------------------------------------------------------
+         *   Global settings of the Ajax.
+         *---------------------------------------------------------*/
+        jQuery.ajaxSetup({
+            cache: false,
+            aysnc: true,
+            url: "",
+            type: "POST",
+            dataType: "json",
+            beforeSend: function () {
+                layer.closeAll();
+                loading = layer.load(1, {
+                    shade: [0.4, '#000'] //0.1透明度的白色背景
+                });
+
+            },
+            complete: function () {
+                layer.close(loading);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.alert('通信失败，重试或刷新！', {
+                    closeBtn: 0,
+                    title: '噩耗:'
+                });
+
+            }
+        });
+
+
+        function logList(url) {
+            jQuery.getJSON(url, function (result) {
+                    if (List) {
+                        List.items = result;
+                    } else {
+                        List = new Vue({
+                            el: '#items',
+                            delimiters: ['[[', ']]'],
+                            data: {
+                                items: result,
+                            },
+                            methods: {
+                                getDetail: function (item) {
+                                    layer.msg('I\'m ' + item.id);
+                                },
+                                getNewList: function (url) {
+                                    logList(url);
+                                },
+                                remove: function (id, index) {
+
+                                    jQuery.getJSON('/songshenzong/destroy', {id: id}, function (result) {
+
+                                            List.items.data.splice(index, 1);
+                                        }
+                                    );
+
+                                },
+                            }
+                        });
+                    }
+
+
+                }
+            );
+        }
+
+        logList('/songshenzong/logs');
+
+
+        function destroy() {
+            jQuery.getJSON('/songshenzong/destroy', function (result) {
+
+                    List.items = result;
+
+                }
+            );
+        }
+
+
+        var logsNum = 0;
+        var logsIncrease = 15;
+        function geocoder() {
+            jQuery.getJSON('http://appapi.lenovo.com.cn/action_log/geocoder?take=' + logsIncrease, function (result) {
+                    if (result.data.quantity) {
+                        logsNum = logsNum + result.data.quantity;
+                    } else {
+                        logsNum = logsNum + logsIncrease;
+                    }
+
+                    console.log(logsNum);
+
+                    geocoder();
+                }
+            );
+        }
+
+        geocoder();
+
+    </script>
+    <style>
+        p {
+            display: block;
+        }
+
+        header {
+            margin: 0px;
+            padding: 10px;
+            background: #2e6da4;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: #F2F4F6;
+        }
+
+        .glyphicon {
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+<div id="items" class="bs-example" data-example-id="hoverable-table">
+
+    <header>
+
+
+        <button onclick="logList('/songshenzong/logs')" type="button" class="btn btn-info btn-sm">Refresh</button>
+
+        <button v-if="items.prev_page_url" @click="getNewList(items.prev_page_url)" type="button"
+                class="btn btn-info btn-sm">Prev
+        </button>
+
+
+        <button v-if="items.next_page_url" @click="getNewList(items.next_page_url)" type="button
+        " class="btn btn-info btn-sm">Next
+        </button>
+
+        <b>Total:[[items.total]]</b>
+
+
+        <button style="float: right" onclick="destroy()" v-if="items.total" type="button"
+                class="btn btn-primary btn-sm btn-danger">Destroy
+        </button>
+    </header>
+
+    <table class="table table-hover table-condensed table-striped">
+        <thead>
+        <tr>
+            <th>Index</th>
+            <th>ID</th>
+            <th>Method</th>
+            <th>Status</th>
+            <th>Hosts</th>
+            <th>URI</th>
+            <th>Response Duration</th>
+            <th>log</th>
+            <th>Time</th>
+            <th>Created at</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr v-for="(item,index) in items.data" @click="getDetail(item)">
+
+            <th scope="row">[[index]]</th>
+            <th>[[item.id]]</th>
+            <td>[[item.method]]</td>
+            <td>[[item.response_status]]</td>
+            <td v-for="host in item.headers.host">[[host]]</td>
+            <td>[[item.uri]]</td>
+            <td>[[item.response_duration/1000]]</td>
+            <td>[[item.headers.user-agent]]</td>
+            <td>[[item.time]]</td>
+            <td>[[item.created_at]]</td>
+            <td><span @click="remove(item.id,index)" class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
+
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+
+</body>
+</html>
