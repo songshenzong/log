@@ -8,19 +8,21 @@ use Songshenzong\Request\Request;
 /**
  * SQL storage for requests
  */
-class SqlStorage extends Storage {
-	
-	/**
-	 * Name of the table with Songshenzong requests metadata
-	 */
-	protected $table;
-	
-	/**
-	 * SqlStorage constructor.
-	 */
-	public function __construct() {
-		$this -> table = 'songshenzong_logs';
-		$statement     = <<<HEREDOC
+class SqlStorage extends Storage
+{
+
+    /**
+     * Name of the table with Songshenzong requests metadata
+     */
+    protected $table;
+
+    /**
+     * SqlStorage constructor.
+     */
+    public function __construct()
+    {
+        $this -> table = 'songshenzong_logs';
+        $statement     = <<<HEREDOC
 		CREATE TABLE {$this -> table}
 		(
 			id               INT UNSIGNED                        NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -49,54 +51,60 @@ class SqlStorage extends Storage {
 			updated_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 		);
 HEREDOC;
-		
-		$this -> createTableAndLock($statement, $this -> table);
-		
-		
-	}
-	
-	/**
-	 * @param $statement
-	 * @param $table
-	 *
-	 * @return bool
-	 */
-	private function createTableAndLock($statement, $table) {
-		
-		$lock = __DIR__ . '/' . studly_case($table) . '.lock';
-		
-		if ( ! file_exists($lock)) {
-			if (\DB ::statement($statement)) {
-				file_put_contents($lock, 'ok');
-				
-				return TRUE;
-			}
-		}
-		
-	}
-	
-	/**
-	 * Retrieve a request specified by id argument, if second argument is specified, array of requests from id to last
-	 * will be returned
-	 *
-	 * @param null $id
-	 * @param null $last
-	 *
-	 * @return mixed
-	 */
-	public function retrieve($id = NULL, $last = NULL) {
-		return SongshenzongLog ::find($id);
-	}
-	
-	/**
-	 * Store the request in the database
-	 */
-	public function store(Request $request) {
-		
-		$data            = $this -> applyFilter($request -> toArray());
-		$data['version'] = Songshenzong::VERSION;
-		
-		return SongshenzongLog ::create($data);
-	}
-	
+
+        $this -> createTableAndLock($statement, $this -> table);
+
+
+    }
+
+    /**
+     * @param $statement
+     * @param $table
+     *
+     * @return bool
+     */
+    private function createTableAndLock($statement, $table)
+    {
+
+        $lock = __DIR__ . '/' . studly_case($table) . '.lock';
+
+        if (!file_exists($lock)) {
+
+            IF (\DB ::statement("DROP TABLE {$table};")) {
+                if (\DB ::statement($statement)) {
+                    file_put_contents($lock, 'ok');
+                    return true;
+                }
+            }
+
+        }
+
+    }
+
+    /**
+     * Retrieve a request specified by id argument, if second argument is specified, array of requests from id to last
+     * will be returned
+     *
+     * @param null $id
+     * @param null $last
+     *
+     * @return mixed
+     */
+    public function retrieve($id = null, $last = null)
+    {
+        return SongshenzongLog ::find($id);
+    }
+
+    /**
+     * Store the request in the database
+     */
+    public function store(Request $request)
+    {
+
+        $data            = $this -> applyFilter($request -> toArray());
+        $data['version'] = Songshenzong::VERSION;
+
+        return SongshenzongLog ::create($data);
+    }
+
 }
