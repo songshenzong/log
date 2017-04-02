@@ -23,7 +23,7 @@ class SqlStorage extends Storage
     {
         $this -> table = 'songshenzong_logs';
         $statement     = <<<HEREDOC
-		CREATE TABLE {$this -> table}
+		CREATE TABLE IF NOT EXISTS {$this -> table}
 		(
 			id               INT UNSIGNED                        NOT NULL AUTO_INCREMENT PRIMARY KEY,
 			version           VARCHAR(20)                         NULL,
@@ -70,7 +70,7 @@ HEREDOC;
 
         if (!file_exists($lock)) {
 
-            IF (\DB ::statement("DROP TABLE {$table};")) {
+            IF (\DB ::statement("DROP TABLE IF EXISTS {$table};")) {
                 if (\DB ::statement($statement)) {
                     file_put_contents($lock, 'ok');
                     return true;
