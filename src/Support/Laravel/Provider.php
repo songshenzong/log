@@ -102,7 +102,7 @@ class Provider extends ServiceProvider {
 	 */
 	public function registerCommands() {
 		// Clean command
-		$this -> app -> bind('command.songshenzong.clean', 'Songshenzong\Support\Laravel\CleanCommand');
+		$this -> app -> bind('command.songshenzong.clean', 'Songshenzong\Log\Support\Laravel\CleanCommand');
 		
 		$this -> commands('command.songshenzong.clean');
 	}
