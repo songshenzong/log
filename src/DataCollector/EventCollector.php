@@ -54,7 +54,7 @@ class EventCollector extends TimeDataCollector
                 $reflector = new \ReflectionFunction($listener);
 
                 // Skip our own listeners
-                if ($reflector->getNamespaceName() == 'Barryvdh\Debugbar') {
+                if ($reflector->getNamespaceName() == 'Songshenzong\Log') {
                     continue;
                 }
 
