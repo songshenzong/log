@@ -99,7 +99,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $debugbar -> enable();
         $debugbar -> boot();
 
-        $this -> registerMiddleware('Barryvdh\Debugbar\Middleware');
+        $this -> registerMiddleware('Songshenzong\Log\Middleware');
     }
 
     /**
