@@ -1,11 +1,11 @@
 <?php
 
-namespace Songshenzong\Support\Laravel;
+namespace Songshenzong\Log\Support\Laravel;
 
-use Songshenzong\Songshenzong;
-use Songshenzong\DataSource\PhpDataSource;
-use Songshenzong\DataSource\LaravelDataSource;
-use Songshenzong\DataSource\EloquentDataSource;
+use Songshenzong\Log\Songshenzong;
+use Songshenzong\Log\DataSource\PhpDataSource;
+use Songshenzong\Log\DataSource\LaravelDataSource;
+use Songshenzong\Log\DataSource\EloquentDataSource;
 use Illuminate\Support\ServiceProvider;
 
 class Provider extends ServiceProvider {

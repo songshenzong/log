@@ -1,8 +1,8 @@
 <?php
 
-namespace Songshenzong\Storage;
+namespace Songshenzong\Log\Storage;
 
-use Songshenzong\Request\Request;
+use Songshenzong\Log\Request\Request;
 
 /**
  * Base storage class, all storage have to extend this class

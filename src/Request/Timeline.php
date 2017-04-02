@@ -1,6 +1,6 @@
 <?php
 
-namespace Songshenzong\Request;
+namespace Songshenzong\Log\Request;
 
 /**
  * Data structure for application time line, used to generate graph of application in client app

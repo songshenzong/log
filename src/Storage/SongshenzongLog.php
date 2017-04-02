@@ -1,6 +1,6 @@
 <?php
 
-namespace Songshenzong\Storage;
+namespace Songshenzong\Log\Storage;
 
 use Illuminate\Database\Eloquent\Model;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Songshenzong\Storage;
+namespace Songshenzong\Log\Storage;
 
-use Songshenzong\Songshenzong;
-use Songshenzong\Request\Request;
+use Songshenzong\Log\Songshenzong;
+use Songshenzong\Log\Request\Request;
 
 /**
  * SQL storage for requests

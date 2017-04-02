@@ -1,8 +1,8 @@
 <?php
 
-namespace Songshenzong\DataSource;
+namespace Songshenzong\Log\DataSource;
 
-use Songshenzong\Request\Request;
+use Songshenzong\Log\Request\Request;
 
 /**
  * Base data source class

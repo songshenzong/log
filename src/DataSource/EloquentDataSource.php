@@ -1,12 +1,12 @@
 <?php
 
-namespace Songshenzong\DataSource;
+namespace Songshenzong\Log\DataSource;
 
-use Songshenzong\Helpers\StackTrace;
-use Songshenzong\Request\Request;
-use Songshenzong\Support\Laravel\Eloquent\ResolveModelScope;
-use Songshenzong\Support\Laravel\Eloquent\ResolveModelLegacyScope;
-use Songshenzong\Support\Laravel\Eloquent\ResolveModelOldScope;
+use Songshenzong\Log\Helpers\StackTrace;
+use Songshenzong\Log\Request\Request;
+use Songshenzong\Log\Support\Laravel\Eloquent\ResolveModelScope;
+use Songshenzong\Log\Support\Laravel\Eloquent\ResolveModelLegacyScope;
+use Songshenzong\Log\Support\Laravel\Eloquent\ResolveModelOldScope;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Events\Dispatcher as EventDispatcher;
 

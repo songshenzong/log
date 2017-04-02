@@ -1,6 +1,6 @@
 <?php
 
-namespace Songshenzong\Helpers;
+namespace Songshenzong\Log\Helpers;
 
 class StackFrame
 {

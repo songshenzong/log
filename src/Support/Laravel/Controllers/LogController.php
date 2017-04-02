@@ -1,11 +1,11 @@
 <?php
 
-namespace Songshenzong\Support\Laravel\Controllers;
+namespace Songshenzong\Log\Support\Laravel\Controllers;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Routing\Controller;
-use Songshenzong\Request\Request;
-use Songshenzong\Storage\SongshenzongLog;
+use Songshenzong\Log\Request\Request;
+use Songshenzong\Log\Storage\SongshenzongLog;
 
 class LogController extends Controller {
 	

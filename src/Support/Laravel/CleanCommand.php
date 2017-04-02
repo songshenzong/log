@@ -1,6 +1,6 @@
 <?php
 
-namespace Songshenzong\Support\Laravel;
+namespace Songshenzong\Log\Support\Laravel;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;

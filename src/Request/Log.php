@@ -1,8 +1,8 @@
 <?php
 
-namespace Songshenzong\Request;
+namespace Songshenzong\Log\Request;
 
-use Songshenzong\Helpers\StackTrace;
+use Songshenzong\Log\Helpers\StackTrace;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 

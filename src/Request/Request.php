@@ -1,6 +1,6 @@
 <?php
 
-namespace Songshenzong\Request;
+namespace Songshenzong\Log\Request;
 
 /**
  * Data structure representing a single application request

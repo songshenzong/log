@@ -1,10 +1,10 @@
 <?php
 
-namespace Songshenzong\DataSource;
+namespace Songshenzong\Log\DataSource;
 
-use Songshenzong\Request\Log;
-use Songshenzong\Request\Request;
-use Songshenzong\Request\Timeline;
+use Songshenzong\Log\Request\Log;
+use Songshenzong\Log\Request\Request;
+use Songshenzong\Log\Request\Timeline;
 use Illuminate\Foundation\Application;
 use Symfony\Component\HttpFoundation\Response;
 

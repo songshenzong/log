@@ -1,12 +1,11 @@
 <?php
+namespace Songshenzong\Log;
 
-namespace Songshenzong;
-
-use Songshenzong\DataSource\DataSourceInterface;
-use Songshenzong\Request\Log;
-use Songshenzong\Request\Request;
-use Songshenzong\Request\Timeline;
-use Songshenzong\Storage\StorageInterface;
+use Songshenzong\Log\DataSource\DataSourceInterface;
+use Songshenzong\Log\Request\Log;
+use Songshenzong\Log\Request\Request;
+use Songshenzong\Log\Request\Timeline;
+use Songshenzong\Log\Storage\StorageInterface;
 
 use Psr\Log\LogLevel;
 use Psr\Log\LoggerInterface;

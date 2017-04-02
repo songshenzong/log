@@ -1,6 +1,6 @@
 <?php
 
-namespace Songshenzong\Support\Laravel;
+namespace Songshenzong\Log\Support\Laravel;
 
 use Illuminate\Support\Facades\Facade as IlluminateFacade;
 

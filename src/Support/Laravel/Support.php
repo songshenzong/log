@@ -1,9 +1,9 @@
 <?php
 
-namespace Songshenzong\Support\Laravel;
+namespace Songshenzong\Log\Support\Laravel;
 
-use Songshenzong\Songshenzong;
-use Songshenzong\Storage\SqlStorage;
+use Songshenzong\Log\Songshenzong;
+use Songshenzong\Log\Storage\SqlStorage;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 

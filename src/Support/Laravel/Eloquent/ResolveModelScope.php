@@ -1,8 +1,8 @@
 <?php
 
-namespace Songshenzong\Support\Laravel\Eloquent;
+namespace Songshenzong\Log\Support\Laravel\Eloquent;
 
-use Songshenzong\DataSource\EloquentDataSource;
+use Songshenzong\Log\DataSource\EloquentDataSource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
