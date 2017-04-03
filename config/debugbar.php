@@ -28,7 +28,7 @@ return [
      */
     'storage' => [
         'enabled'    => true,
-        'driver'     => 'pdo', // redis, file, pdo, custom
+        'driver'     => 'file', // redis, file, pdo, custom
         'path'       => storage_path('debugbar'), // For file driver
         'connection' => null,   // Leave null for default connection (Redis/PDO)
         'provider'   => '' // Instance of StorageInterface for custom driver
@@ -75,7 +75,16 @@ return [
      */
     'error_handler' => false,
     
-
+    /*
+     |--------------------------------------------------------------------------
+     | Clockwork integration
+     |--------------------------------------------------------------------------
+     |
+     | The Debugbar can emulate the Clockwork headers, so you can use the Chrome
+     | Extension, without the server-side code. It uses Debugbar collectors instead.
+     |
+     */
+    'clockwork' => false,
 
     /*
      |--------------------------------------------------------------------------
@@ -153,6 +162,7 @@ return [
      |
      | Usually, the debugbar is added just before </body>, by listening to the
      | Response after the App is done. If you disable this, you have to add them
+     | in your template yourself. See http://phpdebugbar.com/docs/rendering.html
      |
      */
 
