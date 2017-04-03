@@ -3,10 +3,9 @@
 namespace Songshenzong\Log\DataCollector;
 
 use Songshenzong\Log\DataCollector\DataCollector;
-use Songshenzong\Log\DataCollector\Renderable;
 use Illuminate\Foundation\Application;
 
-class LaravelCollector extends DataCollector implements Renderable
+class LaravelCollector extends DataCollector
 {
     /** @var \Illuminate\Foundation\Application $app */
     protected $app;

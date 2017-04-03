@@ -4,7 +4,7 @@ namespace Songshenzong\Log\DataCollector;
 
 use Songshenzong\Log\DataCollector\DataCollector;
 use Songshenzong\Log\DataCollector\DataCollectorInterface;
-use Songshenzong\Log\DataCollector\Renderable;
+
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Based on \Symfony\Component\HttpKernel\DataCollector\RequestDataCollector by Fabien Potencier <fabien@symfony.com>
  *
  */
-class SymfonyRequestCollector extends DataCollector implements DataCollectorInterface, Renderable
+class SymfonyRequestCollector extends DataCollector implements DataCollectorInterface
 {
     /** @var \Symfony\Component\HttpFoundation\Request $request */
     protected $request;

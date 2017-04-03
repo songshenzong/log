@@ -14,7 +14,7 @@ class LogsCollector extends MessagesCollector
         parent::__construct($name);
 
         $path = $path ?: $this->getLogsFile();
-        $this->getStorageLogs($path);
+
     }
 
     /**
@@ -35,27 +35,7 @@ class LogsCollector extends MessagesCollector
         return $path;
     }
 
-    /**
-     * get logs apache in app/storage/logs
-     * only 24 last of current day
-     *
-     * @param string $path
-     *
-     * @return array
-     */
-    public function getStorageLogs($path)
-    {
-        if (!file_exists($path)) {
-            return;
-        }
 
-        //Load the latest lines, guessing about 15x the number of log entries (for stack traces etc)
-        $file = implode("", $this->tailFile($path, $this->lines));
-
-        foreach ($this->getLogs($file) as $log) {
-            $this->addMessage($log['header'] . $log['stack'], $log['level'], false);
-        }
-    }
 
     /**
      * By Ain Tohvri (ain)

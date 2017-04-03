@@ -10,9 +10,7 @@
 
 namespace Songshenzong\Log\Bridge;
 
-use Songshenzong\Log\DataCollector\AssetProvider;
 use Songshenzong\Log\DataCollector\DataCollector;
-use Songshenzong\Log\DataCollector\Renderable;
 use Songshenzong\Log\DebugBarException;
 use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\ORM\EntityManager;
@@ -30,7 +28,7 @@ use Doctrine\ORM\EntityManager;
  * $debugbar->addCollector(new DoctrineCollector($debugStack));
  * </code>
  */
-class DoctrineCollector extends DataCollector implements Renderable, AssetProvider
+class DoctrineCollector extends DataCollector
 {
     protected $debugStack;
 
@@ -83,33 +81,7 @@ class DoctrineCollector extends DataCollector implements Renderable, AssetProvid
         return 'doctrine';
     }
 
-    /**
-     * @return array
-     */
-    public function getWidgets()
-    {
-        return array(
-            "database" => array(
-                "icon" => "arrow-right",
-                "widget" => "PhpDebugBar.Widgets.SQLQueriesWidget",
-                "map" => "doctrine",
-                "default" => "[]"
-            ),
-            "database:badge" => array(
-                "map" => "doctrine.nb_statements",
-                "default" => 0
-            )
-        );
-    }
 
-    /**
-     * @return array
-     */
-    public function getAssets()
-    {
-        return array(
-            'css' => 'widgets/sqlqueries/widget.css',
-            'js' => 'widgets/sqlqueries/widget.js'
-        );
-    }
+
+
 }

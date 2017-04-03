@@ -2,15 +2,14 @@
 
 namespace Songshenzong\Log\DataCollector\PDO;
 
-use Songshenzong\Log\DataCollector\AssetProvider;
 use Songshenzong\Log\DataCollector\DataCollector;
-use Songshenzong\Log\DataCollector\Renderable;
+
 use Songshenzong\Log\DataCollector\TimeDataCollector;
 
 /**
  * Collects data about SQL statements executed with PDO
  */
-class PDOCollector extends DataCollector implements Renderable, AssetProvider
+class PDOCollector extends DataCollector
 {
     protected $connections = array();
 
@@ -193,14 +192,5 @@ class PDOCollector extends DataCollector implements Renderable, AssetProvider
         );
     }
 
-    /**
-     * @return array
-     */
-    public function getAssets()
-    {
-        return array(
-            'css' => 'widgets/sqlqueries/widget.css',
-            'js' => 'widgets/sqlqueries/widget.js'
-        );
-    }
+
 }

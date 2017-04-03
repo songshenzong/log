@@ -10,9 +10,7 @@
 
 namespace Songshenzong\Log\Bridge;
 
-use Songshenzong\Log\DataCollector\AssetProvider;
 use Songshenzong\Log\DataCollector\DataCollector;
-use Songshenzong\Log\DataCollector\Renderable;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use Propel\Runtime\Connection\ConnectionInterface;
@@ -33,7 +31,7 @@ use Psr\Log\LoggerInterface;
  * $debugbar->addCollector(new \Songshenzong\Log\Bridge\Propel2Collector(\Propel\Runtime\Propel::getServiceContainer()->getReadConnection()));
  * </code>
  */
-class Propel2Collector extends DataCollector implements Renderable, AssetProvider
+class Propel2Collector extends DataCollector
 {
     /**
      * @var null|TestHandler
@@ -275,33 +273,7 @@ class Propel2Collector extends DataCollector implements Renderable, AssetProvide
         return 'propel2'.$additionalName;
     }
 
-    /**
-     * @return array
-     */
-    public function getWidgets()
-    {
-        return array(
-            $this->getName() => array(
-                'icon' => 'bolt',
-                'widget' => 'PhpDebugBar.Widgets.SQLQueriesWidget',
-                'map' => $this->getName(),
-                'default' => '[]'
-            ),
-            $this->getName().':badge' => array(
-                'map' => $this->getName().'.nb_statements',
-                'default' => 0
-            ),
-        );
-    }
 
-    /**
-     * @return array
-     */
-    public function getAssets()
-    {
-        return array(
-            'css' => 'widgets/sqlqueries/widget.css',
-            'js' => 'widgets/sqlqueries/widget.js'
-        );
-    }
+
+
 }

@@ -3,13 +3,13 @@
 namespace Songshenzong\Log\DataCollector;
 
 use Songshenzong\Log\DataCollector\DataCollector;
-use Songshenzong\Log\DataCollector\Renderable;
+
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * Collector for Laravel's Auth provider
  */
-class AuthCollector extends DataCollector implements Renderable
+class AuthCollector extends DataCollector
 {
     /** @var \Illuminate\Auth\AuthManager */
     protected $auth;
@@ -89,27 +89,5 @@ class AuthCollector extends DataCollector implements Renderable
         return 'auth';
     }
 
-    /**
-     * @{inheritDoc}
-     */
-    public function getWidgets()
-    {
-        $widgets = [
-            'auth' => [
-                'icon' => 'lock',
-                'widget' => 'PhpDebugBar.Widgets.VariableListWidget',
-                'map' => 'auth.user',
-                'default' => '{}'
-            ]
-        ];
-        if ($this->showName) {
-            $widgets['auth.name'] = [
-                'icon' => 'user',
-                'tooltip' => 'Auth status',
-                'map' => 'auth.name',
-                'default' => '',
-            ];
-        }
-        return $widgets;
-    }
+
 }

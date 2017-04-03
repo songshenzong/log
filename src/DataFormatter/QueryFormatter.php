@@ -2,7 +2,6 @@
 
 namespace Songshenzong\Log\DataFormatter;
 
-use Songshenzong\Log\DataFormatter\DataFormatter;
 
 class QueryFormatter extends DataFormatter
 {
@@ -11,6 +10,7 @@ class QueryFormatter extends DataFormatter
      * Removes extra spaces at the beginning and end of the SQL query and its lines.
      *
      * @param  string $sql
+     *
      * @return string
      */
     public function formatSql($sql)
@@ -22,6 +22,7 @@ class QueryFormatter extends DataFormatter
      * Check bindings for illegal (non UTF-8) strings, like Binary data.
      *
      * @param $bindings
+     *
      * @return mixed
      */
     public function checkBindings($bindings)
@@ -39,6 +40,7 @@ class QueryFormatter extends DataFormatter
      * Make the bindings safe for outputting.
      *
      * @param array $bindings
+     *
      * @return array
      */
     public function escapeBindings($bindings)
@@ -53,23 +55,24 @@ class QueryFormatter extends DataFormatter
     /**
      * Format a source object.
      *
-     * @param  object|null  $source  If the backtrace is disabled, the $source will be null.
+     * @param  object|null $source If the backtrace is disabled, the $source will be null.
+     *
      * @return string
      */
     public function formatSource($source)
     {
-        if (! is_object($source)) {
+        if (!is_object($source)) {
             return '';
         }
 
         $parts = [];
 
-        if ($source->namespace) {
-            $parts['namespace'] = $source->namespace . '::';
+        if ($source -> namespace) {
+            $parts['namespace'] = $source -> namespace . '::';
         }
 
-        $parts['name'] = $source->name;
-        $parts['line'] = ':' . $source->line;
+        $parts['name'] = $source -> name;
+        $parts['line'] = ':' . $source -> line;
 
         return implode($parts);
     }

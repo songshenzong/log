@@ -13,7 +13,7 @@ namespace Songshenzong\Log\DataCollector;
 /**
  * Collects info about the current localization state
  */
-class LocalizationCollector extends DataCollector implements Renderable
+class LocalizationCollector extends DataCollector
 {
     /**
      * Get the current locale

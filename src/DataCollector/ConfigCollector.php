@@ -13,7 +13,7 @@ namespace Songshenzong\Log\DataCollector;
 /**
  * Collects array data
  */
-class ConfigCollector extends DataCollector implements Renderable
+class ConfigCollector extends DataCollector
 {
     protected $name;
 
@@ -44,14 +44,7 @@ class ConfigCollector extends DataCollector implements Renderable
      */
     public function collect()
     {
-        $data = [];
-        foreach ($this -> data as $k => $v) {
-            if (!is_string($v)) {
-                $v = $this -> getDataFormatter() -> formatVar($v);
-            }
-            $data[$k] = $v;
-        }
-        return $data;
+        return $this -> data;
     }
 
     /**
@@ -62,19 +55,5 @@ class ConfigCollector extends DataCollector implements Renderable
         return $this -> name;
     }
 
-    /**
-     * @return array
-     */
-    public function getWidgets()
-    {
-        $name = $this -> getName();
-        return array(
-            "$name" => array(
-                "icon"    => "gear",
-                "widget"  => "PhpDebugBar.Widgets.VariableListWidget",
-                "map"     => "$name",
-                "default" => "{}",
-            ),
-        );
-    }
+
 }

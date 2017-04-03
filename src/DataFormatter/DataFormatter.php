@@ -20,25 +20,26 @@ class DataFormatter implements DataFormatterInterface
      */
     public function __construct()
     {
-        $this->cloner = new VarCloner();
-        $this->dumper = new CliDumper();
+        $this -> cloner = new VarCloner();
+        $this -> dumper = new CliDumper();
     }
 
     /**
      * @param $data
+     *
      * @return string
      */
     public function formatVar($data)
     {
         $output = '';
 
-        $this->dumper->dump(
-            $this->cloner->cloneVar($data),
+        $this -> dumper -> dump(
+            $this -> cloner -> cloneVar($data),
             function ($line, $depth) use (&$output) {
                 // A negative depth means "end of dump"
                 if ($depth >= 0) {
                     // Adds a two spaces indentation to the line
-                    $output .= str_repeat('  ', $depth).$line."\n";
+                    $output .= str_repeat('  ', $depth) . $line . "\n";
                 }
             }
         );
@@ -48,6 +49,7 @@ class DataFormatter implements DataFormatterInterface
 
     /**
      * @param float $seconds
+     *
      * @return string
      */
     public function formatDuration($seconds)
@@ -62,7 +64,8 @@ class DataFormatter implements DataFormatterInterface
 
     /**
      * @param string $size
-     * @param int $precision
+     * @param int    $precision
+     *
      * @return string
      */
     public function formatBytes($size, $precision = 2)
@@ -74,7 +77,7 @@ class DataFormatter implements DataFormatterInterface
         $sign = $size < 0 ? '-' : '';
         $size = abs($size);
 
-        $base = log($size) / log(1024);
+        $base     = log($size) / log(1024);
         $suffixes = array('B', 'KB', 'MB', 'GB', 'TB');
         return $sign . round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
     }

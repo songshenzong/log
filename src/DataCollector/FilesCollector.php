@@ -3,10 +3,10 @@
 namespace Songshenzong\Log\DataCollector;
 
 use Songshenzong\Log\DataCollector\DataCollector;
-use Songshenzong\Log\DataCollector\Renderable;
+
 use Illuminate\Contracts\Foundation\Application;
 
-class FilesCollector extends DataCollector implements Renderable
+class FilesCollector extends DataCollector
 {
     /** @var \Illuminate\Contracts\Foundation\Application */
     protected $app;

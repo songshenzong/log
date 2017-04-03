@@ -19,6 +19,7 @@ interface DataFormatterInterface
      * Transforms a PHP variable to a string representation
      *
      * @param mixed $var
+     *
      * @return string
      */
     function formatVar($data);
@@ -27,6 +28,7 @@ interface DataFormatterInterface
      * Transforms a duration in seconds in a readable string
      *
      * @param float $seconds
+     *
      * @return string
      */
     function formatDuration($seconds);
@@ -34,8 +36,9 @@ interface DataFormatterInterface
     /**
      * Transforms a size in bytes to a human readable string
      *
-     * @param string $size
+     * @param string  $size
      * @param integer $precision
+     *
      * @return string
      */
     function formatBytes($size, $precision = 2);

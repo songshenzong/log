@@ -3,7 +3,6 @@
 namespace Songshenzong\Log\DataCollector;
 
 use Songshenzong\Log\DataCollector\DataCollector;
-use Songshenzong\Log\DataCollector\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
@@ -14,7 +13,7 @@ use Illuminate\Support\Facades\Config;
  * https://github.com/laravel/framework/blob/master/src/Illuminate/Foundation/Console/RoutesCommand.php
  *
  */
-class IlluminateRouteCollector extends DataCollector implements Renderable
+class IlluminateRouteCollector extends DataCollector
 {
     /**
      * The router instance.

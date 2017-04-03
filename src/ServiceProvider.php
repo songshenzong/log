@@ -1,6 +1,5 @@
 <?php namespace Songshenzong\Log;
 
-use Illuminate\Routing\Router;
 use Illuminate\Session\SessionManager;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
@@ -64,7 +63,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $enabled = $this -> app['config'] -> get('debugbar.enabled');
 
         if (is_null($enabled)) {
-            $enabled = $this -> checkAppDebug();
+            $enabled = $this -> app['config'] -> get('app.debug');
         }
 
         if (!$enabled) {
@@ -77,23 +76,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         ];
 
         $this -> app['router'] -> group($routeConfig, function ($router) {
-
-            $router -> get('open', [
-                'uses' => 'OpenHandlerController@handle',
-                'as'   => 'debugbar.openhandler',
-            ]);
-
-
-            $router -> get('assets/stylesheets', [
-                'uses' => 'AssetController@css',
-                'as'   => 'debugbar.assets.css',
-            ]);
-
-            $router -> get('assets/javascript', [
-                'uses' => 'AssetController@js',
-                'as'   => 'debugbar.assets.js',
-            ]);
-
 
             $router -> get('', 'LogController@index');
 
@@ -130,13 +112,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $kernel -> pushMiddleware($middleware);
     }
 
-    /**
-     * Check the App Debug status
-     */
-    protected function checkAppDebug()
-    {
-        return $this -> app['config'] -> get('app.debug');
-    }
 
     /**
      * Get the services provided by the provider.

@@ -4,9 +4,9 @@ namespace Songshenzong\Log\DataCollector;
 
 use Songshenzong\Log\DataCollector\DataCollector;
 use Songshenzong\Log\DataCollector\DataCollectorInterface;
-use Songshenzong\Log\DataCollector\Renderable;
 
-class SessionCollector extends DataCollector implements DataCollectorInterface, Renderable
+
+class SessionCollector extends DataCollector implements DataCollectorInterface
 {
     /** @var  \Symfony\Component\HttpFoundation\Session\SessionInterface|\Illuminate\Contracts\Session\Session $session */
     protected $session;

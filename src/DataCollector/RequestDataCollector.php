@@ -13,7 +13,7 @@ namespace Songshenzong\Log\DataCollector;
 /**
  * Collects info about the current request
  */
-class RequestDataCollector extends DataCollector implements Renderable
+class RequestDataCollector extends DataCollector
 {
     /**
      * @return array

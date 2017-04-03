@@ -65,7 +65,6 @@
 
 ## 1.6.8 (2014-08-27)
 
-- Change OpenHandler layout
 - Add backtrace option for query origin
 
 ## 1.6.7 (2014-08-09)

@@ -12,7 +12,6 @@ namespace Songshenzong\Log\Bridge;
 
 use Songshenzong\Log\DataCollector\DataCollectorInterface;
 use Songshenzong\Log\DataCollector\MessagesAggregateInterface;
-use Songshenzong\Log\DataCollector\Renderable;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
 
@@ -25,24 +24,24 @@ use Monolog\Logger;
  * $debugbar->addCollector(new MonologCollector($logger));
  * </code>
  */
-class MonologCollector extends AbstractProcessingHandler implements DataCollectorInterface, Renderable, MessagesAggregateInterface
+class MonologCollector extends AbstractProcessingHandler implements DataCollectorInterface, MessagesAggregateInterface
 {
     protected $name;
 
     protected $records = array();
 
     /**
-     * @param Logger $logger
-     * @param int $level
+     * @param Logger  $logger
+     * @param int     $level
      * @param boolean $bubble
-     * @param string $name
+     * @param string  $name
      */
     public function __construct(Logger $logger = null, $level = Logger::DEBUG, $bubble = true, $name = 'monolog')
     {
-        parent::__construct($level, $bubble);
-        $this->name = $name;
+        parent ::__construct($level, $bubble);
+        $this -> name = $name;
         if ($logger !== null) {
-            $this->addLogger($logger);
+            $this -> addLogger($logger);
         }
     }
 
@@ -53,7 +52,7 @@ class MonologCollector extends AbstractProcessingHandler implements DataCollecto
      */
     public function addLogger(Logger $logger)
     {
-        $logger->pushHandler($this);
+        $logger -> pushHandler($this);
     }
 
     /**
@@ -61,11 +60,11 @@ class MonologCollector extends AbstractProcessingHandler implements DataCollecto
      */
     protected function write(array $record)
     {
-        $this->records[] = array(
-            'message' => $record['formatted'],
+        $this -> records[] = array(
+            'message'   => $record['formatted'],
             'is_string' => true,
-            'label' => strtolower($record['level_name']),
-            'time' => $record['datetime']->format('U')
+            'label'     => strtolower($record['level_name']),
+            'time'      => $record['datetime'] -> format('U'),
         );
     }
 
@@ -74,7 +73,7 @@ class MonologCollector extends AbstractProcessingHandler implements DataCollecto
      */
     public function getMessages()
     {
-        return $this->records;
+        return $this -> records;
     }
 
     /**
@@ -83,8 +82,8 @@ class MonologCollector extends AbstractProcessingHandler implements DataCollecto
     public function collect()
     {
         return array(
-            'count' => count($this->records),
-            'records' => $this->records
+            'count'   => count($this -> records),
+            'records' => $this -> records,
         );
     }
 
@@ -93,26 +92,8 @@ class MonologCollector extends AbstractProcessingHandler implements DataCollecto
      */
     public function getName()
     {
-        return $this->name;
+        return $this -> name;
     }
 
-    /**
-     * @return array
-     */
-    public function getWidgets()
-    {
-        $name = $this->getName();
-        return array(
-            $name => array(
-                "icon" => "suitcase",
-                "widget" => "PhpDebugBar.Widgets.MessagesWidget",
-                "map" => "$name.records",
-                "default" => "[]"
-            ),
-            "$name:badge" => array(
-                "map" => "$name.count",
-                "default" => "null"
-            )
-        );
-    }
+
 }

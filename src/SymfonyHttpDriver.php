@@ -18,8 +18,8 @@ class SymfonyHttpDriver implements HttpDriverInterface
 
     public function __construct($session, $response = null)
     {
-        $this->session = $session;
-        $this->response = $response;
+        $this -> session  = $session;
+        $this -> response = $response;
     }
 
     /**
@@ -27,8 +27,8 @@ class SymfonyHttpDriver implements HttpDriverInterface
      */
     public function setHeaders(array $headers)
     {
-        if (!is_null($this->response)) {
-            $this->response->headers->add($headers);
+        if (!is_null($this -> response)) {
+            $this -> response -> headers -> add($headers);
         }
     }
 
@@ -37,10 +37,10 @@ class SymfonyHttpDriver implements HttpDriverInterface
      */
     public function isSessionStarted()
     {
-        if (!$this->session->isStarted()) {
-            $this->session->start();
+        if (!$this -> session -> isStarted()) {
+            $this -> session -> start();
         }
-        return $this->session->isStarted();
+        return $this -> session -> isStarted();
     }
 
     /**
@@ -51,11 +51,11 @@ class SymfonyHttpDriver implements HttpDriverInterface
         // In Laravel 5.4 the session changed to use their own custom implementation
         // instead of the one from Symfony. One of the changes was the set method
         // that was changed to put. Here we check if we are using the new one.
-        if (method_exists($this->session, 'driver') && $this->session->driver() instanceof \Illuminate\Contracts\Session\Session) {
-            $this->session->put($name, $value);
+        if (method_exists($this -> session, 'driver') && $this -> session -> driver() instanceof \Illuminate\Contracts\Session\Session) {
+            $this -> session -> put($name, $value);
             return;
         }
-        $this->session->set($name, $value);
+        $this -> session -> set($name, $value);
     }
 
     /**
@@ -63,7 +63,7 @@ class SymfonyHttpDriver implements HttpDriverInterface
      */
     public function hasSessionValue($name)
     {
-        return $this->session->has($name);
+        return $this -> session -> has($name);
     }
 
     /**
@@ -71,7 +71,7 @@ class SymfonyHttpDriver implements HttpDriverInterface
      */
     public function getSessionValue($name)
     {
-        return $this->session->get($name);
+        return $this -> session -> get($name);
     }
 
     /**
@@ -79,6 +79,6 @@ class SymfonyHttpDriver implements HttpDriverInterface
      */
     public function deleteSessionValue($name)
     {
-        $this->session->remove($name);
+        $this -> session -> remove($name);
     }
 }

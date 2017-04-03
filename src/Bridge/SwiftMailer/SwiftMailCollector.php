@@ -10,9 +10,7 @@
 
 namespace Songshenzong\Log\Bridge\SwiftMailer;
 
-use Songshenzong\Log\DataCollector\AssetProvider;
 use Songshenzong\Log\DataCollector\DataCollector;
-use Songshenzong\Log\DataCollector\Renderable;
 use Swift_Mailer;
 use Swift_Plugins_MessageLogger;
 
@@ -21,7 +19,7 @@ use Swift_Plugins_MessageLogger;
  *
  * http://swiftmailer.org/
  */
-class SwiftMailCollector extends DataCollector implements Renderable, AssetProvider
+class SwiftMailCollector extends DataCollector
 {
     protected $messagesLogger;
 
@@ -65,28 +63,7 @@ class SwiftMailCollector extends DataCollector implements Renderable, AssetProvi
         return 'swiftmailer_mails';
     }
 
-    public function getWidgets()
-    {
-        return array(
-            'emails' => array(
-                'icon' => 'inbox',
-                'widget' => 'PhpDebugBar.Widgets.MailsWidget',
-                'map' => 'swiftmailer_mails.mails',
-                'default' => '[]',
-                'title' => 'Mails'
-            ),
-            'emails:badge' => array(
-                'map' => 'swiftmailer_mails.count',
-                'default' => 'null'
-            )
-        );
-    }
 
-    public function getAssets()
-    {
-        return array(
-            'css' => 'widgets/mails/widget.css',
-            'js' => 'widgets/mails/widget.js'
-        );
-    }
+
+
 }

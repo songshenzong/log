@@ -131,7 +131,6 @@ class LaravelDebugbar extends DebugBar
         // Set custom error handler
         set_error_handler([$this, 'handleError']);
 
-        $this -> selectStorage($debugbar);
 
         $this -> addCollector(new PhpInfoCollector());
 
@@ -441,9 +440,6 @@ class LaravelDebugbar extends DebugBar
             }
         }
 
-        $renderer = $this -> getJavascriptRenderer();
-        $renderer -> setIncludeVendors(true);
-        $renderer -> setBindAjaxHandlerToXHR(true);
 
         $this -> booted = true;
     }
@@ -532,21 +528,6 @@ class LaravelDebugbar extends DebugBar
         }
     }
 
-    /**
-     * Returns a JavascriptRenderer for this instance
-     *
-     * @param string $baseUrl
-     * @param string $basePathng
-     *
-     * @return JavascriptRenderer
-     */
-    public function getJavascriptRenderer($baseUrl = null, $basePath = null)
-    {
-        if ($this -> jsRenderer === null) {
-            $this -> jsRenderer = new JavascriptRenderer($this, $baseUrl, $basePath);
-        }
-        return $this -> jsRenderer;
-    }
 
     /**
      * Modify the response and inject the debugbar (or data in headers)
@@ -569,22 +550,22 @@ class LaravelDebugbar extends DebugBar
         }
 
         // Get config of Laravel.
-//        if ($this -> shouldCollect('config', false)) {
-        if (1 == 2) {
-            try {
-                $configCollector = new ConfigCollector();
-                $configCollector -> setData($app['config'] -> all());
-                $this -> addCollector($configCollector);
-            } catch (\Exception $e) {
-                $this -> addThrowable(
-                    new Exception(
-                        'Cannot add ConfigCollector to Laravel Debugbar: ' . $e -> getMessage(),
-                        $e -> getCode(),
-                        $e
-                    )
-                );
-            }
+
+
+        try {
+            $configCollector = new ConfigCollector();
+            $configCollector -> setData($app['config'] -> all());
+            $this -> addCollector($configCollector);
+        } catch (\Exception $e) {
+            $this -> addThrowable(
+                new Exception(
+                    'Cannot add ConfigCollector to Laravel Debugbar: ' . $e -> getMessage(),
+                    $e -> getCode(),
+                    $e
+                )
+            );
         }
+
 
         if ($this -> app -> bound(SessionManager::class)) {
 
@@ -625,49 +606,11 @@ class LaravelDebugbar extends DebugBar
         }
 
 
-        if ($response -> isRedirection()) {
-            try {
-                $this -> stackData();
-            } catch (\Exception $e) {
-                $app['log'] -> error('Debugbar exception: ' . $e -> getMessage());
-            }
-        } elseif (
-        $this -> isJsonRequest($request)
-
-        ) {
-            try {
-                $this -> sendDataInHeaders(true);
-
-
-                $this -> addServerTimingHeaders($response);
-
-
-            } catch (\Exception $e) {
-                $app['log'] -> error('Debugbar exception: ' . $e -> getMessage());
-            }
-        } elseif (
-            ($response -> headers -> has('Content-Type') &&
-             strpos($response -> headers -> get('Content-Type'), 'html') === false)
-            || $request -> getRequestFormat() !== 'html'
-        ) {
-            try {
-                // Just collect + store data, don't inject it.
-                $this -> collect();
-            } catch (\Exception $e) {
-                $app['log'] -> error('Debugbar exception: ' . $e -> getMessage());
-            }
-        } else {
-
-            // Show debigbar if in the debug is true, else just collect data.
+        // Just collect + store data
+        try {
             $this -> collect();
-            if (env('APP_DEBUG')) {
-                try {
-                    $this -> injectDebugbar($response);
-                } catch (\Exception $e) {
-                    $app['log'] -> error('Debugbar exception: ' . $e -> getMessage());
-                }
-            }
-
+        } catch (\Exception $e) {
+            $app['log'] -> error('Debugbar exception: ' . $e -> getMessage());
         }
 
 
@@ -689,7 +632,7 @@ class LaravelDebugbar extends DebugBar
     }
 
     /**
-     * Check if this is a request to the Debugbar OpenHandler
+     * Check if this is a request to the self.
      *
      * @return bool
      */
@@ -698,22 +641,6 @@ class LaravelDebugbar extends DebugBar
         return $this -> app['request'] -> segment(1) == 'songshenzong';
     }
 
-    /**
-     * @param  \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return bool
-     */
-    protected function isJsonRequest(Request $request)
-    {
-        // If XmlHttpRequest, return true
-        if ($request -> isXmlHttpRequest()) {
-            return true;
-        }
-
-        // Check if the request wants Json
-        $acceptable = $request -> getAcceptableContentTypes();
-        return (isset($acceptable[0]) && $acceptable[0] == 'application/json');
-    }
 
     /**
      * Collects the data from the collectors
@@ -755,7 +682,7 @@ class LaravelDebugbar extends DebugBar
         return $this -> data;
     }
 
-    // Persist the collect informationinto the database
+    // Persist the collect information the database
     private function persistData()
     {
         $meta = $this -> data['__meta'];
@@ -768,36 +695,6 @@ class LaravelDebugbar extends DebugBar
                                  ]);
     }
 
-    /**
-     * Injects the web debug toolbar into the given Response.
-     *
-     * @param \Symfony\Component\HttpFoundation\Response $response A Response instance
-     *                                                             Based on
-     *                                                             https://github.com/symfony/WebProfilerBundle/blob/master/EventListener/WebDebugToolbarListener.php
-     */
-    public function injectDebugbar(Response $response)
-    {
-        $content = $response -> getContent();
-
-        $renderer = $this -> getJavascriptRenderer();
-        if ($this -> getStorage()) {
-            $openHandlerUrl = route('debugbar.openhandler');
-            $renderer -> setOpenHandlerUrl($openHandlerUrl);
-        }
-
-        $renderedContent = $renderer -> renderHead() . $renderer -> render();
-
-        $pos = strripos($content, '</body>');
-        if (false !== $pos) {
-            $content = substr($content, 0, $pos) . $renderedContent . substr($content, $pos);
-        } else {
-            $content = $content . $renderedContent;
-        }
-
-        // Update the new content and reset the content length
-        $response -> setContent($content);
-        $response -> headers -> remove('Content-Length');
-    }
 
     /**
      * Disable the Debugbar
@@ -935,64 +832,5 @@ class LaravelDebugbar extends DebugBar
         return $this -> is_lumen;
     }
 
-    /**
-     * @param DebugBar $debugbar
-     */
-    protected function selectStorage(DebugBar $debugbar)
-    {
-        $config = $this -> app['config'];
-        if ($config -> get('debugbar.storage.enabled')) {
-            $driver = $config -> get('debugbar.storage.driver', 'file');
 
-            switch ($driver) {
-                case 'pdo':
-                    $connection = $config -> get('debugbar.storage.connection');
-                    $table      = $this -> app['db'] -> getTablePrefix() . 'phpdebugbar';
-                    $pdo        = $this -> app['db'] -> connection($connection) -> getPdo();
-                    $storage    = new PdoStorage($pdo, $table);
-                    break;
-                case 'redis':
-                    $connection = $config -> get('debugbar.storage.connection');
-                    $client     = $this -> app['redis'] -> connection($connection);
-                    if (is_a($client, 'Illuminate\Redis\Connections\PredisConnection', false)) {
-                        $client = $client -> client();
-                    }
-                    $storage = new RedisStorage($client);
-                    break;
-                case 'custom':
-                    $class   = $config -> get('debugbar.storage.provider');
-                    $storage = $this -> app -> make($class);
-                    break;
-                case 'file':
-                default:
-                    $path    = $config -> get('debugbar.storage.path');
-                    $storage = new FilesystemStorage($this -> app['files'], $path);
-                    break;
-            }
-
-            $debugbar -> setStorage($storage);
-        }
-    }
-
-
-    /**
-     * Add Server-Timing headers for the TimeData collector
-     *
-     * @see https://www.w3.org/TR/server-timing/
-     *
-     * @param Response $response
-     */
-    protected function addServerTimingHeaders(Response $response)
-    {
-        if ($this -> hasCollector('time')) {
-            $collector = $this -> getCollector('time');
-
-            $headers = [];
-            foreach ($collector -> collect()['measures'] as $k => $m) {
-                $headers[] = sprintf('%d=%F; "%s"', $k, $m['duration'], str_replace('"', "'", $m['label']));
-            }
-
-            $response -> headers -> set('Server-Timing', $headers, false);
-        }
-    }
 }

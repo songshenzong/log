@@ -10,9 +10,7 @@
 
 namespace Songshenzong\Log\Bridge\Twig;
 
-use Songshenzong\Log\DataCollector\AssetProvider;
 use Songshenzong\Log\DataCollector\DataCollector;
-use Songshenzong\Log\DataCollector\Renderable;
 
 /**
  * Collects data about rendered templates
@@ -27,7 +25,7 @@ use Songshenzong\Log\DataCollector\Renderable;
  * $debugbar->addCollector(new TwigCollector($env));
  * </code>
  */
-class TwigCollector extends DataCollector implements Renderable, AssetProvider
+class TwigCollector extends DataCollector
 {
     public function __construct(TraceableTwigEnvironment $twig)
     {
@@ -61,27 +59,6 @@ class TwigCollector extends DataCollector implements Renderable, AssetProvider
         return 'twig';
     }
 
-    public function getWidgets()
-    {
-        return array(
-            'twig' => array(
-                'icon' => 'leaf',
-                'widget' => 'PhpDebugBar.Widgets.TemplatesWidget',
-                'map' => 'twig',
-                'default' => json_encode(array('templates' => array())),
-            ),
-            'twig:badge' => array(
-                'map' => 'twig.nb_templates',
-                'default' => 0
-            )
-        );
-    }
 
-    public function getAssets()
-    {
-        return array(
-            'css' => 'widgets/templates/widget.css',
-            'js' => 'widgets/templates/widget.js'
-        );
-    }
+
 }

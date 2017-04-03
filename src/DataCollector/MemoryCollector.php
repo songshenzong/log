@@ -13,7 +13,7 @@ namespace Songshenzong\Log\DataCollector;
 /**
  * Collects info about memory usage
  */
-class MemoryCollector extends DataCollector implements Renderable
+class MemoryCollector extends DataCollector
 {
     protected $peakUsage = 0;
 

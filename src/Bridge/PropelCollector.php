@@ -11,9 +11,7 @@
 namespace Songshenzong\Log\Bridge;
 
 use BasicLogger;
-use Songshenzong\Log\DataCollector\AssetProvider;
 use Songshenzong\Log\DataCollector\DataCollector;
-use Songshenzong\Log\DataCollector\Renderable;
 use Propel;
 use PropelConfiguration;
 use PropelPDO;
@@ -34,7 +32,7 @@ use Psr\Log\LoggerInterface;
  * PropelCollector::enablePropelProfiling();
  * </code>
  */
-class PropelCollector extends DataCollector implements BasicLogger, Renderable, AssetProvider
+class PropelCollector extends DataCollector implements BasicLogger
 {
     protected $logger;
 
@@ -227,27 +225,7 @@ class PropelCollector extends DataCollector implements BasicLogger, Renderable, 
         return 'propel';
     }
 
-    public function getWidgets()
-    {
-        return array(
-            "propel" => array(
-                "icon" => "bolt",
-                "widget" => "PhpDebugBar.Widgets.SQLQueriesWidget",
-                "map" => "propel",
-                "default" => "[]"
-            ),
-            "propel:badge" => array(
-                "map" => "propel.nb_statements",
-                "default" => 0
-            )
-        );
-    }
 
-    public function getAssets()
-    {
-        return array(
-            'css' => 'widgets/sqlqueries/widget.css',
-            'js' => 'widgets/sqlqueries/widget.js'
-        );
-    }
+
+
 }

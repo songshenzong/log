@@ -64,8 +64,7 @@ If you want to use the facade to log messages, add this to your facades in app.p
 
 The profiler is enabled by default, if you have app.debug=true. You can override that in the config (`debugbar.enabled`).
 
-You can also set in your config if you want to include/exclude the vendor files also (FontAwesome, Highlight.js and jQuery). If you already use them in your site, set it to false.
-You can also only display the js or css vendors, by setting it to 'js' or 'css'. (Highlight.js requires both css + js, so set to `true` for syntax highlighting)
+
 
 Copy the package config to your local config with the publish command:
 
@@ -136,12 +135,7 @@ $debugbar = App::make('debugbar');
 $debugbar->addCollector(new Songshenzong\Log\DataCollector\MessagesCollector('my_messages'));
 ```
 
-By default, the Debugbar is injected just before `</body>`. If you want to inject the Debugbar yourself,
-set the config option 'inject' to false and use the renderer yourself and follow http://phpdebugbar.com/docs/rendering.html
 
-```php
-$renderer = Debugbar::getJavascriptRenderer();
-```
 
 Note: Not using the auto-inject, will disable the Request information, because that is added After the response.
 You can add the default_request datacollector in the config as alternative.
