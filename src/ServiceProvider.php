@@ -19,8 +19,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
-        $configPath = __DIR__ . '/../config/debugbar.php';
-        $this->mergeConfigFrom($configPath, 'debugbar');
 
         $this->app->alias(
             'DebugBar\DataFormatter\DataFormatter',
@@ -60,8 +58,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $app = $this->app;
 
-        $configPath = __DIR__ . '/../config/debugbar.php';
-        $this->publishes([$configPath => $this->getConfigPath()], 'config');
 
         // If enabled is null, set from the app.debug value
         $enabled = $this->app['config']->get('debugbar.enabled');
@@ -76,7 +72,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $routeConfig = [
             'namespace' => 'Songshenzong\Log\Controllers',
-            'prefix' => $this->app['config']->get('debugbar.route_prefix'),
+            'prefix' => '_debugbar',
         ];
 
         $this->getRouter()->group($routeConfig, function($router) {
@@ -85,10 +81,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 'as' => 'debugbar.openhandler',
             ]);
 
-            $router->get('clockwork/{id}', [
-                'uses' => 'OpenHandlerController@clockwork',
-                'as' => 'debugbar.clockwork',
-            ]);
+
 
             $router->get('assets/stylesheets', [
                 'uses' => 'AssetController@css',
@@ -123,25 +116,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         return $this->app['router'];
     }
 
-    /**
-     * Get the config path
-     *
-     * @return string
-     */
-    protected function getConfigPath()
-    {
-        return config_path('debugbar.php');
-    }
 
-    /**
-     * Publish the config file
-     *
-     * @param  string $configPath
-     */
-    protected function publishConfig($configPath)
-    {
-        $this->publishes([$configPath => config_path('debugbar.php')], 'config');
-    }
+
 
     /**
      * Register the Debugbar Middleware
