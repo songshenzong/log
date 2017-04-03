@@ -2,9 +2,9 @@
 
 namespace Songshenzong\Log\DataCollector;
 
-use DebugBar\DataCollector\DataCollector;
-use DebugBar\DataCollector\DataCollectorInterface;
-use DebugBar\DataCollector\Renderable;
+use Songshenzong\Log\DataCollector\DataCollector;
+use Songshenzong\Log\DataCollector\DataCollectorInterface;
+use Songshenzong\Log\DataCollector\Renderable;
 
 class SessionCollector extends DataCollector implements DataCollectorInterface, Renderable
 {
@@ -18,7 +18,7 @@ class SessionCollector extends DataCollector implements DataCollectorInterface, 
      */
     public function __construct($session)
     {
-        $this->session = $session;
+        $this -> session = $session;
     }
 
     /**
@@ -26,11 +26,12 @@ class SessionCollector extends DataCollector implements DataCollectorInterface, 
      */
     public function collect()
     {
-        $data = [];
-        foreach ($this->session->all() as $key => $value) {
-            $data[$key] = is_string($value) ? $value : $this->formatVar($value);
-        }
-        return $data;
+        return $this -> session -> all();
+        // $data = [];
+        // foreach ($this -> session -> all() as $key => $value) {
+        //     $data[$key] = is_string($value) ? $value : $this -> formatVar($value);
+        // }
+        // return $data;
     }
 
     /**
@@ -48,11 +49,11 @@ class SessionCollector extends DataCollector implements DataCollectorInterface, 
     {
         return [
             "session" => [
-                "icon" => "archive",
-                "widget" => "PhpDebugBar.Widgets.VariableListWidget",
-                "map" => "session",
-                "default" => "{}"
-            ]
+                "icon"    => "archive",
+                "widget"  => "PhpDebugBar.Widgets.VariableListWidget",
+                "map"     => "session",
+                "default" => "{}",
+            ],
         ];
     }
 }

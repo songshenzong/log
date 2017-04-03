@@ -1,6 +1,6 @@
 <?php namespace Songshenzong\Log\Twig\Extension;
 
-use DebugBar\DataFormatter\DataFormatterInterface;
+use Songshenzong\Log\DataFormatter\DataFormatterInterface;
 use Twig_Environment;
 use Twig_Extension;
 use Twig_SimpleFunction;
@@ -11,14 +11,14 @@ use Twig_SimpleFunction;
 class Dump extends Twig_Extension
 {
     /**
-     * @var \DebugBar\DataFormatter\DataFormatter
+     * @var \Songshenzong\Log\DataFormatter\DataFormatter
      */
     protected $formatter;
 
     /**
      * Create a new auth extension.
      *
-     * @param \DebugBar\DataFormatter\DataFormatterInterface $formatter
+     * @param \Songshenzong\Log\DataFormatter\DataFormatterInterface $formatter
      */
     public function __construct(DataFormatterInterface $formatter)
     {

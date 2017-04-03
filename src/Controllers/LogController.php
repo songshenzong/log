@@ -34,7 +34,7 @@ class LogController extends Controller
     {
         $log = SongshenzongLog ::find($id);
 
-        return $log;
+        return response()->json($log);
     }
 
     public function getList()

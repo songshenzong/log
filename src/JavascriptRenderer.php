@@ -1,7 +1,7 @@
 <?php namespace Songshenzong\Log;
 
-use DebugBar\DebugBar;
-use DebugBar\JavascriptRenderer as BaseJavascriptRenderer;
+use Songshenzong\Log\DebugBar;
+use Songshenzong\Log\BaseJavascriptRenderer;
 use Illuminate\Routing\UrlGenerator;
 
 /**

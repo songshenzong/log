@@ -1,7 +1,7 @@
 <?php
 namespace Songshenzong\Log\DataCollector;
 
-use DebugBar\DataCollector\MessagesCollector;
+use Songshenzong\Log\DataCollector\MessagesCollector;
 use Psr\Log\LogLevel;
 use ReflectionClass;
 

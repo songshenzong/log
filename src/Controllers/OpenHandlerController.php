@@ -1,6 +1,6 @@
 <?php namespace Songshenzong\Log\Controllers;
 
-use DebugBar\OpenHandler;
+use Songshenzong\Log\OpenHandler;
 use Illuminate\Http\Response;
 
 class OpenHandlerController extends BaseController

@@ -130,10 +130,10 @@ measure('My long operation', function() {
 If you want you can add your own DataCollectors, through the Container or the Facade:
 
 ```php
-Debugbar::addCollector(new DebugBar\DataCollector\MessagesCollector('my_messages'));
+Debugbar::addCollector(new Songshenzong\Log\DataCollector\MessagesCollector('my_messages'));
 //Or via the App container:
 $debugbar = App::make('debugbar');
-$debugbar->addCollector(new DebugBar\DataCollector\MessagesCollector('my_messages'));
+$debugbar->addCollector(new Songshenzong\Log\DataCollector\MessagesCollector('my_messages'));
 ```
 
 By default, the Debugbar is injected just before `</body>`. If you want to inject the Debugbar yourself,

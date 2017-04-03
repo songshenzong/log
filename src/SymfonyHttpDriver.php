@@ -2,7 +2,7 @@
 
 namespace Songshenzong\Log;
 
-use DebugBar\HttpDriverInterface;
+use Songshenzong\Log\HttpDriverInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 

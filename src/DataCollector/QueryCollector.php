@@ -2,8 +2,8 @@
 
 namespace Songshenzong\Log\DataCollector;
 
-use DebugBar\DataCollector\PDO\PDOCollector;
-use DebugBar\DataCollector\TimeDataCollector;
+use Songshenzong\Log\DataCollector\PDO\PDOCollector;
+use Songshenzong\Log\DataCollector\TimeDataCollector;
 
 /**
  * Collects data about SQL statements executed with PDO

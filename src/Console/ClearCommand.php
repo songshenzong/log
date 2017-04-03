@@ -1,6 +1,6 @@
 <?php namespace Songshenzong\Log\Console;
 
-use DebugBar\DebugBar;
+use Songshenzong\Log\DebugBar;
 use Illuminate\Console\Command;
 
 class ClearCommand extends Command

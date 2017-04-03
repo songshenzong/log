@@ -11,21 +11,25 @@ use Songshenzong\Log\DataCollector\QueryCollector;
 use Songshenzong\Log\DataCollector\SessionCollector;
 use Songshenzong\Log\DataCollector\SymfonyRequestCollector;
 use Songshenzong\Log\DataCollector\ViewCollector;
+use Songshenzong\Log\DataCollector\RequestDataCollector;
+
+use Songshenzong\Log\DataCollector\ConfigCollector;
+use Songshenzong\Log\DataCollector\ExceptionsCollector;
+use Songshenzong\Log\DataCollector\MemoryCollector;
+use Songshenzong\Log\DataCollector\MessagesCollector;
+use Songshenzong\Log\DataCollector\PhpInfoCollector;
+use Songshenzong\Log\DataCollector\TimeDataCollector;
+
 use Songshenzong\Log\Storage\FilesystemStorage;
-use DebugBar\Bridge\MonologCollector;
-use DebugBar\Bridge\SwiftMailer\SwiftLogCollector;
-use DebugBar\Bridge\SwiftMailer\SwiftMailCollector;
-use DebugBar\DataCollector\ConfigCollector;
-use DebugBar\DataCollector\ExceptionsCollector;
-use DebugBar\DataCollector\MemoryCollector;
-use DebugBar\DataCollector\MessagesCollector;
-use DebugBar\DataCollector\PhpInfoCollector;
-use DebugBar\DataCollector\RequestDataCollector;
-use DebugBar\DataCollector\TimeDataCollector;
+use Songshenzong\Log\Bridge\MonologCollector;
+use Songshenzong\Log\Bridge\SwiftMailer\SwiftLogCollector;
+use Songshenzong\Log\Bridge\SwiftMailer\SwiftMailCollector;
+
+
 use Songshenzong\Log\DataFormatter\QueryFormatter;
-use DebugBar\DebugBar;
-use DebugBar\Storage\PdoStorage;
-use DebugBar\Storage\RedisStorage;
+use Songshenzong\Log\DebugBar;
+use Songshenzong\Log\Storage\PdoStorage;
+use Songshenzong\Log\Storage\RedisStorage;
 use Exception;
 
 use Illuminate\Contracts\Foundation\Application;
@@ -214,6 +218,7 @@ class LaravelDebugbar extends DebugBar
         }
 
         if (!$this -> isLumen()) {
+
             try {
                 $this -> addCollector($this -> app -> make('Songshenzong\Log\DataCollector\IlluminateRouteCollector'));
             } catch (\Exception $e) {
@@ -225,9 +230,8 @@ class LaravelDebugbar extends DebugBar
                     )
                 );
             }
-        }
 
-        if (!$this -> isLumen()) {
+
             try {
                 if ($this -> hasCollector('messages')) {
                     $logger = new MessagesCollector('log');
@@ -270,7 +274,9 @@ class LaravelDebugbar extends DebugBar
                     )
                 );
             }
+
         }
+
 
         if (isset($this -> app['db'])) {
             $db = $this -> app['db'];
@@ -476,7 +482,7 @@ class LaravelDebugbar extends DebugBar
     public function startMeasure($name, $label = null)
     {
         if ($this -> hasCollector('time')) {
-            /** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+            /** @var \Songshenzong\Log\DataCollector\TimeDataCollector $collector */
             $collector = $this -> getCollector('time');
             $collector -> startMeasure($name, $label);
         }
@@ -490,7 +496,7 @@ class LaravelDebugbar extends DebugBar
     public function stopMeasure($name)
     {
         if ($this -> hasCollector('time')) {
-            /** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+            /** @var \Songshenzong\Log\DataCollector\TimeDataCollector $collector */
             $collector = $this -> getCollector('time');
             try {
                 $collector -> stopMeasure($name);
@@ -520,7 +526,7 @@ class LaravelDebugbar extends DebugBar
     public function addThrowable($e)
     {
         if ($this -> hasCollector('exceptions')) {
-            /** @var \DebugBar\DataCollector\ExceptionsCollector $collector */
+            /** @var \Songshenzong\Log\DataCollector\ExceptionsCollector $collector */
             $collector = $this -> getCollector('exceptions');
             $collector -> addThrowable($e);
         }
@@ -562,7 +568,9 @@ class LaravelDebugbar extends DebugBar
             $this -> addThrowable($response -> exception);
         }
 
-        if ($this -> shouldCollect('config', false)) {
+        // Get config of Laravel.
+//        if ($this -> shouldCollect('config', false)) {
+        if (1 == 2) {
             try {
                 $configCollector = new ConfigCollector();
                 $configCollector -> setData($app['config'] -> all());
@@ -651,14 +659,13 @@ class LaravelDebugbar extends DebugBar
         } else {
 
             // Show debigbar if in the debug is true, else just collect data.
+            $this -> collect();
             if (env('APP_DEBUG')) {
                 try {
                     $this -> injectDebugbar($response);
                 } catch (\Exception $e) {
                     $app['log'] -> error('Debugbar exception: ' . $e -> getMessage());
                 }
-            } else {
-                $this -> collect();
             }
 
         }
@@ -720,11 +727,10 @@ class LaravelDebugbar extends DebugBar
 
         $this -> data = [
             '__meta' => [
-                'datetime' => date('Y-m-d H:i:s'),
-                'utime'    => microtime(true),
-                'method'   => $request -> getMethod(),
-                'uri'      => $request -> getRequestUri(),
-                'ip'       => $request -> getClientIp(),
+                'utime'  => microtime(true),
+                'method' => $request -> getMethod(),
+                'uri'    => $request -> getRequestUri(),
+                'ip'     => $request -> getClientIp(),
             ],
         ];
 
@@ -742,9 +748,9 @@ class LaravelDebugbar extends DebugBar
             }
         );
 
-        if ($this -> storage !== null) {
-            $this -> persistData();
-        }
+
+        $this -> persistData();
+
 
         return $this -> data;
     }
@@ -754,12 +760,11 @@ class LaravelDebugbar extends DebugBar
     {
         $meta = $this -> data['__meta'];
         SongshenzongLog ::create([
-                                     'data'          => $this -> data,
-                                     'utime'    => $meta['utime'],
-                                     'datetime' => $meta['datetime'],
-                                     'uri'      => $meta['uri'],
-                                     'ip'       => $meta['ip'],
-                                     'method'   => $meta['method'],
+                                     'data'   => $this -> data,
+                                     'utime'  => $meta['utime'],
+                                     'uri'    => $meta['uri'],
+                                     'ip'     => $meta['ip'],
+                                     'method' => $meta['method'],
                                  ]);
     }
 
@@ -812,7 +817,7 @@ class LaravelDebugbar extends DebugBar
     public function addMeasure($label, $start, $end)
     {
         if ($this -> hasCollector('time')) {
-            /** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+            /** @var \Songshenzong\Log\DataCollector\TimeDataCollector $collector */
             $collector = $this -> getCollector('time');
             $collector -> addMeasure($label, $start, $end);
         }
@@ -827,7 +832,7 @@ class LaravelDebugbar extends DebugBar
     public function measure($label, \Closure $closure)
     {
         if ($this -> hasCollector('time')) {
-            /** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+            /** @var \Songshenzong\Log\DataCollector\TimeDataCollector $collector */
             $collector = $this -> getCollector('time');
             $collector -> measure($label, $closure);
         } else {
@@ -846,13 +851,13 @@ class LaravelDebugbar extends DebugBar
             return;
         }
 
+
         $this -> data = [
             '__meta' => [
-                'datetime' => date('Y-m-d H:i:s'),
-                'utime'    => microtime(true),
-                'method'   => 'CLI',
-                'uri'      => isset($_SERVER['argv']) ? implode(' ', $_SERVER['argv']) : null,
-                'ip'       => isset($_SERVER['SSH_CLIENT']) ? $_SERVER['SSH_CLIENT'] : null,
+                'utime'  => microtime(true),
+                'method' => 'CLI',
+                'uri'    => isset($_SERVER['argv']) ? implode(' ', $_SERVER['argv']) : null,
+                'ip'     => isset($_SERVER['SSH_CLIENT']) ? $_SERVER['SSH_CLIENT'] : null,
             ],
         ];
 
@@ -870,9 +875,9 @@ class LaravelDebugbar extends DebugBar
             }
         );
 
-        if ($this -> storage !== null) {
-            $this -> persistData();
-        }
+
+        $this -> persistData();
+
 
         return $this -> data;
     }
@@ -906,7 +911,7 @@ class LaravelDebugbar extends DebugBar
     public function addMessage($message, $label = 'info')
     {
         if ($this -> hasCollector('messages')) {
-            /** @var \DebugBar\DataCollector\MessagesCollector $collector */
+            /** @var \Songshenzong\Log\DataCollector\MessagesCollector $collector */
             $collector = $this -> getCollector('messages');
             $collector -> addMessage($message, $label);
         }

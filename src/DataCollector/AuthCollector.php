@@ -2,8 +2,8 @@
 
 namespace Songshenzong\Log\DataCollector;
 
-use DebugBar\DataCollector\DataCollector;
-use DebugBar\DataCollector\Renderable;
+use Songshenzong\Log\DataCollector\DataCollector;
+use Songshenzong\Log\DataCollector\Renderable;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**

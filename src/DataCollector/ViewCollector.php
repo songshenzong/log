@@ -2,7 +2,7 @@
 
 namespace Songshenzong\Log\DataCollector;
 
-use DebugBar\Bridge\Twig\TwigCollector;
+use Songshenzong\Log\Bridge\Twig\TwigCollector;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\DataCollector\Util\ValueExporter;
 

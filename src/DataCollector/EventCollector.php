@@ -1,7 +1,7 @@
 <?php
 namespace Songshenzong\Log\DataCollector;
 
-use DebugBar\DataCollector\TimeDataCollector;
+use Songshenzong\Log\DataCollector\TimeDataCollector;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\DataCollector\Util\ValueExporter;

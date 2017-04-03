@@ -2,9 +2,9 @@
 
 namespace Songshenzong\Log\DataCollector;
 
-use DebugBar\DataCollector\DataCollector;
-use DebugBar\DataCollector\DataCollectorInterface;
-use DebugBar\DataCollector\Renderable;
+use Songshenzong\Log\DataCollector\DataCollector;
+use Songshenzong\Log\DataCollector\DataCollectorInterface;
+use Songshenzong\Log\DataCollector\Renderable;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

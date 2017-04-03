@@ -2,7 +2,7 @@
 
 namespace Songshenzong\Log\Storage;
 
-use DebugBar\Storage\StorageInterface;
+use Songshenzong\Log\Storage\StorageInterface;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 

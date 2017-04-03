@@ -21,8 +21,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
 
         $this -> app -> alias(
-            'DebugBar\DataFormatter\DataFormatter',
-            'DebugBar\DataFormatter\DataFormatterInterface'
+            'Songshenzong\Log\DataFormatter\DataFormatter',
+            'Songshenzong\Log\DataFormatter\DataFormatterInterface'
         );
 
         $this -> app -> singleton('debugbar', function ($app) {

@@ -2,7 +2,7 @@
 
 namespace Songshenzong\Log\DataCollector;
 
-use DebugBar\DataCollector\MessagesCollector;
+use Songshenzong\Log\DataCollector\MessagesCollector;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Contracts\Auth\Authenticatable;
 

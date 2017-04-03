@@ -2,7 +2,7 @@
 
 namespace Songshenzong\Log\DataFormatter;
 
-use DebugBar\DataFormatter\DataFormatter;
+use Songshenzong\Log\DataFormatter\DataFormatter;
 
 class QueryFormatter extends DataFormatter
 {
