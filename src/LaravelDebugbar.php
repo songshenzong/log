@@ -744,6 +744,7 @@ class LaravelDebugbar extends DebugBar
         );
 
         if ($this -> storage !== null) {
+            // Persist into the database
             $this -> storage -> save($this -> getCurrentRequestId(), $this -> data);
         }
 

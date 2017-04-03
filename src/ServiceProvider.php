@@ -20,33 +20,33 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
 
-        $this->app->alias(
+        $this -> app -> alias(
             'DebugBar\DataFormatter\DataFormatter',
             'DebugBar\DataFormatter\DataFormatterInterface'
         );
 
-        $this->app->singleton('debugbar', function ($app) {
-                $debugbar = new LaravelDebugbar($app);
+        $this -> app -> singleton('debugbar', function ($app) {
+            $debugbar = new LaravelDebugbar($app);
 
-                if ($app->bound(SessionManager::class)) {
-                    $sessionManager = $app->make(SessionManager::class);
-                    $httpDriver = new SymfonyHttpDriver($sessionManager);
-                    $debugbar->setHttpDriver($httpDriver);
-                }
-
-                return $debugbar;
+            if ($app -> bound(SessionManager::class)) {
+                $sessionManager = $app -> make(SessionManager::class);
+                $httpDriver     = new SymfonyHttpDriver($sessionManager);
+                $debugbar -> setHttpDriver($httpDriver);
             }
+
+            return $debugbar;
+        }
         );
 
-        $this->app->alias('debugbar', 'Songshenzong\Log\LaravelDebugbar');
+        $this -> app -> alias('debugbar', 'Songshenzong\Log\LaravelDebugbar');
 
-        $this->app->singleton('command.debugbar.clear',
+        $this -> app -> singleton('command.debugbar.clear',
             function ($app) {
                 return new Console\ClearCommand($app['debugbar']);
             }
         );
 
-        $this->commands(['command.debugbar.clear']);
+        $this -> commands(['command.debugbar.clear']);
     }
 
     /**
@@ -56,67 +56,66 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        $app = $this->app;
+        $app = $this -> app;
 
 
         // If enabled is null, set from the app.debug value
-        $enabled = $this->app['config']->get('debugbar.enabled');
+        $enabled = $this -> app['config'] -> get('debugbar.enabled');
 
         if (is_null($enabled)) {
-            $enabled = $this->checkAppDebug();
+            $enabled = $this -> checkAppDebug();
         }
 
-        if (! $enabled) {
+        if (!$enabled) {
             return;
         }
 
         $routeConfig = [
             'namespace' => 'Songshenzong\Log\Controllers',
-            'prefix' => '_debugbar',
+            'prefix'    => '_debugbar',
+            'as'        => 'songshenzong::',
         ];
 
-        $this->getRouter()->group($routeConfig, function($router) {
-            $router->get('open', [
+        $this -> app['router'] -> group($routeConfig, function ($router) {
+            $router -> get('open', [
                 'uses' => 'OpenHandlerController@handle',
-                'as' => 'debugbar.openhandler',
+                'as'   => 'debugbar.openhandler',
             ]);
 
 
-
-            $router->get('assets/stylesheets', [
+            $router -> get('assets/stylesheets', [
                 'uses' => 'AssetController@css',
-                'as' => 'debugbar.assets.css',
+                'as'   => 'debugbar.assets.css',
             ]);
 
-            $router->get('assets/javascript', [
+            $router -> get('assets/javascript', [
                 'uses' => 'AssetController@js',
-                'as' => 'debugbar.assets.js',
+                'as'   => 'debugbar.assets.js',
             ]);
+
+
+            $router -> get('', 'LogController@index');
+
+            $router -> get('logs', 'LogController@getList');
+
+            $router -> get('destroy', 'LogController@destroy');
+
+            $router -> get('logs/{id}', 'LogController@getData') -> where('id', '[0-9\.]+');
+
+
         });
 
-        if ($app->runningInConsole() || $app->environment('testing')) {
+        if ($app -> runningInConsole() || $app -> environment('testing')) {
             return;
         }
 
         /** @var LaravelDebugbar $debugbar */
-        $debugbar = $this->app['debugbar'];
-        $debugbar->enable();
-        $debugbar->boot();
+        $debugbar = $this -> app['debugbar'];
+        $debugbar -> enable();
+        $debugbar -> boot();
 
-        $this->registerMiddleware('Songshenzong\Log\Middleware');
+        $this -> registerMiddleware('Songshenzong\Log\Middleware');
     }
-
-    /**
-     * Get the active router.
-     *
-     * @return Router
-     */
-    protected function getRouter()
-    {
-        return $this->app['router'];
-    }
-
-
 
 
     /**
@@ -126,8 +125,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     protected function registerMiddleware($middleware)
     {
-        $kernel = $this->app['Illuminate\Contracts\Http\Kernel'];
-        $kernel->pushMiddleware($middleware);
+        $kernel = $this -> app['Illuminate\Contracts\Http\Kernel'];
+        $kernel -> pushMiddleware($middleware);
     }
 
     /**
@@ -135,7 +134,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     protected function checkAppDebug()
     {
-        return $this->app['config']->get('app.debug');
+        return $this -> app['config'] -> get('app.debug');
     }
 
     /**
