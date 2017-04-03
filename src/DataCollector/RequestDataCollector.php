@@ -20,15 +20,16 @@ class RequestDataCollector extends DataCollector implements Renderable
      */
     public function collect()
     {
-        $vars = array('_GET', '_POST', '_SESSION', '_COOKIE', '_SERVER');
+        $vars = array('GET', 'POST', 'SESSION', 'COOKIE', 'SERVER');
         $data = array();
 
         foreach ($vars as $var) {
-            if (isset($GLOBALS[$var])) {
-                $data["$" . $var] = $GLOBALS[$var];
+            if (isset($GLOBALS['_' . $var])) {
+                $data[$var] = $GLOBALS['_' . $var];
+
             }
         }
-
+        $data = array_change_key_case($data, CASE_LOWER);
         return $data;
     }
 
@@ -47,11 +48,11 @@ class RequestDataCollector extends DataCollector implements Renderable
     {
         return array(
             "request" => array(
-                "icon" => "tags",
-                "widget" => "PhpDebugBar.Widgets.VariableListWidget",
-                "map" => "request",
-                "default" => "{}"
-            )
+                "icon"    => "tags",
+                "widget"  => "PhpDebugBar.Widgets.VariableListWidget",
+                "map"     => "request",
+                "default" => "{}",
+            ),
         );
     }
 }

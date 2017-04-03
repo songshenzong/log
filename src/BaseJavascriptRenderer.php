@@ -856,26 +856,9 @@ class BaseJavascriptRenderer
      */
     public function render($initialize = true, $renderStackedData = true)
     {
-        $js = '';
 
-        if ($initialize) {
-            $js = $this->getJsInitializationCode();
-        }
 
-        if ($renderStackedData && $this->debugBar->hasStackedData()) {
-            foreach ($this->debugBar->getStackedData() as $id => $data) {
-                $js .= $this->getAddDatasetCode($id, $data, '(stacked)');
-            }
-        }
 
-        $suffix = !$initialize ? '(ajax)' : null;
-        $js .= $this->getAddDatasetCode($this->debugBar->getCurrentRequestId(), $this->debugBar->getData(), $suffix);
-
-        if ($this->useRequireJs){
-            return "<script type=\"text/javascript\">\nrequire(['debugbar'], function(PhpDebugBar){ $js });\n</script>\n";
-        } else {
-            return "<script type=\"text/javascript\">\n$js\n</script>\n";
-        }
 
     }
 

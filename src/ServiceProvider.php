@@ -56,6 +56,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
+
         $app = $this -> app;
 
 
@@ -76,6 +77,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         ];
 
         $this -> app['router'] -> group($routeConfig, function ($router) {
+
             $router -> get('open', [
                 'uses' => 'OpenHandlerController@handle',
                 'as'   => 'debugbar.openhandler',

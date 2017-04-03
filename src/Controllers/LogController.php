@@ -2,8 +2,8 @@
 
 namespace Songshenzong\Log\Controllers;
 
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Routing\Controller;
+use Illuminate\Contracts\Foundation\Application;
 use Songshenzong\Log\SongshenzongLog;
 
 class LogController extends Controller
@@ -32,22 +32,29 @@ class LogController extends Controller
      */
     public function getData($id)
     {
+
         $log = SongshenzongLog ::find($id);
 
-        return response()->json($log);
+        return response() -> json($log);
     }
 
     public function getList()
     {
-        return SongshenzongLog :: orderBy('created_at', 'desc')
-                               -> paginate(\request() -> per_page??23)
-                               -> appends(\request() -> all())
-                               -> toArray();
+        $list = SongshenzongLog :: orderBy('created_at', 'desc')
+                                -> paginate(\request() -> per_page??23)
+                                -> appends(\request() -> all())
+                                -> toArray();
+
+
+        return response() -> json($list);
     }
 
     public function index()
     {
-        return file_get_contents(__DIR__ . '/../Views/index.html');
+        $file = __DIR__ . '/../Views/index.html';
+
+        echo file_get_contents($file);
+        exit;
     }
 
     public function destroy()

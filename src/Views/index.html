@@ -49,6 +49,7 @@
 
 
         function logList(url) {
+
             jQuery.getJSON(url, function (result) {
                     if (List) {
                         List.items = result;
@@ -150,12 +151,11 @@
         <tr>
             <th>Index</th>
             <th>ID</th>
+            <th>IP</th>
             <th>Method</th>
-            <th>Status</th>
-            <th>Hosts</th>
+            <th>Host</th>
             <th>URI</th>
-            <th>Response Duration</th>
-            <th>log</th>
+            <th>Status</th>
             <th>Time</th>
             <th>Created at</th>
             <th>Delete</th>
@@ -167,13 +167,12 @@
 
             <th scope="row">[[index]]</th>
             <th>[[item.id]]</th>
+            <td>[[item.ip]]</td>
             <td>[[item.method]]</td>
-            <td>[[item.response_status]]</td>
-            <td v-for="host in item.headers.host">[[host]]</td>
+            <td>[[item.data.request.server.HTTP_HOST]]</td>
             <td>[[item.uri]]</td>
-            <td>[[item.response_duration/1000]]</td>
-            <td>[[item.headers.user-agent]]</td>
-            <td>[[item.time]]</td>
+            <td>[[item.data.request.server.REDIRECT_STATUS]]</td>
+            <td>[[item.utime]]</td>
             <td>[[item.created_at]]</td>
             <td><span @click="remove(item.id,index)" class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
 
