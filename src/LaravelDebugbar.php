@@ -720,7 +720,6 @@ class LaravelDebugbar extends DebugBar
 
         $this -> data = [
             '__meta' => [
-                'id'       => $this -> getCurrentRequestId(),
                 'datetime' => date('Y-m-d H:i:s'),
                 'utime'    => microtime(true),
                 'method'   => $request -> getMethod(),
@@ -744,11 +743,24 @@ class LaravelDebugbar extends DebugBar
         );
 
         if ($this -> storage !== null) {
-            // Persist into the database
-            $this -> storage -> save($this -> getCurrentRequestId(), $this -> data);
+            $this -> persistData();
         }
 
         return $this -> data;
+    }
+
+    // Persist the collect informationinto the database
+    private function persistData()
+    {
+        $meta = $this -> data['__meta'];
+        SongshenzongLog ::create([
+                                     'data'          => $this -> data,
+                                     'utime'    => $meta['utime'],
+                                     'datetime' => $meta['datetime'],
+                                     'uri'      => $meta['uri'],
+                                     'ip'       => $meta['ip'],
+                                     'method'   => $meta['method'],
+                                 ]);
     }
 
     /**
@@ -836,7 +848,6 @@ class LaravelDebugbar extends DebugBar
 
         $this -> data = [
             '__meta' => [
-                'id'       => $this -> getCurrentRequestId(),
                 'datetime' => date('Y-m-d H:i:s'),
                 'utime'    => microtime(true),
                 'method'   => 'CLI',
@@ -860,7 +871,7 @@ class LaravelDebugbar extends DebugBar
         );
 
         if ($this -> storage !== null) {
-            $this -> storage -> save($this -> getCurrentRequestId(), $this -> data);
+            $this -> persistData();
         }
 
         return $this -> data;

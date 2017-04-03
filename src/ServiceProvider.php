@@ -72,8 +72,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $routeConfig = [
             'namespace' => 'Songshenzong\Log\Controllers',
-            'prefix'    => '_debugbar',
-            'as'        => 'songshenzong::',
+            'prefix'    => 'songshenzong',
         ];
 
         $this -> app['router'] -> group($routeConfig, function ($router) {
