@@ -1,16 +1,29 @@
-CREATE TABLE phpdebugbar (
-    id TEXT PRIMARY KEY,
-    data TEXT,
-    meta_utime TEXT,
-    meta_datetime TEXT,
-    meta_uri TEXT,
-    meta_ip TEXT,
-    meta_method TEXT
+-- auto-generated definition
+CREATE TABLE songshenzong_logs
+(
+    id         INT(10) UNSIGNED NOT NULL AUTO_INCREMENT
+        PRIMARY KEY,
+    data       LONGTEXT         NOT NULL,
+    utime      VARCHAR(255)     NOT NULL,
+    uri        VARCHAR(255)     NOT NULL,
+    ip         VARCHAR(255)     NOT NULL,
+    method     VARCHAR(255)     NOT NULL,
+    created_at TIMESTAMP        NULL,
+    updated_at TIMESTAMP        NULL
 );
 
-CREATE INDEX idx_debugbar_id ON phpdebugbar (id);
-CREATE INDEX idx_debugbar_meta_utime ON phpdebugbar (meta_utime);
-CREATE INDEX idx_debugbar_meta_datetime ON phpdebugbar (meta_datetime);
-CREATE INDEX idx_debugbar_meta_uri ON phpdebugbar (meta_uri);
-CREATE INDEX idx_debugbar_meta_ip ON phpdebugbar (meta_ip);
-CREATE INDEX idx_debugbar_meta_method ON phpdebugbar (meta_method);
+CREATE INDEX songshenzong_logs_created_at_index
+    ON songshenzong_logs (created_at);
+
+CREATE INDEX songshenzong_logs_ip_index
+    ON songshenzong_logs (ip);
+
+CREATE INDEX songshenzong_logs_method_index
+    ON songshenzong_logs (method);
+
+CREATE INDEX songshenzong_logs_uri_index
+    ON songshenzong_logs (uri);
+
+CREATE INDEX songshenzong_logs_utime_index
+    ON songshenzong_logs (utime);
+
