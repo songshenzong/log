@@ -2,11 +2,10 @@
 
 namespace Songshenzong\Log\Controllers;
 
-use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Foundation\Application;
 use Songshenzong\Log\SongshenzongLog;
 
-class LogController extends Controller
+class LogController extends BaseController
 {
 
     /**

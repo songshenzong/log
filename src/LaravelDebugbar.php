@@ -88,6 +88,14 @@ class LaravelDebugbar extends DebugBar
      */
     protected $is_lumen = false;
 
+
+    /**
+     * The database table.
+     *
+     * @var string
+     */
+    protected $table = 'songshenzong_logs';
+
     /**
      * @param Application $app
      */
@@ -686,15 +694,56 @@ class LaravelDebugbar extends DebugBar
     private function persistData()
     {
         $meta = $this -> data['__meta'];
-        SongshenzongLog ::create([
-                                     'data'   => $this -> data,
-                                     'utime'  => $meta['utime'],
-                                     'uri'    => $meta['uri'],
-                                     'ip'     => $meta['ip'],
-                                     'method' => $meta['method'],
-                                 ]);
+        $data = [
+            'data'   => $this -> data,
+            'utime'  => $meta['utime'],
+            'uri'    => $meta['uri'],
+            'ip'     => $meta['ip'],
+            'method' => $meta['method'],
+        ];
+
+        return SongshenzongLog ::create($data);
     }
 
+
+    /**
+     * Drop Table.
+     *
+     * @return bool
+     */
+    private function dropTable()
+    {
+        return \DB ::statement("DROP TABLE IF EXISTS {$this->table};");
+    }
+
+
+    /**
+     * Create table.
+     */
+    private function createTable()
+    {
+        $createTable = <<<"HEREDOC"
+CREATE TABLE IF NOT EXISTS {$this -> table}
+(
+  id         INT(10) UNSIGNED NOT NULL AUTO_INCREMENT
+    PRIMARY KEY,
+  data       LONGTEXT         NOT NULL,
+  utime      VARCHAR(255)     NOT NULL,
+  uri        VARCHAR(255)     NOT NULL,
+  ip         VARCHAR(255)     NOT NULL,
+  method     VARCHAR(255)     NOT NULL,
+  created_at TIMESTAMP        NULL,
+  updated_at TIMESTAMP        NULL
+);
+HEREDOC;
+
+        \DB ::statement($createTable);
+        \DB ::statement("CREATE INDEX songshenzong_logs_created_at_index ON songshenzong_logs (created_at);");
+        \DB ::statement("CREATE INDEX songshenzong_logs_ip_index ON songshenzong_logs (ip);");
+        \DB ::statement("CREATE INDEX songshenzong_logs_method_index ON songshenzong_logs (method);");
+        \DB ::statement("CREATE INDEX songshenzong_logs_uri_index ON songshenzong_logs (uri);");
+        \DB ::statement("CREATE INDEX songshenzong_logs_utime_index ON songshenzong_logs (utime);");
+    }
 
     /**
      * Disable the Debugbar
