@@ -28,10 +28,5 @@
     "files": [
       "src/helpers.php"
     ]
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.5.0-dev"
-    }
   }
 }
