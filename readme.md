@@ -10,8 +10,8 @@ Require this package with composer:
 composer require songshenzong/log
 ```
 
-After updating composer, add the ServiceProvider to the providers array in config/app.php
-> If you use a catch-all/fallback route, make sure you load the Songshenzong ServiceProvider before your own App ServiceProviders.
+After updating composer, add the ServiceProvider to the providers array in `config/app.php`
+
 
 ### Laravel 5.x:
 
@@ -19,11 +19,22 @@ After updating composer, add the ServiceProvider to the providers array in confi
 Songshenzong\Log\ServiceProvider::class,
 ```
 
-If you want to use the facade to log messages, add this to your facades in app.php:
+If you want to use the facade to log messages, add this to your facades in `config/app.php`:
 
 ```php
 'Songshenzong' => Songshenzong\Log\Facade::class,
 ```
+
+> If you use a `dingo/api` route, make sure you load the Songshenzong Middleware in `config/api.php`.
+```php
+    'middleware' => [
+        'Songshenzong\Log\Middleware',
+    ],
+```
+
+
+
+
 
 The profiler is enabled by default, You can override that in the config (`songshenzong.enabled`).
 
@@ -34,7 +45,6 @@ Copy the package config to your local config with the publish command:
 ```shell
 php artisan vendor:publish --provider="Songshenzong\Log\ServiceProvider"
 ```
-
 
 
 ## Usage
