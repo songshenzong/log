@@ -95,7 +95,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         app('Illuminate\Contracts\Http\Kernel') -> pushMiddleware('Songshenzong\Log\Middleware');
 
 
-
         $routeConfig = [
             'namespace' => 'Songshenzong\Log\Controllers',
             'prefix'    => 'songshenzong',
@@ -143,4 +142,16 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         return ['debugbar', 'command.songshenzong.clear'];
     }
+
+
+    /**
+     * Publish the config file
+     *
+     * @param  string $configPath
+     */
+    protected function publishConfig($configPath)
+    {
+        $this -> publishes([$configPath => config_path('songshenzong.php')], 'config');
+    }
+
 }
