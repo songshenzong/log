@@ -15,7 +15,6 @@ use Songshenzong\Log\DataCollector\DataCollectorInterface;
 use Songshenzong\Log\Storage\StorageInterface;
 
 /**
- * Main DebugBar object
  *
  * Manages data collectors. DebugBar provides an array-like access
  * to collectors by name.
