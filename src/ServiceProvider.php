@@ -140,7 +140,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function provides()
     {
-        return ['debugbar', 'command.songshenzong.clear'];
+        return ['songshenzong', 'command.songshenzong.clear'];
     }
 
 
