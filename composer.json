@@ -22,7 +22,7 @@
     }
   ],
   "require": {
-    "php": ">=5.6.30",
+    "php": ">=5.6.26",
     "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*",
     "symfony/finder": "~2.7|~3.0"
   },
