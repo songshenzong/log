@@ -435,22 +435,5 @@ class QueryCollector extends PDOCollector
         return 'queries';
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getWidgets()
-    {
-        return [
-            "queries" => [
-                "icon" => "database",
-                "widget" => "PhpDebugBar.Widgets.LaravelSQLQueriesWidget",
-                "map" => "queries",
-                "default" => "[]"
-            ],
-            "queries:badge" => [
-                "map" => "queries.nb_statements",
-                "default" => 0
-            ]
-        ];
-    }
+
 }

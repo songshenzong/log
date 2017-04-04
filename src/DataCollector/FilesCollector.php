@@ -105,25 +105,7 @@ class FilesCollector extends DataCollector
         return ltrim(str_replace($this->basePath, '', $path), '/');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getWidgets()
-    {
-        $name = $this->getName();
-        return [
-            "$name" => [
-                "icon" => "files-o",
-                "widget" => "PhpDebugBar.Widgets.MessagesWidget",
-                "map" => "$name.messages",
-                "default" => "{}"
-            ],
-            "$name:badge" => [
-                "map" => "$name.count",
-                "default" => "null"
-            ]
-        ];
-    }
+
 
     /**
      * {@inheritDoc}

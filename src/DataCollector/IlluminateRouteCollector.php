@@ -101,29 +101,7 @@ class IlluminateRouteCollector extends DataCollector
         return 'route';
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getWidgets()
-    {
-        $widgets = [
-            "route" => [
-                "icon" => "share",
-                "widget" => "PhpDebugBar.Widgets.VariableListWidget",
-                "map" => "route",
-                "default" => "{}"
-            ]
-        ];
-        if (Config::get('debugbar.options.route.label', true)) {
-            $widgets['currentroute'] = [
-                "icon" => "share",
-                "tooltip" => "Route",
-                "map" => "route.uri",
-                "default" => ""
-            ];
-        }
-        return $widgets;
-    }
+
 
     /**
      * Display the route information on the console.

@@ -70,29 +70,5 @@ class MultiAuthCollector extends AuthCollector
         }
     }
 
-    /**
-     * @{inheritDoc}
-     */
-    public function getWidgets()
-    {
-        $widgets = [
-            "auth" => [
-                "icon"    => "lock",
-                "widget"  => "PhpDebugBar.Widgets.VariableListWidget",
-                "map"     => "auth.guards",
-                "default" => "{}",
-            ],
-        ];
 
-        if ($this -> showName) {
-            $widgets['auth.name'] = [
-                'icon'    => 'user',
-                'tooltip' => 'Auth status',
-                'map'     => 'auth.names',
-                'default' => '',
-            ];
-        }
-
-        return $widgets;
-    }
 }

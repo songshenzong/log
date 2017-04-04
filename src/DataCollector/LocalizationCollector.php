@@ -54,20 +54,5 @@ class LocalizationCollector extends DataCollector
         return 'localization';
     }
 
-    /**
-     * @return array
-     */
-    public function getWidgets()
-    {
-        return array(
-            'domain' => array(
-                'icon' => 'bookmark',
-                'map'  => 'localization.domain',
-            ),
-            'locale' => array(
-                'icon' => 'flag',
-                'map'  => 'localization.locale',
-            )
-        );
-    }
+
 }

@@ -4,14 +4,23 @@ namespace Songshenzong\Log\Controllers;
 
 use Illuminate\Contracts\Foundation\Application;
 use Songshenzong\Log\SongshenzongLog;
+use Songshenzong\Log\LaravelDebugbar;
 
-class LogController extends BaseController
+class ApiController extends BaseController
 {
 
     /**
      * @var \Illuminate\Contracts\Foundation\Application
      */
     public $app;
+
+
+    /**
+     * The Songshenzong instance
+     *
+     * @var LaravelDebugbar
+     */
+    protected $songshenzong;
 
 
     /**
@@ -25,9 +34,10 @@ class LogController extends BaseController
      *
      * @param \Illuminate\Contracts\Foundation\Application $app
      */
-    public function __construct(Application $app)
+    public function __construct(Application $app, LaravelDebugbar $songshenzong)
     {
-        $this -> app = $app;
+        $this -> app          = $app;
+        $this -> songshenzong = $songshenzong;
     }
 
 
@@ -39,9 +49,9 @@ class LogController extends BaseController
     public function dropTable()
     {
         if (\DB ::statement("DROP TABLE IF EXISTS {$this->table};")) {
-            return response() -> json(['status_code' => 200]);
+            return $this -> songshenzong -> json(200, 'OK');
         }
-        return response() -> json(['status_code' => 500]);
+        return $this -> songshenzong -> json(500, 'Error');
     }
 
 
@@ -71,9 +81,9 @@ HEREDOC;
             \DB ::statement("CREATE INDEX {$this->table}_method_index ON {$this->table} (method);");
             \DB ::statement("CREATE INDEX {$this->table}_uri_index ON {$this->table} (uri);");
             \DB ::statement("CREATE INDEX {$this->table}_utime_index ON {$this->table} (utime);");
-            return response() -> json(['status_code' => 200]);
+            return $this -> songshenzong -> json(200, 'OK');
         }
-        return response() -> json(['status_code' => 500]);
+        return $this -> songshenzong -> json(500, 'Error');
 
     }
 
@@ -87,7 +97,7 @@ HEREDOC;
     public function getData($id)
     {
         $log = SongshenzongLog ::find($id);
-        return response() -> json($log);
+        return $this -> songshenzong -> json(200, 'OK', $log);
     }
 
 
@@ -96,24 +106,14 @@ HEREDOC;
      */
     public function getList()
     {
+
         $list = SongshenzongLog :: orderBy('created_at', 'desc')
                                 -> paginate(\request() -> per_page??23)
                                 -> appends(\request() -> all())
                                 -> toArray();
 
 
-        return response() -> json($list);
-    }
-
-
-    /**
-     * Index
-     */
-    public function index()
-    {
-        $file = __DIR__ . '/../Views/index.html';
-        echo file_get_contents($file);
-        exit;
+        return $this -> songshenzong -> json(200, 'OK', $list);
     }
 
 

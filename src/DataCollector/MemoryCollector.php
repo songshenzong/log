@@ -55,18 +55,5 @@ class MemoryCollector extends DataCollector
         return 'memory';
     }
 
-    /**
-     * @return array
-     */
-    public function getWidgets()
-    {
-        return array(
-            "memory" => array(
-                "icon" => "cogs",
-                "tooltip" => "Memory Usage",
-                "map" => "memory.peak_usage_str",
-                "default" => "'0B'"
-            )
-        );
-    }
+
 }

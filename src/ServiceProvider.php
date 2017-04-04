@@ -48,13 +48,13 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this -> app -> alias('debugbar', 'Songshenzong\Log\LaravelDebugbar');
 
-        $this -> app -> singleton('command.debugbar.clear',
+        $this -> app -> singleton('command.songshenzong.clear',
             function ($app) {
                 return new Console\ClearCommand($app['debugbar']);
             }
         );
 
-        $this -> commands(['command.debugbar.clear']);
+        $this -> commands(['command.songshenzong.clear']);
     }
 
 
@@ -66,12 +66,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function isEnabled()
     {
         if ($this -> enabled === null) {
-            $this -> enabled = (boolean)config('debugbar.enabled');;
+            $this -> enabled = (boolean)config('songshenzong.enabled');;
         }
 
 
         if ($this -> enabled === true) {
-            $environments    = config('debugbar.env', ['dev', 'local', 'production']);
+            $environments    = config('songshenzong.env', ['dev', 'local', 'production']);
             $this -> enabled = in_array(env('APP_ENV'), $environments);
         }
 
@@ -91,6 +91,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             return;
         }
 
+
+        app('Illuminate\Contracts\Http\Kernel') -> pushMiddleware('Songshenzong\Log\Middleware');
+
+
+
         $routeConfig = [
             'namespace' => 'Songshenzong\Log\Controllers',
             'prefix'    => 'songshenzong',
@@ -98,17 +103,22 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         app('router') -> group($routeConfig, function ($router) {
 
-            $router -> get('', 'LogController@index');
+            $router -> get('', 'WebController@index');
 
-            $router -> get('logs', 'LogController@getList');
+            $router -> group(['middleware' => 'Songshenzong\Log\TokenMiddleware'], function ($router) {
 
-            $router -> get('logs/{id}', 'LogController@getData') -> where('id', '[0-9\.]+');
+                $router -> get('logs', 'ApiController@getList');
 
-            $router -> get('destroy', 'LogController@destroy');
+                $router -> get('logs/{id}', 'ApiController@getData') -> where('id', '[0-9\.]+');
 
-            $router -> get('drop', 'LogController@dropTable');
+                $router -> get('destroy', 'ApiController@destroy');
 
-            $router -> get('create', 'LogController@createTable');
+                $router -> get('drop', 'ApiController@dropTable');
+
+                $router -> get('create', 'ApiController@createTable');
+
+            });
+
 
         });
 
@@ -121,7 +131,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         app('debugbar') -> boot();
 
 
-        app('Illuminate\Contracts\Http\Kernel') -> pushMiddleware('Songshenzong\Log\Middleware');
     }
 
 
@@ -132,6 +141,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function provides()
     {
-        return ['debugbar', 'command.debugbar.clear'];
+        return ['debugbar', 'command.songshenzong.clear'];
     }
 }

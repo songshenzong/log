@@ -173,24 +173,7 @@ class PDOCollector extends DataCollector
         return 'pdo';
     }
 
-    /**
-     * @return array
-     */
-    public function getWidgets()
-    {
-        return array(
-            "database" => array(
-                "icon" => "database",
-                "widget" => "PhpDebugBar.Widgets.SQLQueriesWidget",
-                "map" => "pdo",
-                "default" => "[]"
-            ),
-            "database:badge" => array(
-                "map" => "pdo.nb_statements",
-                "default" => 0
-            )
-        );
-    }
+
 
 
 }

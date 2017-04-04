@@ -41,18 +41,5 @@ class RequestDataCollector extends DataCollector
         return 'request';
     }
 
-    /**
-     * @return array
-     */
-    public function getWidgets()
-    {
-        return array(
-            "request" => array(
-                "icon"    => "tags",
-                "widget"  => "PhpDebugBar.Widgets.VariableListWidget",
-                "map"     => "request",
-                "default" => "{}",
-            ),
-        );
-    }
+
 }

@@ -103,19 +103,5 @@ class EventCollector extends TimeDataCollector
         return 'event';
     }
 
-    public function getWidgets()
-    {
-        return [
-          "events" => [
-            "icon" => "tasks",
-            "widget" => "PhpDebugBar.Widgets.TimelineWidget",
-            "map" => "event",
-            "default" => "{}",
-          ],
-          'events:badge' => [
-            'map' => 'event.nb_measures',
-            'default' => 0,
-          ],
-        ];
-    }
+
 }

@@ -120,22 +120,5 @@ class ExceptionsCollector extends DataCollector
         return 'exceptions';
     }
 
-    /**
-     * @return array
-     */
-    public function getWidgets()
-    {
-        return array(
-            'exceptions' => array(
-                'icon' => 'bug',
-                'widget' => 'PhpDebugBar.Widgets.ExceptionsWidget',
-                'map' => 'exceptions.exceptions',
-                'default' => '[]'
-            ),
-            'exceptions:badge' => array(
-                'map' => 'exceptions.count',
-                'default' => 'null'
-            )
-        );
-    }
+
 }

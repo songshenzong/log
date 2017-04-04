@@ -42,18 +42,5 @@ class SessionCollector extends DataCollector implements DataCollectorInterface
         return 'session';
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getWidgets()
-    {
-        return [
-            "session" => [
-                "icon"    => "archive",
-                "widget"  => "PhpDebugBar.Widgets.VariableListWidget",
-                "map"     => "session",
-                "default" => "{}",
-            ],
-        ];
-    }
+
 }

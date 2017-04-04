@@ -29,21 +29,7 @@ class ViewCollector extends TwigCollector
         return 'views';
     }
 
-    public function getWidgets()
-    {
-        return [
-            'views' => [
-                'icon' => 'leaf',
-                'widget' => 'PhpDebugBar.Widgets.TemplatesWidget',
-                'map' => 'views',
-                'default' => '[]'
-            ],
-            'views:badge' => [
-                'map' => 'views.nb_templates',
-                'default' => 0
-            ]
-        ];
-    }
+
 
     /**
      * Add a View instance to the Collector

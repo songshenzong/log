@@ -152,23 +152,5 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
         return $this->name;
     }
 
-    /**
-     * @return array
-     */
-    public function getWidgets()
-    {
-        $name = $this->getName();
-        return array(
-            "$name" => array(
-                'icon' => 'list-alt',
-                "widget" => "PhpDebugBar.Widgets.MessagesWidget",
-                "map" => "$name.messages",
-                "default" => "[]"
-            ),
-            "$name:badge" => array(
-                "map" => "$name.count",
-                "default" => "null"
-            )
-        );
-    }
+
 }

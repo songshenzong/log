@@ -43,20 +43,7 @@ class SymfonyRequestCollector extends DataCollector implements DataCollectorInte
         return 'request';
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getWidgets()
-    {
-        return [
-            "request" => [
-                "icon" => "tags",
-                "widget" => "PhpDebugBar.Widgets.VariableListWidget",
-                "map" => "request",
-                "default" => "{}"
-            ]
-        ];
-    }
+
 
     /**
      * {@inheritdoc}

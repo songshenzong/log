@@ -41,30 +41,5 @@ class LaravelCollector extends DataCollector
         return 'laravel';
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getWidgets()
-    {
-        return [
-            "version" => [
-                "icon" => "github",
-                "tooltip" => "Version",
-                "map" => "laravel.version",
-                "default" => ""
-            ],
-            "environment" => [
-                "icon" => "desktop",
-                "tooltip" => "Environment",
-                "map" => "laravel.environment",
-                "default" => ""
-            ],
-            "locale" => [
-                "icon" => "flag",
-                "tooltip" => "Current locale",
-                "map" => "laravel.locale",
-                "default" => "",
-            ],
-        ];
-    }
+
 }

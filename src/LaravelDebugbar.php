@@ -89,8 +89,6 @@ class LaravelDebugbar extends DebugBar
     protected $is_lumen = false;
 
 
-
-
     /**
      * @param Application $app
      */
@@ -165,7 +163,7 @@ class LaravelDebugbar extends DebugBar
         try {
             $exceptionCollector = new ExceptionsCollector();
             $exceptionCollector -> setChainExceptions(
-                $this -> app['config'] -> get('debugbar.options.exceptions.chain', true)
+                $this -> app['config'] -> get('songshenzong.options.exceptions.chain', true)
             );
             $this -> addCollector($exceptionCollector);
         } catch (\Exception $e) {
@@ -199,7 +197,7 @@ class LaravelDebugbar extends DebugBar
         // Views with their data
         if (isset($this -> app['events'])) {
             try {
-                $collectData = $this -> app['config'] -> get('debugbar.options.views.data', true);
+                $collectData = $this -> app['config'] -> get('songshenzong.options.views.data', true);
                 $this -> addCollector(new ViewCollector($collectData));
                 $this -> app['events'] -> listen(
                     'composing:*',
@@ -283,7 +281,7 @@ class LaravelDebugbar extends DebugBar
         if (isset($this -> app['db'])) {
             $db = $this -> app['db'];
             if ($debugbar -> hasCollector('time') && $this -> app['config'] -> get(
-                    'debugbar.options.db.timeline',
+                    'songshenzong.options.db.timeline',
                     false
                 )
             ) {
@@ -295,21 +293,21 @@ class LaravelDebugbar extends DebugBar
 
             $queryCollector -> setDataFormatter(new QueryFormatter());
 
-            if ($this -> app['config'] -> get('debugbar.options.db.with_params')) {
+            if ($this -> app['config'] -> get('songshenzong.options.db.with_params')) {
                 $queryCollector -> setRenderSqlWithParams(true);
             }
 
-            if ($this -> app['config'] -> get('debugbar.options.db.backtrace')) {
+            if ($this -> app['config'] -> get('songshenzong.options.db.backtrace')) {
                 $middleware = !$this -> is_lumen ? $this -> app['router'] -> getMiddleware() : [];
                 $queryCollector -> setFindSource(true, $middleware);
             }
 
-            if ($this -> app['config'] -> get('debugbar.options.db.explain.enabled')) {
-                $types = $this -> app['config'] -> get('debugbar.options.db.explain.types');
+            if ($this -> app['config'] -> get('songshenzong.options.db.explain.enabled')) {
+                $types = $this -> app['config'] -> get('songshenzong.options.db.explain.types');
                 $queryCollector -> setExplainSource(true, $types);
             }
 
-            if ($this -> app['config'] -> get('debugbar.options.db.hints', true)) {
+            if ($this -> app['config'] -> get('songshenzong.options.db.hints', true)) {
                 $queryCollector -> setShowHints(true);
             }
 
@@ -380,7 +378,7 @@ class LaravelDebugbar extends DebugBar
             try {
                 $mailer = $this -> app['mailer'] -> getSwiftMailer();
                 $this -> addCollector(new SwiftMailCollector($mailer));
-                if ($this -> app['config'] -> get('debugbar.options.mail.full_log') && $this -> hasCollector(
+                if ($this -> app['config'] -> get('songshenzong.options.mail.full_log') && $this -> hasCollector(
                         'messages'
                     )
                 ) {
@@ -389,7 +387,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add MailCollector to Laravel Debugbar: ' . $e -> getMessage(), $e -> getCode(), $e
+                        'Cannot add MailCollector to Songshenzong: ' . $e -> getMessage(), $e -> getCode(), $e
                     )
                 );
             }
@@ -397,7 +395,7 @@ class LaravelDebugbar extends DebugBar
 
         if ($this -> shouldCollect('logs', false)) {
             try {
-                $file = $this -> app['config'] -> get('debugbar.options.logs.file');
+                $file = $this -> app['config'] -> get('songshenzong.options.logs.file');
                 $this -> addCollector(new LogsCollector($file));
             } catch (\Exception $e) {
                 $this -> addThrowable(
@@ -422,7 +420,7 @@ class LaravelDebugbar extends DebugBar
                 }
 
                 $authCollector -> setShowName(
-                    $this -> app['config'] -> get('debugbar.options.auth.show_name')
+                    $this -> app['config'] -> get('songshenzong.options.auth.show_name')
                 );
                 $this -> addCollector($authCollector);
             } catch (\Exception $e) {
@@ -449,7 +447,7 @@ class LaravelDebugbar extends DebugBar
 
     public function shouldCollect($name, $default = false)
     {
-        return $this -> app['config'] -> get('debugbar.collectors.' . $name, $default);
+        return $this -> app['config'] -> get('songshenzong.collectors.' . $name, $default);
     }
 
     /**
@@ -566,7 +564,7 @@ class LaravelDebugbar extends DebugBar
         } catch (\Exception $e) {
             $this -> addThrowable(
                 new Exception(
-                    'Cannot add ConfigCollector to Laravel Debugbar: ' . $e -> getMessage(),
+                    'Cannot add ConfigCollector to Songshenzong: ' . $e -> getMessage(),
                     $e -> getCode(),
                     $e
                 )
@@ -634,11 +632,11 @@ class LaravelDebugbar extends DebugBar
 
 
         if ($this -> enabled === null) {
-            $this -> enabled = value($this -> app['config'] -> get('debugbar.enabled'));
+            $this -> enabled = value($this -> app['config'] -> get('songshenzong.enabled'));
         }
 
         if ($this -> enabled === true) {
-            $environments = config('debugbar.env', ['dev', 'local', 'production']);
+            $environments = config('songshenzong.env', ['dev', 'local', 'production']);
 
             $this -> enabled = in_array(env('APP_ENV'), $environments);
         }
@@ -711,10 +709,6 @@ class LaravelDebugbar extends DebugBar
 
         return SongshenzongLog ::create($data);
     }
-
-
-
-
 
 
     /**
@@ -851,6 +845,24 @@ class LaravelDebugbar extends DebugBar
     protected function isLumen()
     {
         return $this -> is_lumen;
+    }
+
+    /**
+     * Basic Json method.
+     *
+     * @param      $status_code
+     * @param      $message
+     * @param null $data
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function json($status_code, $message, $data = null)
+    {
+        return response() -> json([
+                                      'status_code' => $status_code,
+                                      'message'     => $message,
+                                      'data'        => $data,
+                                  ]);
     }
 
 

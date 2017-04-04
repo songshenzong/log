@@ -222,24 +222,5 @@ class TimeDataCollector extends DataCollector
         return 'time';
     }
 
-    /**
-     * @return array
-     */
-    public function getWidgets()
-    {
-        return array(
-            "time" => array(
-                "icon" => "clock-o",
-                "tooltip" => "Request Duration",
-                "map" => "time.duration_str",
-                "default" => "'0ms'"
-            ),
-            "timeline" => array(
-                "icon" => "tasks",
-                "widget" => "PhpDebugBar.Widgets.TimelineWidget",
-                "map" => "time",
-                "default" => "{}"
-            )
-        );
-    }
+
 }

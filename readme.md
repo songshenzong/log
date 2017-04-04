@@ -3,7 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/barryvdh/laravel-debugbar/version.png)](https://packagist.org/packages/barryvdh/laravel-debugbar)
 [![Total Downloads](https://poser.pugx.org/barryvdh/laravel-debugbar/d/total.png)](https://packagist.org/packages/barryvdh/laravel-debugbar)
 
-### For Laravel 4, please use the [1.8 branch](https://github.com/barryvdh/laravel-debugbar/tree/1.8)!
+
 
 This is a package to integrate [PHP Debug Bar](http://phpdebugbar.com/) with Laravel 5.
 It includes a ServiceProvider to register the debugbar and attach it to the output. You can publish assets and configure it through Laravel.
@@ -11,7 +11,7 @@ It bootstraps some Collectors to work with Laravel and implements a couple custo
 It is configured to display Redirects and (jQuery) Ajax Requests. (Shown in a dropdown)
 Read [the documentation](http://phpdebugbar.com/docs/) for more configuration options.
 
-![Screenshot](https://cloud.githubusercontent.com/assets/973269/4270452/740c8c8c-3ccb-11e4-8d9a-5a9e64f19351.png)
+
 
 Note: Use the DebugBar only in development. It can slow the application down (because it has to gather data). So when experiencing slowness, try disabling some of the collectors.
 
@@ -62,7 +62,7 @@ If you want to use the facade to log messages, add this to your facades in app.p
 'Debugbar' => Songshenzong\Log\Facade::class,
 ```
 
-The profiler is enabled by default, if you have app.debug=true. You can override that in the config (`debugbar.enabled`).
+The profiler is enabled by default, if you have app.debug=true. You can override that in the config (`songshenzong.enabled`).
 
 
 
