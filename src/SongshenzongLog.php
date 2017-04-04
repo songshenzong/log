@@ -33,4 +33,6 @@ class SongshenzongLog extends Model
     protected $hidden = [
         'updated_at',
     ];
+
+
 }

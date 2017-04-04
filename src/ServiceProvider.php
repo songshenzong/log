@@ -11,6 +11,15 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     protected $defer = false;
 
+
+    /**
+     * True when enabled, false disabled an null for still unknown
+     *
+     * @var bool
+     */
+    protected $enabled = null;
+
+
     /**
      * Register the service provider.
      *
@@ -48,6 +57,28 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this -> commands(['command.debugbar.clear']);
     }
 
+
+    /**
+     * Check if the Debugbar is enabled
+     *
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        if ($this -> enabled === null) {
+            $this -> enabled = (boolean)config('debugbar.enabled');;
+        }
+
+
+        if ($this -> enabled === true) {
+            $environments    = config('debugbar.env', ['dev', 'local', 'production']);
+            $this -> enabled = in_array(env('APP_ENV'), $environments);
+        }
+
+        return $this -> enabled;
+    }
+
+
     /**
      * Bootstrap the application events.
      *
@@ -56,17 +87,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
 
-        $app = $this -> app;
-
-
-        // If enabled is null, set from the app.debug value
-        $enabled = $this -> app['config'] -> get('debugbar.enabled');
-
-        if (is_null($enabled)) {
-            $enabled = $this -> app['config'] -> get('app.debug');
-        }
-
-        if (!$enabled) {
+        if (!$this -> isEnabled()) {
             return;
         }
 
@@ -75,41 +96,32 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             'prefix'    => 'songshenzong',
         ];
 
-        $this -> app['router'] -> group($routeConfig, function ($router) {
+        app('router') -> group($routeConfig, function ($router) {
 
             $router -> get('', 'LogController@index');
 
             $router -> get('logs', 'LogController@getList');
 
-            $router -> get('destroy', 'LogController@destroy');
-
             $router -> get('logs/{id}', 'LogController@getData') -> where('id', '[0-9\.]+');
 
+            $router -> get('destroy', 'LogController@destroy');
+
+            $router -> get('drop', 'LogController@dropTable');
+
+            $router -> get('create', 'LogController@createTable');
 
         });
 
-        if ($app -> runningInConsole() || $app -> environment('testing')) {
+        if (app() -> runningInConsole() || app() -> environment('testing')) {
             return;
         }
 
-        /** @var LaravelDebugbar $debugbar */
-        $debugbar = $this -> app['debugbar'];
-        $debugbar -> enable();
-        $debugbar -> boot();
 
-        $this -> registerMiddleware('Songshenzong\Log\Middleware');
-    }
+        app('debugbar') -> enable();
+        app('debugbar') -> boot();
 
 
-    /**
-     * Register the Debugbar Middleware
-     *
-     * @param  string $middleware
-     */
-    protected function registerMiddleware($middleware)
-    {
-        $kernel = $this -> app['Illuminate\Contracts\Http\Kernel'];
-        $kernel -> pushMiddleware($middleware);
+        app('Illuminate\Contracts\Http\Kernel') -> pushMiddleware('Songshenzong\Log\Middleware');
     }
 
 

@@ -89,12 +89,7 @@ class LaravelDebugbar extends DebugBar
     protected $is_lumen = false;
 
 
-    /**
-     * The database table.
-     *
-     * @var string
-     */
-    protected $table = 'songshenzong_logs';
+
 
     /**
      * @param Application $app
@@ -547,7 +542,11 @@ class LaravelDebugbar extends DebugBar
      */
     public function modifyResponse(Request $request, Response $response)
     {
+
+
         $app = $this -> app;
+
+
         if ($app -> runningInConsole() || !$this -> isEnabled() || $this -> isDebugbarRequest()) {
             return $response;
         }
@@ -632,8 +631,16 @@ class LaravelDebugbar extends DebugBar
      */
     public function isEnabled()
     {
+
+
         if ($this -> enabled === null) {
             $this -> enabled = value($this -> app['config'] -> get('debugbar.enabled'));
+        }
+
+        if ($this -> enabled === true) {
+            $environments = config('debugbar.env', ['dev', 'local', 'production']);
+
+            $this -> enabled = in_array(env('APP_ENV'), $environments);
         }
 
         return $this -> enabled;
@@ -658,7 +665,7 @@ class LaravelDebugbar extends DebugBar
     public function collect()
     {
         /** @var Request $request */
-        $request = $this -> app['request'];
+        $request = app('request');
 
         $this -> data = [
             '__meta' => [
@@ -706,44 +713,9 @@ class LaravelDebugbar extends DebugBar
     }
 
 
-    /**
-     * Drop Table.
-     *
-     * @return bool
-     */
-    private function dropTable()
-    {
-        return \DB ::statement("DROP TABLE IF EXISTS {$this->table};");
-    }
 
 
-    /**
-     * Create table.
-     */
-    private function createTable()
-    {
-        $createTable = <<<"HEREDOC"
-CREATE TABLE IF NOT EXISTS {$this -> table}
-(
-  id         INT(10) UNSIGNED NOT NULL AUTO_INCREMENT
-    PRIMARY KEY,
-  data       LONGTEXT         NOT NULL,
-  utime      VARCHAR(255)     NOT NULL,
-  uri        VARCHAR(255)     NOT NULL,
-  ip         VARCHAR(255)     NOT NULL,
-  method     VARCHAR(255)     NOT NULL,
-  created_at TIMESTAMP        NULL,
-  updated_at TIMESTAMP        NULL
-);
-HEREDOC;
 
-        \DB ::statement($createTable);
-        \DB ::statement("CREATE INDEX songshenzong_logs_created_at_index ON songshenzong_logs (created_at);");
-        \DB ::statement("CREATE INDEX songshenzong_logs_ip_index ON songshenzong_logs (ip);");
-        \DB ::statement("CREATE INDEX songshenzong_logs_method_index ON songshenzong_logs (method);");
-        \DB ::statement("CREATE INDEX songshenzong_logs_uri_index ON songshenzong_logs (uri);");
-        \DB ::statement("CREATE INDEX songshenzong_logs_utime_index ON songshenzong_logs (utime);");
-    }
 
     /**
      * Disable the Debugbar
