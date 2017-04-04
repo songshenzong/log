@@ -33,7 +33,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             'Songshenzong\Log\DataFormatter\DataFormatterInterface'
         );
 
-        $this -> app -> singleton('debugbar', function ($app) {
+        $this -> app -> singleton('songshenzong', function ($app) {
             $debugbar = new LaravelDebugbar($app);
 
             if ($app -> bound(SessionManager::class)) {
@@ -46,11 +46,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
         );
 
-        $this -> app -> alias('debugbar', 'Songshenzong\Log\LaravelDebugbar');
+        $this -> app -> alias('songshenzong', 'Songshenzong\Log\LaravelDebugbar');
 
         $this -> app -> singleton('command.songshenzong.clear',
             function ($app) {
-                return new Console\ClearCommand($app['debugbar']);
+                return new Console\ClearCommand($app['songshenzong']);
             }
         );
 
@@ -59,7 +59,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
 
     /**
-     * Check if the Debugbar is enabled
+     * Check if is enabled
      *
      * @return boolean
      */

@@ -5,8 +5,8 @@ use Illuminate\Console\Command;
 
 class ClearCommand extends Command
 {
-    protected $name = 'debugbar:clear';
-    protected $description = 'Clear the Debugbar Storage';
+    protected $name = 'songshenzong:clear';
+    protected $description = 'Clear the Songshenzong Storage';
     protected $debugbar;
 
     public function __construct(DebugBar $debugbar)

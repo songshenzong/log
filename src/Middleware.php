@@ -19,7 +19,7 @@ class Middleware
     protected $container;
 
     /**
-     * The DebugBar instance
+     * The instance
      *
      * @var LaravelDebugbar
      */
@@ -56,7 +56,7 @@ class Middleware
             $response = $this->handleException($request, $e);
         }
 
-        // Modify the response to add the Debugbar
+        // Modify the response to add
         $this->debugbar->modifyResponse($request, $response);
 
         return $response;

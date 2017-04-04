@@ -31,7 +31,7 @@
       "Songshenzong\\Log\\": "src/"
     },
     "files": [
-      "src/helpers.php"
+      "src/Helpers.php"
     ]
   },
   "extra": {

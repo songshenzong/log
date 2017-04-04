@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the DebugBar package.
+ * This file is part of the package.
  *
  * (c) 2013 Maxime Bouroumeau-Fuseau
  *
@@ -140,7 +140,6 @@ class DebugBar implements ArrayAccess
     }
 
 
-
     /**
      * Returns collected data
      *
@@ -155,9 +154,6 @@ class DebugBar implements ArrayAccess
         }
         return $this -> data;
     }
-
-
-
 
 
     /**
@@ -203,8 +199,6 @@ class DebugBar implements ArrayAccess
     }
 
 
-
-
     /**
      * Sets whether to only use the session to store stacked data even
      * if a storage is enabled
@@ -240,7 +234,7 @@ class DebugBar implements ArrayAccess
     {
         $http = $this -> getHttpDriver();
         if (!$http -> isSessionStarted()) {
-            throw new DebugBarException("Session must be started before using stack data in the debug bar");
+            throw new DebugBarException("Session must be started before using stack data in the songshenzong");
         }
 
         if (!$http -> hasSessionValue($this -> stackSessionNamespace)) {
@@ -257,7 +251,7 @@ class DebugBar implements ArrayAccess
 
     public function offsetSet($key, $value)
     {
-        throw new DebugBarException("DebugBar[] is read-only");
+        throw new DebugBarException("Songshenzong[] is read-only");
     }
 
     public function offsetGet($key)
@@ -272,6 +266,6 @@ class DebugBar implements ArrayAccess
 
     public function offsetUnset($key)
     {
-        throw new DebugBarException("DebugBar[] is read-only");
+        throw new DebugBarException("Songshenzong[] is read-only");
     }
 }

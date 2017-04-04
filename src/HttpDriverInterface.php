@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the DebugBar package.
+ * This file is part of the  package.
  *
  * (c) 2013 Maxime Bouroumeau-Fuseau
  *

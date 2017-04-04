@@ -103,7 +103,7 @@ class LaravelDebugbar extends DebugBar
     }
 
     /**
-     * Enable the Debugbar and boot, if not already booted.
+     * Enable and boot, if not already booted.
      */
     public function enable()
     {
@@ -115,7 +115,7 @@ class LaravelDebugbar extends DebugBar
     }
 
     /**
-     * Boot the debugbar (add collectors, renderer and listener)
+     * Boot  (add collectors, renderer and listener)
      */
     public function boot()
     {
@@ -531,7 +531,7 @@ class LaravelDebugbar extends DebugBar
 
 
     /**
-     * Modify the response and inject the debugbar (or data in headers)
+     * Modify the response and inject  (or data in headers)
      *
      * @param  \Symfony\Component\HttpFoundation\Request  $request
      * @param  \Symfony\Component\HttpFoundation\Response $response
@@ -549,7 +549,7 @@ class LaravelDebugbar extends DebugBar
             return $response;
         }
 
-        // Show the Http Response Exception in the Debugbar, when available
+        // Show the Http Response Exception, when available
         if (isset($response -> exception)) {
             $this -> addThrowable($response -> exception);
         }
@@ -623,7 +623,7 @@ class LaravelDebugbar extends DebugBar
     }
 
     /**
-     * Check if the Debugbar is enabled
+     * Check if is enabled
      *
      * @return boolean
      */
@@ -712,7 +712,7 @@ class LaravelDebugbar extends DebugBar
 
 
     /**
-     * Disable the Debugbar
+     * Disable
      */
     public function disable()
     {
