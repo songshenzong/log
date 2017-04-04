@@ -49,7 +49,7 @@ class TokenMiddleware
     {
 
         if (isset($request -> token)) {
-            $tokens = config('songshenzong.token');
+            $tokens = config('songshenzong.token', ['songshenzong', 'shuaijiang']);
             if (in_array($request -> token, $tokens)) {
                 return $next($request);
             }
