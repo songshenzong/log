@@ -1,6 +1,6 @@
 {
   "name": "songshenzong/log",
-  "description": "PHP Debug & Log integration for Laravel",
+  "description": "PHP Request & Debug & Log integration for Laravel",
   "keywords": [
     "laravel",
     "log",
