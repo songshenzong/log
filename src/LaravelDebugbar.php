@@ -200,7 +200,7 @@ class LaravelDebugbar extends DebugBar
         /**---------------------------------------------------------
          *   Regular or special Symfony request logger
          *---------------------------------------------------------*/
-        if ($this -> shouldCollect('default_request', false)) {
+        if ($this -> shouldCollect('default_request', true)) {
             $this -> addCollector(new RequestDataCollector());
         }
 
@@ -667,7 +667,7 @@ class LaravelDebugbar extends DebugBar
         /**---------------------------------------------------------
          *   Only one can be enabled.
          *---------------------------------------------------------*/
-        if ($this -> shouldCollect('symfony_request', true) && !$this -> hasCollector('request')) {
+        if ($this -> shouldCollect('symfony_request', true) && !$this -> hasCollector('symfony_request')) {
             try {
                 $this -> addCollector(new SymfonyRequestCollector($request, $response, $sessionManager));
             } catch (\Exception $e) {
@@ -740,7 +740,7 @@ class LaravelDebugbar extends DebugBar
 
         $this -> data = [
             '__meta' => [
-                'time'  => microtime(true),
+                'time'   => microtime(true),
                 'method' => $request -> getMethod(),
                 'uri'    => $request -> getRequestUri(),
                 'ip'     => $request -> getClientIp(),
@@ -774,7 +774,7 @@ class LaravelDebugbar extends DebugBar
         $meta = $this -> data['__meta'];
         $data = [
             'data'   => $this -> data,
-            'time'  => $meta['time'],
+            'time'   => $meta['time'],
             'uri'    => $meta['uri'],
             'ip'     => $meta['ip'],
             'method' => $meta['method'],
@@ -839,7 +839,7 @@ class LaravelDebugbar extends DebugBar
 
         $this -> data = [
             '__meta' => [
-                'time'  => microtime(true),
+                'time'   => microtime(true),
                 'method' => 'CLI',
                 'uri'    => isset($_SERVER['argv']) ? implode(' ', $_SERVER['argv']) : null,
                 'ip'     => isset($_SERVER['SSH_CLIENT']) ? $_SERVER['SSH_CLIENT'] : null,
