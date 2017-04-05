@@ -16,7 +16,6 @@ class SongshenzongLog extends Model
     protected $fillable = [
         'data',
         'time',
-        'datetime',
         'uri',
         'ip',
         'method',
@@ -34,5 +33,10 @@ class SongshenzongLog extends Model
         'updated_at',
     ];
 
+
+    public function getTimeAttribute($key)
+    {
+        return date('m/d/y H:i:s:ms', $key);
+    }
 
 }
