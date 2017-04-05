@@ -14,7 +14,7 @@ use Songshenzong\Log\DataCollector\ExceptionsCollector;
 use Songshenzong\Log\DataCollector\MemoryCollector;
 use Songshenzong\Log\DataCollector\MessagesCollector;
 use Songshenzong\Log\DataCollector\PhpInfoCollector;
-use Songshenzong\Log\DataCollector\RequestDataCollector;
+use Songshenzong\Log\DataCollector\RequestCollector;
 use Songshenzong\Log\DataCollector\TimeDataCollector;
 
 /**
@@ -26,7 +26,7 @@ class StandardDebugBar extends DebugBar
     {
         $this->addCollector(new PhpInfoCollector());
         $this->addCollector(new MessagesCollector());
-        $this->addCollector(new RequestDataCollector());
+        $this->addCollector(new RequestCollector());
         $this->addCollector(new TimeDataCollector());
         $this->addCollector(new MemoryCollector());
         $this->addCollector(new ExceptionsCollector());

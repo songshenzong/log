@@ -10,7 +10,7 @@ use Songshenzong\Log\DataCollector\MultiAuthCollector;
 use Songshenzong\Log\DataCollector\QueryCollector;
 use Songshenzong\Log\DataCollector\SessionCollector;
 use Songshenzong\Log\DataCollector\ViewCollector;
-use Songshenzong\Log\DataCollector\RequestDataCollector;
+use Songshenzong\Log\DataCollector\RequestCollector;
 
 use Songshenzong\Log\DataCollector\ConfigCollector;
 use Songshenzong\Log\DataCollector\ExceptionsCollector;
@@ -196,12 +196,7 @@ class LaravelDebugbar extends DebugBar
         }
 
 
-        /**---------------------------------------------------------
-         *   Regular or special Symfony request logger
-         *---------------------------------------------------------*/
-        if ($this -> shouldCollect('default_request', true)) {
-            $this -> addCollector(new RequestDataCollector());
-        }
+
 
 
         /**---------------------------------------------------------

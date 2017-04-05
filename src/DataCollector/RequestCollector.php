@@ -9,10 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  *
- * Based on \Symfony\Component\HttpKernel\DataCollector\RequestDataCollector by Fabien Potencier <fabien@symfony.com>
+ * Based on \Symfony\Component\HttpKernel\DataCollector\RequestCollector by Fabien Potencier <fabien@symfony.com>
  *
  */
-class RequestDataCollector extends DataCollector implements DataCollectorInterface
+class RequestCollector extends DataCollector implements DataCollectorInterface
 {
     /** @var \Symfony\Component\HttpFoundation\Request $request */
     protected $request;
@@ -22,7 +22,7 @@ class RequestDataCollector extends DataCollector implements DataCollectorInterfa
     protected $session;
 
     /**
-     * Create a new RequestDataCollector
+     * Create a new RequestCollector
      *
      * @param \Symfony\Component\HttpFoundation\Request                  $request
      * @param \Symfony\Component\HttpFoundation\Request                  $response
