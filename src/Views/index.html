@@ -262,14 +262,12 @@
     <table class="table table-hover table-condensed table-striped" id="table">
         <thead>
         <tr>
-            <th>Index</th>
             <th>ID</th>
             <th>IP</th>
             <th>Method</th>
             <th>Host</th>
             <th>URI</th>
             <th>Status</th>
-            <th>Time</th>
             <th>Created at</th>
             <th>Delete</th>
         </tr>
@@ -280,14 +278,12 @@
         <tr v-for="(item,index) in items.data">
 
 
-            <th scope="row">[[index]]</th>
-            <th>[[item.id]]</th>
+            <th scope="row">[[item.id]]</th>
             <td>[[item.ip]]</td>
             <td>[[item.method]]</td>
             <td>[[item.data.request.server.HTTP_HOST]]</td>
             <td @click="getDetail(item)">[[item.uri]]</td>
             <td>[[item.data.request.server.REDIRECT_STATUS]]</td>
-            <td>[[item.utime]]</td>
             <td>[[item.created_at]]</td>
             <td><span @click="remove(item.id,index)" class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
 
