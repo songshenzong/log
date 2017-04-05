@@ -40,7 +40,7 @@ class SymfonyRequestCollector extends DataCollector implements DataCollectorInte
      */
     public function getName()
     {
-        return 'request';
+        return 'symfony_request';
     }
 
 
@@ -111,11 +111,11 @@ class SymfonyRequestCollector extends DataCollector implements DataCollectorInte
             $data['request_server']['PHP_AUTH_PW'] = '******';
         }
 
-        foreach ($data as $key => $var) {
-            if (!is_string($data[$key])) {
-                $data[$key] = $this->formatVar($var);
-            }
-        }
+        // foreach ($data as $key => $var) {
+        //     if (!is_string($data[$key])) {
+        //         $data[$key] = $this->formatVar($var);
+        //     }
+        // }
 
         return $data;
     }
