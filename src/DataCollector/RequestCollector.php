@@ -71,6 +71,7 @@ class RequestCollector extends DataCollector implements DataCollectorInterface
 
         $statusCode = $response -> getStatusCode();
 
+
         $data = [
             'format'           => $request -> getRequestFormat(),
             'content_type'     => $response -> headers -> get('Content-Type') ? $response -> headers -> get(
@@ -81,11 +82,15 @@ class RequestCollector extends DataCollector implements DataCollectorInterface
             'path_info'        => $request -> getPathInfo(),
             'query'            => $request -> query -> all(),
             'request'          => $request -> request -> all(),
+            'get'              => $GLOBALS['_GET'],
+            'post'             => $GLOBALS['_POST'],
+            'session'          => isset($GLOBALS['_SESSION']) ? $GLOBALS['_SESSION'] : '',
             'headers'          => $request -> headers -> all(),
             'server'           => array_change_key_case($request -> server -> all(), CASE_LOWER),
             'cookies'          => $request -> cookies -> all(),
             'response_headers' => $responseHeaders,
         ];
+
 
         if ($this -> session) {
             $sessionAttributes = [];
@@ -111,22 +116,6 @@ class RequestCollector extends DataCollector implements DataCollectorInterface
             $data['server']['PHP_AUTH_PW'] = '******';
         }
 
-        // foreach ($data as $key => $var) {
-        //     if (!is_string($data[$key])) {
-        //         $data[$key] = $this->formatVar($var);
-        //     }
-        // }
-
-        $vars = array('GET', 'POST', 'SESSION', 'COOKIE', 'SERVER');
-
-        foreach ($vars as $var) {
-            if (isset($GLOBALS['_' . $var])) {
-                $data[$var] = $GLOBALS['_' . $var];
-
-            }
-        }
-
-        $data = array_change_key_case($data, CASE_LOWER);
 
         return $data;
     }
