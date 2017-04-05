@@ -78,11 +78,11 @@ class RequestDataCollector extends DataCollector implements DataCollectorInterfa
             ) : 'text/html',
             'status_text'      => isset(Response ::$statusTexts[$statusCode]) ? Response ::$statusTexts[$statusCode] : '',
             'status_code'      => $statusCode,
-            'request_query'    => $request -> query -> all(),
-            'request_request'  => $request -> request -> all(),
-            'request_headers'  => $request -> headers -> all(),
-            'request_server'   => $request -> server -> all(),
-            'request_cookies'  => $request -> cookies -> all(),
+            'query'    => $request -> query -> all(),
+            'request'  => $request -> request -> all(),
+            'headers'  => $request -> headers -> all(),
+            'server'   => $request -> server -> all(),
+            'cookies'  => $request -> cookies -> all(),
             'response_headers' => $responseHeaders,
             'path_info'        => $request -> getPathInfo(),
         ];
@@ -95,20 +95,20 @@ class RequestDataCollector extends DataCollector implements DataCollectorInterfa
             $data['session_attributes'] = $sessionAttributes;
         }
 
-        foreach ($data['request_server'] as $key => $value) {
+        foreach ($data['server'] as $key => $value) {
             if (str_is('*_KEY', $key) || str_is('*_PASSWORD', $key)
                 || str_is('*_SECRET', $key) || str_is('*_PW', $key)
             ) {
-                $data['request_server'][$key] = '******';
+                $data['server'][$key] = '******';
             }
         }
 
-        if (isset($data['request_headers']['php-auth-pw'])) {
-            $data['request_headers']['php-auth-pw'] = '******';
+        if (isset($data['headers']['php-auth-pw'])) {
+            $data['headers']['php-auth-pw'] = '******';
         }
 
-        if (isset($data['request_server']['PHP_AUTH_PW'])) {
-            $data['request_server']['PHP_AUTH_PW'] = '******';
+        if (isset($data['server']['PHP_AUTH_PW'])) {
+            $data['server']['PHP_AUTH_PW'] = '******';
         }
 
         // foreach ($data as $key => $var) {
