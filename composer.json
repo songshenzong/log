@@ -3,10 +3,10 @@
   "description": "PHP Request & Debug & Log integration for Laravel",
   "keywords": [
     "laravel",
+    "request",
     "log",
-    "debugbar",
-    "profiler",
     "debug",
+    "profiler",
     "web"
   ],
   "license": "MIT",
@@ -36,7 +36,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "0.4-dev"
+      "dev-master": "0.5-dev"
     }
   },
   "minimum-stability": "dev"
