@@ -26,7 +26,7 @@ return [
     */
 
     'token' => [
-        'songshenzong',
+        'lenovo',
         'shuaijiang',
     ],
 
@@ -84,7 +84,7 @@ return [
         'exceptions'      => true,  // Exception displayer
         'log'             => true,  // Logs from Monolog (merged in messages if enabled)
         'db'              => true,  // Show database (PDO) queries and bindings
-        'views'           => true,  // Views with their data
+        'views'           => false,  // Views with their data
         'route'           => true,  // Current route information
         'laravel'         => false, // Laravel version and environment
         'events'          => false, // All events fired
