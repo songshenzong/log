@@ -104,10 +104,6 @@ class RequestCollector extends DataCollector implements DataCollectorInterface
             $data['headers']['php-auth-pw'] = '******';
         }
 
-        if (isset($data['server']['PHP_AUTH_PW'])) {
-            $data['server']['PHP_AUTH_PW'] = '******';
-        }
-
 
         return $data;
     }
