@@ -615,7 +615,7 @@ class LaravelDebugbar extends DebugBar
         try {
             $this -> collect();
         } catch (\Exception $e) {
-            $app['log'] -> error('Debugbar exception: ' . $e -> getMessage());
+            $app['log'] -> error('Songshenzong exception: ' . $e -> getMessage());
         }
 
 

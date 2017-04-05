@@ -126,8 +126,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
 
-        app('debugbar') -> enable();
-        app('debugbar') -> boot();
+        app('songshenzong') -> enable();
+        app('songshenzong') -> boot();
 
 
     }
