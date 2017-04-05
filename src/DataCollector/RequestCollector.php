@@ -92,14 +92,6 @@ class RequestCollector extends DataCollector implements DataCollectorInterface
         ];
 
 
-        if ($this -> session) {
-            $sessionAttributes = [];
-            foreach ($this -> session -> all() as $key => $value) {
-                $sessionAttributes[$key] = $value;
-            }
-            $data['session_attributes'] = $sessionAttributes;
-        }
-
         foreach ($data['server'] as $key => $value) {
             if (str_is('*_KEY', $key) || str_is('*_PASSWORD', $key)
                 || str_is('*_SECRET', $key) || str_is('*_PW', $key)
