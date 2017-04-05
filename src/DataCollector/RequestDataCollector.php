@@ -78,13 +78,13 @@ class RequestDataCollector extends DataCollector implements DataCollectorInterfa
             ) : 'text/html',
             'status_text'      => isset(Response ::$statusTexts[$statusCode]) ? Response ::$statusTexts[$statusCode] : '',
             'status_code'      => $statusCode,
+            'path_info'        => $request -> getPathInfo(),
             'query'            => $request -> query -> all(),
             'request'          => $request -> request -> all(),
             'headers'          => $request -> headers -> all(),
             'server'           => array_change_key_case($request -> server -> all(), CASE_LOWER),
             'cookies'          => $request -> cookies -> all(),
             'response_headers' => $responseHeaders,
-            'path_info'        => $request -> getPathInfo(),
         ];
 
         if ($this -> session) {
