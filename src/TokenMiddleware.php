@@ -25,11 +25,12 @@ class TokenMiddleware
      */
     protected $songshenzong;
 
+
     /**
-     * Create a new middleware instance.
+     * TokenMiddleware constructor.
      *
-     * @param  Container       $container
-     * @param  LaravelDebugbar $debugbar
+     * @param \Illuminate\Contracts\Container\Container $container
+     * @param \Songshenzong\Log\LaravelDebugbar         $songshenzong
      */
     public function __construct(Container $container, LaravelDebugbar $songshenzong)
     {
