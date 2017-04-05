@@ -34,6 +34,11 @@ class SongshenzongLog extends Model
     ];
 
 
+    /**
+     * @param $key
+     *
+     * @return false|string
+     */
     public function getTimeAttribute($key)
     {
         return date('m/d/y H:i:s:ms', $key);
