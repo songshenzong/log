@@ -15,7 +15,7 @@ class SongshenzongLog extends Model
      */
     protected $fillable = [
         'data',
-        'utime',
+        'time',
         'datetime',
         'uri',
         'ip',

@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS {$this -> table}
 (
   id         INT UNSIGNED     NOT NULL  AUTO_INCREMENT  PRIMARY KEY,
   data       LONGTEXT         NOT NULL,
-  utime      VARCHAR(100)     NOT NULL,
+  time       VARCHAR(100)     NOT NULL,
   uri        VARCHAR(300)     NOT NULL,
   ip         VARCHAR(50)      NOT NULL,
   method     VARCHAR(10)      NOT NULL,
@@ -80,7 +80,7 @@ HEREDOC;
             \DB ::statement("CREATE INDEX {$this->table}_ip_index ON {$this->table} (ip);");
             \DB ::statement("CREATE INDEX {$this->table}_method_index ON {$this->table} (method);");
             \DB ::statement("CREATE INDEX {$this->table}_uri_index ON {$this->table} (uri);");
-            \DB ::statement("CREATE INDEX {$this->table}_utime_index ON {$this->table} (utime);");
+            \DB ::statement("CREATE INDEX {$this->table}_time_index ON {$this->table} (time);");
             return $this -> songshenzong -> json(200, 'OK');
         }
         return $this -> songshenzong -> json(500, 'Error');

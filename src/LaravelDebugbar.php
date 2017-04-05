@@ -740,7 +740,7 @@ class LaravelDebugbar extends DebugBar
 
         $this -> data = [
             '__meta' => [
-                'utime'  => microtime(true),
+                'time'  => microtime(true),
                 'method' => $request -> getMethod(),
                 'uri'    => $request -> getRequestUri(),
                 'ip'     => $request -> getClientIp(),
@@ -774,7 +774,7 @@ class LaravelDebugbar extends DebugBar
         $meta = $this -> data['__meta'];
         $data = [
             'data'   => $this -> data,
-            'utime'  => $meta['utime'],
+            'time'  => $meta['time'],
             'uri'    => $meta['uri'],
             'ip'     => $meta['ip'],
             'method' => $meta['method'],
@@ -839,7 +839,7 @@ class LaravelDebugbar extends DebugBar
 
         $this -> data = [
             '__meta' => [
-                'utime'  => microtime(true),
+                'time'  => microtime(true),
                 'method' => 'CLI',
                 'uri'    => isset($_SERVER['argv']) ? implode(' ', $_SERVER['argv']) : null,
                 'ip'     => isset($_SERVER['SSH_CLIENT']) ? $_SERVER['SSH_CLIENT'] : null,

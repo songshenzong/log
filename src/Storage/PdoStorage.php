@@ -22,7 +22,7 @@ class PdoStorage implements StorageInterface
     protected $tableName;
 
     protected $sqlQueries = array(
-        'save' => "INSERT INTO %tablename% (id, data, meta_utime, meta_datetime, meta_uri, meta_ip, meta_method) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        'save' => "INSERT INTO %tablename% (id, data, meta_time, meta_datetime, meta_uri, meta_ip, meta_method) VALUES (?, ?, ?, ?, ?, ?, ?)",
         'get' => "SELECT data FROM %tablename% WHERE id = ?",
         'find' => "SELECT data FROM %tablename% %where% ORDER BY meta_datetime DESC LIMIT %limit% OFFSET %offset%",
         'clear' => "DELETE FROM %tablename%"
@@ -58,7 +58,7 @@ class PdoStorage implements StorageInterface
         $sql = $this->getSqlQuery('save');
         $stmt = $this->pdo->prepare($sql);
         $meta = $data['__meta'];
-        $stmt->execute(array($id, serialize($data), $meta['utime'], $meta['datetime'], $meta['uri'], $meta['ip'], $meta['method']));
+        $stmt->execute(array($id, serialize($data), $meta['time'], $meta['datetime'], $meta['uri'], $meta['ip'], $meta['method']));
     }
 
     /**
