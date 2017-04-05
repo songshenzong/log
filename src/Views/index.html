@@ -137,17 +137,6 @@
 
 
         /**---------------------------------------------------------
-         *   Drpp Table.
-         *---------------------------------------------------------*/
-        function dropTable() {
-            jQuery.getJSON('/songshenzong/drop', {token: jQuery("#token").val()}, function (result) {
-                    layer.msg(result.message);
-                }
-            );
-        }
-
-
-        /**---------------------------------------------------------
          *   Create Table.
          *---------------------------------------------------------*/
         function createTable() {
@@ -166,14 +155,7 @@
 
     </script>
     <style>
-        p {
-            display: block;
-        }
-
         .navbar {
-            /*margin: 0px;*/
-            /*padding: 5px;*/
-            /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
             background: #2e6da4;
             color: #F2F4F6;
             border-radius: 0;
@@ -240,10 +222,7 @@
                     </button>
 
 
-                    <button onclick="createTable()" type="button" class="btn btn-sm btn-danger">Create Table
-                    </button>
-
-                    <button onclick="dropTable()" type="button" class="btn btn-sm btn-danger">Drop Table
+                    <button onclick="createTable()" type="button" class="btn btn-sm btn-danger">Create/Recreate Table
                     </button>
 
 

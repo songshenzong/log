@@ -42,24 +42,12 @@ class ApiController extends BaseController
 
 
     /**
-     * Drop Table.
-     *
-     * @return bool
-     */
-    public function dropTable()
-    {
-        if (\DB ::statement("DROP TABLE IF EXISTS {$this->table};")) {
-            return $this -> songshenzong -> json(200, 'OK');
-        }
-        return $this -> songshenzong -> json(500, 'Error');
-    }
-
-
-    /**
      * Create table.
      */
     public function createTable()
     {
+        \DB ::statement("DROP TABLE IF EXISTS {$this->table};");
+
         $createTable = <<<"HEREDOC"
 CREATE TABLE IF NOT EXISTS {$this -> table}
 (
@@ -89,15 +77,14 @@ HEREDOC;
 
 
     /**
-     * @param null $id
-     * @param null $last
+     * @param                                   $id
+     * @param \Songshenzong\Log\SongshenzongLog $songshenzong_log
      *
-     * @return mixed
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function getData($id)
+    public function getData($id, SongshenzongLog $songshenzong_log)
     {
-        $log = SongshenzongLog ::find($id);
-        return $this -> songshenzong -> json(200, 'OK', $log);
+        return $this -> songshenzong -> json(200, 'OK', $songshenzong_log -> find($id));
     }
 
 
@@ -120,7 +107,7 @@ HEREDOC;
 
 
     /**
-     * @return \Illuminate\Http\JsonResponse|int
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy()
     {

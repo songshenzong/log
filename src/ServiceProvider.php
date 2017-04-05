@@ -112,8 +112,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
                 $router -> get('destroy', 'ApiController@destroy');
 
-                $router -> get('drop', 'ApiController@dropTable');
-
                 $router -> get('create', 'ApiController@createTable');
 
             });
