@@ -12,12 +12,9 @@
 
 
     <script>
-
-
         var List;
         var loading;
         var Token;
-
 
         /**---------------------------------------------------------
          *   Layer alert.
@@ -60,7 +57,7 @@
                 layer.close(loading);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                information('1. May be a network error. <br /> 2. May be no data table, please create table.');
+                information('May be a network error.');
             }
         });
 
