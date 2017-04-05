@@ -45,7 +45,10 @@ Copy the package config to your local config with the publish command:
 ```shell
 php artisan vendor:publish --provider="Songshenzong\Log\ServiceProvider"
 ```
-
+## Let's start
+```
+http://your.domain/songshenzong
+```
 
 ## Usage
 
