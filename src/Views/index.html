@@ -283,7 +283,7 @@
             <td>[[item.method]]</td>
             <td>[[item.data.request.server.HTTP_HOST]]</td>
             <td @click="getDetail(item)" style="word-break:break-all">[[item.uri]]</td>
-            <td>[[item.data.request.server.REDIRECT_STATUS]]</td>
+            <td>[[item.data.request.status_code]]</td>
             <td>[[item.created_at]]</td>
             <td><span @click="remove(item.id,index)" class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
 

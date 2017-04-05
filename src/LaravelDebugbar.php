@@ -9,7 +9,6 @@ use Songshenzong\Log\DataCollector\LogsCollector;
 use Songshenzong\Log\DataCollector\MultiAuthCollector;
 use Songshenzong\Log\DataCollector\QueryCollector;
 use Songshenzong\Log\DataCollector\SessionCollector;
-use Songshenzong\Log\DataCollector\SymfonyRequestCollector;
 use Songshenzong\Log\DataCollector\ViewCollector;
 use Songshenzong\Log\DataCollector\RequestDataCollector;
 
@@ -667,13 +666,13 @@ class LaravelDebugbar extends DebugBar
         /**---------------------------------------------------------
          *   Only one can be enabled.
          *---------------------------------------------------------*/
-        if ($this -> shouldCollect('symfony_request', true) && !$this -> hasCollector('symfony_request')) {
+        if ($this -> shouldCollect('request', true) && !$this -> hasCollector('request')) {
             try {
-                $this -> addCollector(new SymfonyRequestCollector($request, $response, $sessionManager));
+                $this -> addCollector(new RequestCollector($request, $response, $sessionManager));
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add SymfonyRequestCollector to Songshenzong: ' . $e -> getMessage(),
+                        'Cannot add RequestCollector to Songshenzong: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
