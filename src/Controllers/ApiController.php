@@ -107,8 +107,10 @@ HEREDOC;
     public function getList()
     {
 
+        $index = isset(\request() -> per_page) ? \request() -> per_page : 23;
+
         $list = SongshenzongLog :: orderBy('created_at', 'desc')
-                                -> paginate(\request() -> per_page??23)
+                                -> paginate($index)
                                 -> appends(\request() -> all())
                                 -> toArray();
 
