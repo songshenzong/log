@@ -196,9 +196,6 @@ class LaravelDebugbar extends DebugBar
         }
 
 
-
-
-
         /**---------------------------------------------------------
          *   All events fired
          *---------------------------------------------------------*/
@@ -929,6 +926,7 @@ class LaravelDebugbar extends DebugBar
                                       'status_code' => $status_code,
                                       'message'     => $message,
                                       'data'        => $data,
+                                      'token'       => \request() -> token,
                                   ]);
     }
 

@@ -54,9 +54,9 @@ class TokenMiddleware
             if (in_array($request -> token, $tokens)) {
                 return $next($request);
             }
-            return $this -> songshenzong -> json(403, 'Token invalid!');
+            return $this -> songshenzong -> json(403, $request -> token . ' is Invalid Token !');
         }
-        return $this -> songshenzong -> json(403, 'No Token!');
+        return $this -> songshenzong -> json(403, 'No Token !');
 
     }
 

@@ -14,71 +14,111 @@
     <script>
         var List;
         var loading;
-        var Token;
-
+        var token;
         /**---------------------------------------------------------
-         *   Layer alert.
+         *   Ready Go!
          *---------------------------------------------------------*/
-        function information(message) {
-            layer.alert(message, {
-                closeBtn: 0,
-                title: 'Alert',
-                btn: ['Got It'],
-                time: 20000,
-            });
-        }
+        jQuery(document).ready(function () {
 
-        /**---------------------------------------------------------
-         *   Global settings of the Ajax.
-         *---------------------------------------------------------*/
-        jQuery.ajaxSetup({
-            cache: false,
-            aysnc: true,
-            url: "",
-            type: "GET",
-            data: jQuery("input").serialize(),
-            dataType: "json",
-            beforeSend: function () {
+            jQuery("#token").val(localStorage.getItem('songshenzong_token'));
 
-                Token = jQuery("#token").val();
+            token = jQuery("#token").val().toString();
 
-                if (!Token) {
-                    information('Enter Token First.');
-                    return false;
+            jQuery("#token").bind('input propertychange', function () {
+                token = jQuery("#token").val().toString();
+                localStorage.setItem('songshenzong_token', token);
+                console.log(localStorage.getItem('songshenzong_token'));
+
+            })
+
+
+            /**---------------------------------------------------------
+             *   Global settings of the Ajax.
+             *---------------------------------------------------------*/
+
+            jQuery.ajaxSetup({
+                cache: false,
+                aysnc: true,
+                url: "",
+                type: "GET",
+                data: {token: token},
+                dataType: "json",
+                beforeSend: function () {
+
+
+                    if (!token) {
+                        information('Enter Token First.');
+                        return false;
+                        jQuery("#token").focus();
+                    }
+
+                    layer.closeAll();
+                    loading = layer.load(1, {
+                        shade: [0.4, '#000']
+                    });
+
+                },
+                complete: function () {
+                    layer.close(loading);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    information('May be a network error.');
                 }
+            });
 
-                layer.closeAll();
-                loading = layer.load(1, {
-                    shade: [0.4, '#000']
-                });
+            /**---------------------------------------------------------
+             *   Get list of the logs.
+             *---------------------------------------------------------*/
+            logList('/songshenzong/logs');
 
-            },
-            complete: function () {
-                layer.close(loading);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                information('May be a network error.');
-            }
+
         });
 
 
         /**---------------------------------------------------------
-         *   Verify method.
+         *   Set Cookies.
          *---------------------------------------------------------*/
-        function verify(data) {
-            if (data.status_code != 200) {
-                information(data.message);
-                return false;
-            }
-            return true;
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
         }
+
+        /**---------------------------------------------------------
+         *   Get Cookies.
+         *---------------------------------------------------------*/
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i].trim();
+                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+
+        /**---------------------------------------------------------
+         *   Check Cookies.
+         *---------------------------------------------------------*/
+        function checkCookie() {
+            var user = getCookie("username");
+            if (user != "") {
+                alert("Welcome again " + user);
+            }
+            else {
+                user = prompt("Please enter your name:", "");
+                if (user != "" && user != null) {
+                    setCookie("username", user, 365);
+                }
+            }
+        }
+
         /**---------------------------------------------------------
          *   Get list of logs.
          *---------------------------------------------------------*/
         function logList(url) {
-
-
-            jQuery.getJSON(url, {token: jQuery("#token").val()},
+            jQuery.getJSON(url,
                 function (result) {
                     if (!verify(result)) {
                         return false;
@@ -119,8 +159,7 @@
 
 
                                     jQuery.getJSON('/songshenzong/destroy', {
-                                            id: id,
-                                            token: jQuery("#token").val()
+                                            id: id
                                         }, function (result) {
 
                                             List.items.data.splice(index, 1);
@@ -132,9 +171,33 @@
                         });
                     }
 
-
+                    jQuery("#token").val(localStorage.getItem('songshenzong_token'));
                 }
-            );
+            )
+            ;
+        }
+
+        /**---------------------------------------------------------
+         *   Verify method.
+         *---------------------------------------------------------*/
+        function verify(data) {
+            if (data.status_code != 200) {
+                information(data.message);
+                return false;
+            }
+            return true;
+        }
+
+        /**---------------------------------------------------------
+         *   Layer alert.
+         *---------------------------------------------------------*/
+        function information(message) {
+            layer.alert(message, {
+                closeBtn: 0,
+                title: 'Alert',
+                btn: ['Got It'],
+                time: 20000,
+            });
         }
 
 
@@ -142,28 +205,21 @@
          *   Destroy all of the logs.
          *---------------------------------------------------------*/
         function destroy() {
-            jQuery.getJSON('/songshenzong/destroy', {token: jQuery("#token").val()}, function (result) {
+            jQuery.getJSON('/songshenzong/destroy', function (result) {
                     List.items = result.data;
                 }
             );
         }
 
-
         /**---------------------------------------------------------
          *   Create Table.
          *---------------------------------------------------------*/
         function createTable() {
-            jQuery.getJSON('/songshenzong/create', {token: jQuery("#token").val()}, function (result) {
+            jQuery.getJSON('/songshenzong/create', function (result) {
                     layer.msg(result.message);
                 }
             );
         }
-
-
-        /**---------------------------------------------------------
-         *   Get list of the logs.
-         *---------------------------------------------------------*/
-        logList('/songshenzong/logs');
 
 
     </script>
