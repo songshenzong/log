@@ -15,6 +15,19 @@
         var List;
         var loading;
         var token;
+
+
+        /**---------------------------------------------------------
+         *   Clear Token.
+         *---------------------------------------------------------*/
+        function clearToken() {
+            token = '';
+            jQuery("#token").val('');
+            localStorage.setItem('songshenzong_token', token);
+            jQuery.ajaxSetup({
+                data: {token: token},
+            });
+        }
         /**---------------------------------------------------------
          *   Ready Go!
          *---------------------------------------------------------*/
@@ -219,6 +232,9 @@
                         <span class="input-group-addon" id="sizing-addon3">Token</span>
                         <input type="text" class="form-control" placeholder="Token" name="token" id="token"
                                aria-describedby="sizing-addon3">
+                        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" onclick="clearToken()">Clear</button>
+          </span>
                     </div>
 
                 </div>
