@@ -1,6 +1,6 @@
 # Songshenzong
 
-PHP Request & Debug & Log integration for Laravel
+Record request & debug for Laravel
 
 ## Installation
 
