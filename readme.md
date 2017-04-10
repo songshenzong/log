@@ -12,7 +12,6 @@ composer require songshenzong/log
 
 After updating composer, add the ServiceProvider to the providers array in `config/app.php`
 
-
 ### Laravel 5.x:
 
 ```php
