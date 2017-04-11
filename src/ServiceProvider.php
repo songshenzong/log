@@ -61,12 +61,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function isEnabled()
     {
         if ($this -> enabled === null) {
-            $this -> enabled = (boolean)config('songshenzong.enabled');;
+            $this -> enabled = (boolean)config('request-log.enabled');;
         }
 
 
         if ($this -> enabled === true) {
-            $environments    = config('songshenzong.env', ['dev', 'local', 'production']);
+            $environments    = config('request-log.env', ['dev', 'local', 'production']);
             $this -> enabled = in_array(env('APP_ENV'), $environments);
         }
 

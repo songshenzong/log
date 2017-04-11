@@ -50,7 +50,7 @@ class TokenMiddleware
     {
 
         if (isset($request -> token)) {
-            $tokens = config('songshenzong.token', ['songshenzong']);
+            $tokens = config('request-log.token', ['request-log']);
             if (in_array($request -> token, $tokens)) {
                 return $next($request);
             }

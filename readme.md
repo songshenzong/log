@@ -35,7 +35,7 @@ If you want to use the facade to log messages, add this to your facades in `conf
 
 
 
-The profiler is enabled by default, You can override that in the config (`songshenzong.enabled`).
+The profiler is enabled by default, You can override that in the config (`request-log.enabled`).
 
 
 
