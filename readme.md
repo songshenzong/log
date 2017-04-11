@@ -15,19 +15,19 @@ After updating composer, add the ServiceProvider to the providers array in `conf
 ### Laravel 5.x:
 
 ```php
-Songshenzong\RequestLog\ServiceProvider::class,
+RequestLog\RequestLog\ServiceProvider::class,
 ```
 
 If you want to use the facade to log messages, add this to your facades in `config/app.php`:
 
 ```php
-'Songshenzong' => Songshenzong\RequestLog\Facade::class,
+'RequestLog' => Songshenzong\RequestLog\Facade::class,
 ```
 
-> If you use a `dingo/api` route, make sure you load the Songshenzong Middleware in `config/api.php`.
+> If you use a `dingo/api` route, make sure you load the Middleware in `config/api.php`.
 ```php
     'middleware' => [
-        'Songshenzong\RequestLog\Middleware',
+        'RequestLog\RequestLog\Middleware',
     ],
 ```
 
@@ -98,10 +98,10 @@ measure('My long operation', function() {
 If you want you can add your own DataCollectors, through the Container or the Facade:
 
 ```php
-Songshenzong::addCollector(new Songshenzong\RequestLog\DataCollector\MessagesCollector('my_messages'));
+RequestLog::addCollector(new Songshenzong\RequestLog\DataCollector\MessagesCollector('my_messages'));
 //Or via the App container:
-$songshenzong = App::make('songshenzong');
-$songshenzong->addCollector(new Songshenzong\RequestLog\DataCollector\MessagesCollector('my_messages'));
+$request_log = App::make('RequestLog');
+$request_log->addCollector(new Songshenzong\RequestLog\DataCollector\MessagesCollector('my_messages'));
 ```
 
 

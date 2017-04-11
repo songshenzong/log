@@ -20,8 +20,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     protected $enabled = null;
 
 
-    protected $routePrefix = 'request_logs';
-
     /**
      * Register the service provider.
      *
@@ -88,7 +86,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $routeConfig = [
             'namespace' => 'Songshenzong\RequestLog\Controllers',
-            'prefix'    => $this -> routePrefix,
+            'prefix'    => config('request-log.route_prefix', 'request_logs'),
         ];
 
         app('router') -> group($routeConfig, function ($router) {
@@ -115,8 +113,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
 
-        app('songshenzong') -> enable();
-        app('songshenzong') -> boot();
+        app('RequestLog') -> enable();
+        app('RequestLog') -> boot();
 
 
     }

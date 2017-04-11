@@ -14,7 +14,7 @@
         var List;
         var loading;
         var token;
-
+        var route = '/request_logs/';
 
         /**---------------------------------------------------------
          *   Clear Token.
@@ -22,7 +22,7 @@
         function clearToken() {
             token = '';
             jQuery("#token").val('');
-            localStorage.setItem('songshenzong_token', token);
+            localStorage.setItem('request_log_token', token);
             jQuery.ajaxSetup({
                 data: {token: token},
             });
@@ -32,7 +32,7 @@
          *---------------------------------------------------------*/
         jQuery(document).ready(function () {
 
-            jQuery("#token").val(localStorage.getItem('songshenzong_token'));
+            jQuery("#token").val(localStorage.getItem('request_log_token'));
 
             token = jQuery("#token").val().toString();
 
@@ -41,8 +41,8 @@
                 jQuery.ajaxSetup({
                     data: {token: token},
                 });
-                localStorage.setItem('songshenzong_token', token);
-                console.log(localStorage.getItem('songshenzong_token'));
+                localStorage.setItem('request_log_token', token);
+                console.log(localStorage.getItem('request_log_token'));
             })
 
 
@@ -82,7 +82,7 @@
             /**---------------------------------------------------------
              *   Get list of the logs.
              *---------------------------------------------------------*/
-            logList('/songshenzong/logs');
+            logList('logs');
 
 
         });
@@ -92,7 +92,7 @@
          *   Get list of logs.
          *---------------------------------------------------------*/
         function logList(url) {
-            jQuery.getJSON(url,
+            jQuery.getJSON(route + url,
                 function (result) {
                     if (!verify(result)) {
                         return false;
@@ -124,7 +124,7 @@
                                     }
                                 },
                                 getDetail: function (item) {
-                                    window.open("/songshenzong/logs/" + item.id + '?token=' + jQuery("#token").val());
+                                    window.open(route + "logs/" + item.id + '?token=' + jQuery("#token").val());
                                 },
                                 getNewList: function (url) {
                                     logList(url);
@@ -132,7 +132,7 @@
                                 remove: function (id, index) {
 
 
-                                    jQuery.getJSON('/songshenzong/destroy', {
+                                    jQuery.getJSON('destroy', {
                                             id: id
                                         }, function (result) {
 
@@ -145,7 +145,7 @@
                         });
                     }
 
-                    jQuery("#token").val(localStorage.getItem('songshenzong_token'));
+                    jQuery("#token").val(localStorage.getItem('request_log_token'));
                 }
             )
             ;
@@ -179,7 +179,7 @@
          *   Destroy all of the logs.
          *---------------------------------------------------------*/
         function destroy() {
-            jQuery.getJSON('/songshenzong/destroy', function (result) {
+            jQuery.getJSON(route + 'destroy', function (result) {
                     List.items = result.data;
                 }
             );
@@ -189,7 +189,7 @@
          *   Create Table.
          *---------------------------------------------------------*/
         function createTable() {
-            jQuery.getJSON('/songshenzong/create', function (result) {
+            jQuery.getJSON(route + 'create', function (result) {
                     layer.msg(result.message);
                 }
             );
@@ -240,7 +240,7 @@
                 <div class="navbar-form navbar-right">
 
 
-                    <button onclick="logList('/songshenzong/logs')" type="button" class="btn btn-sm btn-success">Refresh
+                    <button onclick="logList('logs')" type="button" class="btn btn-sm btn-success">Refresh
                         Home
                     </button>
 

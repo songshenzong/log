@@ -20,13 +20,13 @@ class ApiController extends BaseController
      *
      * @var LaravelDebugbar
      */
-    protected $songshenzong;
+    protected $request_log;
 
 
     /**
      * @var string\
      */
-    protected $table = 'request_logs';
+    protected $table;
 
 
     /**
@@ -34,10 +34,11 @@ class ApiController extends BaseController
      *
      * @param \Illuminate\Contracts\Foundation\Application $app
      */
-    public function __construct(Application $app, LaravelDebugbar $songshenzong)
+    public function __construct(Application $app, LaravelDebugbar $request_log)
     {
-        $this -> app          = $app;
-        $this -> songshenzong = $songshenzong;
+        $this -> app         = $app;
+        $this -> table       = config('request-log.table', 'request_logs');
+        $this -> request_log = $request_log;
     }
 
 
@@ -69,22 +70,22 @@ HEREDOC;
             \DB ::statement("CREATE INDEX {$this->table}_method_index ON {$this->table} (method);");
             \DB ::statement("CREATE INDEX {$this->table}_uri_index ON {$this->table} (uri);");
             \DB ::statement("CREATE INDEX {$this->table}_time_index ON {$this->table} (time);");
-            return $this -> songshenzong -> json(200, 'OK');
+            return $this -> request_log -> json(200, 'OK');
         }
-        return $this -> songshenzong -> json(500, 'Error');
+        return $this -> request_log -> json(500, 'Error');
 
     }
 
 
     /**
-     * @param                                   $id
+     * @param                                     $id
      * @param \Songshenzong\RequestLog\RequestLog $request_log
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getData($id, RequestLog $request_log)
     {
-        return $this -> songshenzong -> json(200, 'OK', $request_log -> find($id));
+        return $this -> request_log -> json(200, 'OK', $request_log -> find($id));
     }
 
 
@@ -102,7 +103,7 @@ HEREDOC;
                            -> toArray();
 
 
-        return $this -> songshenzong -> json(200, 'OK', $list);
+        return $this -> request_log -> json(200, 'OK', $list);
     }
 
 

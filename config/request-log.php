@@ -38,11 +38,31 @@ return [
     |
     */
 
-    'token'   => [
+    'token' => [
         'lenovo',
         'shuaijiang',
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Route Prefix Settings
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+
+    'route_prefix' => 'request_logs',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Table Name
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+
+    'table' => 'request_logs',
 
     /*
      |--------------------------------------------------------------------------
@@ -56,7 +76,7 @@ return [
      | can also be used. For PDO, run the package migrations first.
      |
      */
-    'storage' => [
+    'storage'      => [
         'enabled'    => true,
         'driver'     => 'pdo', // redis, file, pdo, custom
         'path'       => storage_path('songshenzong'), // For file driver

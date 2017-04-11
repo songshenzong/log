@@ -679,7 +679,7 @@ class LaravelDebugbar extends DebugBar
         try {
             $this -> collect();
         } catch (\Exception $e) {
-            $app['log'] -> error('Songshenzong exception: ' . $e -> getMessage());
+            $app['log'] -> error('RequestLog Exception: ' . $e -> getMessage());
         }
 
 
@@ -711,7 +711,7 @@ class LaravelDebugbar extends DebugBar
      */
     protected function isDebugbarRequest()
     {
-        return $this -> app['request'] -> segment(1) == 'songshenzong';
+        return $this -> app['request'] -> segment(1) == config('request-log.route_prefix', 'request_logs');
     }
 
 

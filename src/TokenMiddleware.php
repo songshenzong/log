@@ -19,23 +19,23 @@ class TokenMiddleware
     protected $container;
 
     /**
-     * The Songshenzong instance
+     * The instance
      *
      * @var LaravelDebugbar
      */
-    protected $songshenzong;
+    protected $instance;
 
 
     /**
      * TokenMiddleware constructor.
      *
      * @param \Illuminate\Contracts\Container\Container $container
-     * @param \Songshenzong\RequestLog\LaravelDebugbar         $songshenzong
+     * @param \Songshenzong\RequestLog\LaravelDebugbar  $instance
      */
-    public function __construct(Container $container, LaravelDebugbar $songshenzong)
+    public function __construct(Container $container, LaravelDebugbar $instance)
     {
-        $this -> container    = $container;
-        $this -> songshenzong = $songshenzong;
+        $this -> container = $container;
+        $this -> instance  = $instance;
     }
 
     /**
@@ -54,9 +54,9 @@ class TokenMiddleware
             if (in_array($request -> token, $tokens)) {
                 return $next($request);
             }
-            return $this -> songshenzong -> json(403, $request -> token . ' is Invalid Token !');
+            return $this -> instance -> json(403, $request -> token . ' is Invalid Token !');
         }
-        return $this -> songshenzong -> json(403, 'No Token !');
+        return $this -> instance -> json(403, 'No Token !');
 
     }
 
