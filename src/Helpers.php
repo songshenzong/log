@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('songshenzong')) {
+if (!function_exists('requestLog')) {
     /**
      * Get the instance
      *
@@ -8,7 +8,7 @@ if (!function_exists('songshenzong')) {
      */
     function songshenzong()
     {
-        return app('songshenzong');
+        return app('RequestLog');
     }
 }
 
@@ -21,7 +21,7 @@ if (!function_exists('debug')) {
      */
     function debug($value)
     {
-        $debug = app('songshenzong');
+        $debug = app('RequestLog');
         foreach (func_get_args() as $value) {
             $debug->addMessage($value, 'debug');
         }
@@ -37,7 +37,7 @@ if (!function_exists('start_measure')) {
      */
     function start_measure($name, $label = null)
     {
-        app('songshenzong')->startMeasure($name, $label);
+        app('RequestLog')->startMeasure($name, $label);
     }
 }
 
@@ -49,7 +49,7 @@ if (!function_exists('stop_measure')) {
      */
     function stop_measure($name)
     {
-        app('songshenzong')->stopMeasure($name);
+        app('RequestLog')->stopMeasure($name);
     }
 }
 
@@ -63,7 +63,7 @@ if (!function_exists('add_measure')) {
      */
     function add_measure($label, $start, $end)
     {
-        app('songshenzong')->addMeasure($label, $start, $end);
+        app('RequestLog')->addMeasure($label, $start, $end);
     }
 }
 
@@ -76,6 +76,6 @@ if (!function_exists('measure')) {
      */
     function measure($label, \Closure $closure)
     {
-        app('songshenzong')->measure($label, $closure);
+        app('RequestLog')->measure($label, $closure);
     }
 }

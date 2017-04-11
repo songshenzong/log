@@ -20,6 +20,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     protected $enabled = null;
 
 
+    protected $routePrefix = 'request_logs';
+
     /**
      * Register the service provider.
      *
@@ -33,7 +35,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             'Songshenzong\RequestLog\DataFormatter\DataFormatterInterface'
         );
 
-        $this -> app -> singleton('songshenzong', function ($app) {
+        $this -> app -> singleton('RequestLog', function ($app) {
             $debugbar = new LaravelDebugbar($app);
 
             if ($app -> bound(SessionManager::class)) {
@@ -46,8 +48,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
         );
 
-        $this -> app -> alias('songshenzong', 'Songshenzong\RequestLog\LaravelDebugbar');
-
+        $this -> app -> alias('RequestLog', 'Songshenzong\RequestLog\LaravelDebugbar');
 
 
     }
@@ -61,11 +62,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function isEnabled()
     {
         if ($this -> enabled === null) {
-            $this -> enabled = (boolean)config('request-log.enabled');;
-        }
-
-
-        if ($this -> enabled === true) {
             $environments    = config('request-log.env', ['dev', 'local', 'production']);
             $this -> enabled = in_array(env('APP_ENV'), $environments);
         }
@@ -92,7 +88,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $routeConfig = [
             'namespace' => 'Songshenzong\RequestLog\Controllers',
-            'prefix'    => 'songshenzong',
+            'prefix'    => $this -> routePrefix,
         ];
 
         app('router') -> group($routeConfig, function ($router) {
@@ -124,7 +120,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
 
     }
-
 
 
     /**

@@ -696,10 +696,6 @@ class LaravelDebugbar extends DebugBar
 
 
         if ($this -> enabled === null) {
-            $this -> enabled = value($this -> app['config'] -> get('request-log.enabled'));
-        }
-
-        if ($this -> enabled === true) {
             $environments = config('request-log.env', ['dev', 'local', 'production']);
 
             $this -> enabled = in_array(env('APP_ENV'), $environments);
