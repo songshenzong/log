@@ -1,5 +1,5 @@
 {
-  "name": "songshenzong/log",
+  "name": "songshenzong/request-log",
   "description": "Record request & debug for Laravel",
   "keywords": [
     "laravel",
@@ -12,8 +12,8 @@
   "license": "MIT",
   "homepage": "http://songshenzong.com",
   "support": {
-    "issues": "https://github.com/songshenzong/log/issues",
-    "source": "https://github.com/songshenzong/log"
+    "issues": "https://github.com/songshenzong/request-log/issues",
+    "source": "https://github.com/songshenzong/request-log"
   },
   "authors": [
     {
@@ -28,7 +28,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Songshenzong\\Log\\": "src/"
+      "Songshenzong\\RequestLog\\": "src/"
     },
     "files": [
       "src/Helpers.php"
@@ -36,7 +36,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "0.3-dev"
+      "dev-master": "0.1-dev"
     }
   },
   "minimum-stability": "dev"

@@ -1,4 +1,4 @@
-# Songshenzong
+# RequestLog
 
 Record request & debug for Laravel
 
@@ -7,7 +7,7 @@ Record request & debug for Laravel
 Require this package with composer:
 
 ```shell
-composer require songshenzong/log
+composer require songshenzong/request-log
 ```
 
 After updating composer, add the ServiceProvider to the providers array in `config/app.php`
@@ -15,19 +15,19 @@ After updating composer, add the ServiceProvider to the providers array in `conf
 ### Laravel 5.x:
 
 ```php
-Songshenzong\Log\ServiceProvider::class,
+Songshenzong\RequestLog\ServiceProvider::class,
 ```
 
 If you want to use the facade to log messages, add this to your facades in `config/app.php`:
 
 ```php
-'Songshenzong' => Songshenzong\Log\Facade::class,
+'Songshenzong' => Songshenzong\RequestLog\Facade::class,
 ```
 
 > If you use a `dingo/api` route, make sure you load the Songshenzong Middleware in `config/api.php`.
 ```php
     'middleware' => [
-        'Songshenzong\Log\Middleware',
+        'Songshenzong\RequestLog\Middleware',
     ],
 ```
 
