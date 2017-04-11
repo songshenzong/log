@@ -21,8 +21,8 @@ class PhpInfoCollector extends DataCollector
     public function collect()
     {
         return array(
-            'version' => PHP_VERSION,
-            'interface' => PHP_SAPI
+            'version'   => PHP_VERSION,
+            'interface' => PHP_SAPI,
         );
     }
 

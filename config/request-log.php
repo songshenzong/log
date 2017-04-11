@@ -18,19 +18,6 @@ return [
 
 
     /*
-     |--------------------------------------------------------------------------
-     | Songshenzong Settings
-     |--------------------------------------------------------------------------
-     |
-     | Songshenzong is enabled by default, when debug is set to true in app.php.
-     | You can override the value by setting enable to true or false instead of null.
-     |
-     */
-
-    'enabled' => true,
-
-
-    /*
     |--------------------------------------------------------------------------
     | Token Settings
     |--------------------------------------------------------------------------
@@ -62,7 +49,7 @@ return [
     |
     */
 
-    'table' => 'request_logs',
+    'table'   => 'request_logs',
 
     /*
      |--------------------------------------------------------------------------
@@ -76,7 +63,7 @@ return [
      | can also be used. For PDO, run the package migrations first.
      |
      */
-    'storage'      => [
+    'storage' => [
         'enabled'    => true,
         'driver'     => 'pdo', // redis, file, pdo, custom
         'path'       => storage_path('songshenzong'), // For file driver
