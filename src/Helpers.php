@@ -4,7 +4,7 @@ if (!function_exists('songshenzong')) {
     /**
      * Get the instance
      *
-     * @return \Songshenzong\Log\LaravelDebugbar
+     * @return \Songshenzong\RequestLog\LaravelDebugbar
      */
     function songshenzong()
     {

@@ -8,14 +8,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\Log;
+namespace Songshenzong\RequestLog;
 
-use Songshenzong\Log\DataCollector\ExceptionsCollector;
-use Songshenzong\Log\DataCollector\MemoryCollector;
-use Songshenzong\Log\DataCollector\MessagesCollector;
-use Songshenzong\Log\DataCollector\PhpInfoCollector;
-use Songshenzong\Log\DataCollector\RequestCollector;
-use Songshenzong\Log\DataCollector\TimeDataCollector;
+use Songshenzong\RequestLog\DataCollector\ExceptionsCollector;
+use Songshenzong\RequestLog\DataCollector\MemoryCollector;
+use Songshenzong\RequestLog\DataCollector\MessagesCollector;
+use Songshenzong\RequestLog\DataCollector\PhpInfoCollector;
+use Songshenzong\RequestLog\DataCollector\RequestCollector;
+use Songshenzong\RequestLog\DataCollector\TimeDataCollector;
 
 /**
  * Debug bar subclass which adds all included collectors

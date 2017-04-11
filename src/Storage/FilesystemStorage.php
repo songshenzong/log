@@ -1,8 +1,8 @@
 <?php
 
-namespace Songshenzong\Log\Storage;
+namespace Songshenzong\RequestLog\Storage;
 
-use Songshenzong\Log\Storage\StorageInterface;
+use Songshenzong\RequestLog\Storage\StorageInterface;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 

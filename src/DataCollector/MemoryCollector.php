@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\Log\DataCollector;
+namespace Songshenzong\RequestLog\DataCollector;
 
 /**
  * Collects info about memory usage

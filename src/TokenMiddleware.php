@@ -1,10 +1,10 @@
-<?php namespace Songshenzong\Log;
+<?php namespace Songshenzong\RequestLog;
 
 use Error;
 use Closure;
 use Exception;
 use Illuminate\Http\Request;
-use Songshenzong\Log\LaravelDebugbar;
+use Songshenzong\RequestLog\LaravelDebugbar;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
@@ -30,7 +30,7 @@ class TokenMiddleware
      * TokenMiddleware constructor.
      *
      * @param \Illuminate\Contracts\Container\Container $container
-     * @param \Songshenzong\Log\LaravelDebugbar         $songshenzong
+     * @param \Songshenzong\RequestLog\LaravelDebugbar         $songshenzong
      */
     public function __construct(Container $container, LaravelDebugbar $songshenzong)
     {

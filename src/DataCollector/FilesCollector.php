@@ -1,8 +1,8 @@
 <?php
 
-namespace Songshenzong\Log\DataCollector;
+namespace Songshenzong\RequestLog\DataCollector;
 
-use Songshenzong\Log\DataCollector\DataCollector;
+use Songshenzong\RequestLog\DataCollector\DataCollector;
 
 use Illuminate\Contracts\Foundation\Application;
 

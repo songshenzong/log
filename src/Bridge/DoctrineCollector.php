@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\Log\Bridge;
+namespace Songshenzong\RequestLog\Bridge;
 
-use Songshenzong\Log\DataCollector\DataCollector;
-use Songshenzong\Log\DebugBarException;
+use Songshenzong\RequestLog\DataCollector\DataCollector;
+use Songshenzong\RequestLog\DebugBarException;
 use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\ORM\EntityManager;
 

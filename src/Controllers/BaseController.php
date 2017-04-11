@@ -1,6 +1,6 @@
-<?php namespace Songshenzong\Log\Controllers;
+<?php namespace Songshenzong\RequestLog\Controllers;
 
-use Songshenzong\Log\LaravelDebugbar;
+use Songshenzong\RequestLog\LaravelDebugbar;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 

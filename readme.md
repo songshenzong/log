@@ -42,7 +42,7 @@ The profiler is enabled by default, You can override that in the config (`songsh
 Copy the package config to your local config with the publish command:
 
 ```shell
-php artisan vendor:publish --provider="Songshenzong\Log\ServiceProvider"
+php artisan vendor:publish --provider="Songshenzong\RequestLog\ServiceProvider"
 ```
 ## Let's start
 ```
@@ -98,10 +98,10 @@ measure('My long operation', function() {
 If you want you can add your own DataCollectors, through the Container or the Facade:
 
 ```php
-Songshenzong::addCollector(new Songshenzong\Log\DataCollector\MessagesCollector('my_messages'));
+Songshenzong::addCollector(new Songshenzong\RequestLog\DataCollector\MessagesCollector('my_messages'));
 //Or via the App container:
 $songshenzong = App::make('songshenzong');
-$songshenzong->addCollector(new Songshenzong\Log\DataCollector\MessagesCollector('my_messages'));
+$songshenzong->addCollector(new Songshenzong\RequestLog\DataCollector\MessagesCollector('my_messages'));
 ```
 
 

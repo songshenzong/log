@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\Log\Bridge;
+namespace Songshenzong\RequestLog\Bridge;
 
-use Songshenzong\Log\DataCollector\DataCollectorInterface;
-use Songshenzong\Log\DataCollector\MessagesAggregateInterface;
+use Songshenzong\RequestLog\DataCollector\DataCollectorInterface;
+use Songshenzong\RequestLog\DataCollector\MessagesAggregateInterface;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
 

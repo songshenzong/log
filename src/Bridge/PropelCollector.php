@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\Log\Bridge;
+namespace Songshenzong\RequestLog\Bridge;
 
 use BasicLogger;
-use Songshenzong\Log\DataCollector\DataCollector;
+use Songshenzong\RequestLog\DataCollector\DataCollector;
 use Propel;
 use PropelConfiguration;
 use PropelPDO;

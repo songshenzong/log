@@ -1,10 +1,10 @@
 <?php
 
-namespace Songshenzong\Log\DataCollector\PDO;
+namespace Songshenzong\RequestLog\DataCollector\PDO;
 
 use PDO;
 use PDOException;
-use Songshenzong\Log\DataCollector\PDO\TraceablePDOStatement;
+use Songshenzong\RequestLog\DataCollector\PDO\TraceablePDOStatement;
 
 /**
  * A PDO proxy which traces statements
@@ -20,7 +20,7 @@ class TraceablePDO extends PDO
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
-        $this->pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('Songshenzong\Log\DataCollector\PDO\TraceablePDOStatement', array($this)));
+        $this->pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('Songshenzong\RequestLog\DataCollector\PDO\TraceablePDOStatement', array($this)));
     }
 
 	/**

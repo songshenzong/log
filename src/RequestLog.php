@@ -1,11 +1,11 @@
 <?php
 
-namespace Songshenzong\Log;
+namespace Songshenzong\RequestLog;
 
 use Illuminate\Database\Eloquent\Model;
 
 
-class SongshenzongLog extends Model
+class RequestLog extends Model
 {
 
     /**

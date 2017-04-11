@@ -1,8 +1,8 @@
 <?php
 
-namespace Songshenzong\Log\DataCollector;
+namespace Songshenzong\RequestLog\DataCollector;
 
-use Songshenzong\Log\DataCollector\DataCollector;
+use Songshenzong\RequestLog\DataCollector\DataCollector;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;

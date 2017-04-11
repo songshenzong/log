@@ -1,34 +1,34 @@
-<?php namespace Songshenzong\Log;
+<?php namespace Songshenzong\RequestLog;
 
-use Songshenzong\Log\DataCollector\AuthCollector;
-use Songshenzong\Log\DataCollector\EventCollector;
-use Songshenzong\Log\DataCollector\FilesCollector;
-use Songshenzong\Log\DataCollector\GateCollector;
-use Songshenzong\Log\DataCollector\LaravelCollector;
-use Songshenzong\Log\DataCollector\LogsCollector;
-use Songshenzong\Log\DataCollector\MultiAuthCollector;
-use Songshenzong\Log\DataCollector\QueryCollector;
-use Songshenzong\Log\DataCollector\SessionCollector;
-use Songshenzong\Log\DataCollector\ViewCollector;
-use Songshenzong\Log\DataCollector\RequestCollector;
+use Songshenzong\RequestLog\DataCollector\AuthCollector;
+use Songshenzong\RequestLog\DataCollector\EventCollector;
+use Songshenzong\RequestLog\DataCollector\FilesCollector;
+use Songshenzong\RequestLog\DataCollector\GateCollector;
+use Songshenzong\RequestLog\DataCollector\LaravelCollector;
+use Songshenzong\RequestLog\DataCollector\LogsCollector;
+use Songshenzong\RequestLog\DataCollector\MultiAuthCollector;
+use Songshenzong\RequestLog\DataCollector\QueryCollector;
+use Songshenzong\RequestLog\DataCollector\SessionCollector;
+use Songshenzong\RequestLog\DataCollector\ViewCollector;
+use Songshenzong\RequestLog\DataCollector\RequestCollector;
 
-use Songshenzong\Log\DataCollector\ConfigCollector;
-use Songshenzong\Log\DataCollector\ExceptionsCollector;
-use Songshenzong\Log\DataCollector\MemoryCollector;
-use Songshenzong\Log\DataCollector\MessagesCollector;
-use Songshenzong\Log\DataCollector\PhpInfoCollector;
-use Songshenzong\Log\DataCollector\TimeDataCollector;
+use Songshenzong\RequestLog\DataCollector\ConfigCollector;
+use Songshenzong\RequestLog\DataCollector\ExceptionsCollector;
+use Songshenzong\RequestLog\DataCollector\MemoryCollector;
+use Songshenzong\RequestLog\DataCollector\MessagesCollector;
+use Songshenzong\RequestLog\DataCollector\PhpInfoCollector;
+use Songshenzong\RequestLog\DataCollector\TimeDataCollector;
 
-use Songshenzong\Log\Storage\FilesystemStorage;
-use Songshenzong\Log\Bridge\MonologCollector;
-use Songshenzong\Log\Bridge\SwiftMailer\SwiftLogCollector;
-use Songshenzong\Log\Bridge\SwiftMailer\SwiftMailCollector;
+use Songshenzong\RequestLog\Storage\FilesystemStorage;
+use Songshenzong\RequestLog\Bridge\MonologCollector;
+use Songshenzong\RequestLog\Bridge\SwiftMailer\SwiftLogCollector;
+use Songshenzong\RequestLog\Bridge\SwiftMailer\SwiftMailCollector;
 
 
-use Songshenzong\Log\DataFormatter\QueryFormatter;
-use Songshenzong\Log\DebugBar;
-use Songshenzong\Log\Storage\PdoStorage;
-use Songshenzong\Log\Storage\RedisStorage;
+use Songshenzong\RequestLog\DataFormatter\QueryFormatter;
+use Songshenzong\RequestLog\DebugBar;
+use Songshenzong\RequestLog\Storage\PdoStorage;
+use Songshenzong\RequestLog\Storage\RedisStorage;
 use Exception;
 
 use Illuminate\Contracts\Foundation\Application;
@@ -122,7 +122,7 @@ class LaravelDebugbar extends DebugBar
             return;
         }
 
-        /** @var \Songshenzong\Log\LaravelDebugbar $debugbar */
+        /** @var \Songshenzong\RequestLog\LaravelDebugbar $debugbar */
         $debugbar = $this;
 
         /** @var Application $app */
@@ -248,7 +248,7 @@ class LaravelDebugbar extends DebugBar
          *---------------------------------------------------------*/
         if (!$this -> isLumen() && $this -> shouldCollect('route')) {
             try {
-                $this -> addCollector($this -> app -> make('Songshenzong\Log\DataCollector\IlluminateRouteCollector'));
+                $this -> addCollector($this -> app -> make('Songshenzong\RequestLog\DataCollector\IlluminateRouteCollector'));
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
@@ -490,7 +490,7 @@ class LaravelDebugbar extends DebugBar
          *---------------------------------------------------------*/
         if ($this -> shouldCollect('gate', false)) {
             try {
-                $gateCollector = $this -> app -> make('Songshenzong\Log\DataCollector\GateCollector');
+                $gateCollector = $this -> app -> make('Songshenzong\RequestLog\DataCollector\GateCollector');
                 $this -> addCollector($gateCollector);
             } catch (\Exception $e) {
                 // No Gate collector
@@ -535,7 +535,7 @@ class LaravelDebugbar extends DebugBar
     public function startMeasure($name, $label = null)
     {
         if ($this -> hasCollector('time')) {
-            /** @var \Songshenzong\Log\DataCollector\TimeDataCollector $collector */
+            /** @var \Songshenzong\RequestLog\DataCollector\TimeDataCollector $collector */
             $collector = $this -> getCollector('time');
             $collector -> startMeasure($name, $label);
         }
@@ -549,7 +549,7 @@ class LaravelDebugbar extends DebugBar
     public function stopMeasure($name)
     {
         if ($this -> hasCollector('time')) {
-            /** @var \Songshenzong\Log\DataCollector\TimeDataCollector $collector */
+            /** @var \Songshenzong\RequestLog\DataCollector\TimeDataCollector $collector */
             $collector = $this -> getCollector('time');
             try {
                 $collector -> stopMeasure($name);
@@ -579,7 +579,7 @@ class LaravelDebugbar extends DebugBar
     public function addThrowable($e)
     {
         if ($this -> hasCollector('exceptions')) {
-            /** @var \Songshenzong\Log\DataCollector\ExceptionsCollector $collector */
+            /** @var \Songshenzong\RequestLog\DataCollector\ExceptionsCollector $collector */
             $collector = $this -> getCollector('exceptions');
             $collector -> addThrowable($e);
         }
@@ -771,7 +771,7 @@ class LaravelDebugbar extends DebugBar
             'method' => $meta['method'],
         ];
 
-        return SongshenzongLog ::create($data);
+        return RequestLog ::create($data);
     }
 
 
@@ -793,7 +793,7 @@ class LaravelDebugbar extends DebugBar
     public function addMeasure($label, $start, $end)
     {
         if ($this -> hasCollector('time')) {
-            /** @var \Songshenzong\Log\DataCollector\TimeDataCollector $collector */
+            /** @var \Songshenzong\RequestLog\DataCollector\TimeDataCollector $collector */
             $collector = $this -> getCollector('time');
             $collector -> addMeasure($label, $start, $end);
         }
@@ -808,7 +808,7 @@ class LaravelDebugbar extends DebugBar
     public function measure($label, \Closure $closure)
     {
         if ($this -> hasCollector('time')) {
-            /** @var \Songshenzong\Log\DataCollector\TimeDataCollector $collector */
+            /** @var \Songshenzong\RequestLog\DataCollector\TimeDataCollector $collector */
             $collector = $this -> getCollector('time');
             $collector -> measure($label, $closure);
         } else {
@@ -887,7 +887,7 @@ class LaravelDebugbar extends DebugBar
     public function addMessage($message, $label = 'info')
     {
         if ($this -> hasCollector('messages')) {
-            /** @var \Songshenzong\Log\DataCollector\MessagesCollector $collector */
+            /** @var \Songshenzong\RequestLog\DataCollector\MessagesCollector $collector */
             $collector = $this -> getCollector('messages');
             $collector -> addMessage($message, $label);
         }

@@ -8,11 +8,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\Log;
+namespace Songshenzong\RequestLog;
 
 use ArrayAccess;
-use Songshenzong\Log\DataCollector\DataCollectorInterface;
-use Songshenzong\Log\Storage\StorageInterface;
+use Songshenzong\RequestLog\DataCollector\DataCollectorInterface;
+use Songshenzong\RequestLog\Storage\StorageInterface;
 
 /**
  *

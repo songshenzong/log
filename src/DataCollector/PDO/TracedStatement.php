@@ -1,6 +1,6 @@
 <?php
 
-namespace Songshenzong\Log\DataCollector\PDO;
+namespace Songshenzong\RequestLog\DataCollector\PDO;
 
 /**
  * Holds information about a statement

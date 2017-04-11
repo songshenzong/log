@@ -1,6 +1,6 @@
 <?php
 
-namespace Songshenzong\Log\DataCollector\PDO;
+namespace Songshenzong\RequestLog\DataCollector\PDO;
 
 use PDO;
 use PDOException;

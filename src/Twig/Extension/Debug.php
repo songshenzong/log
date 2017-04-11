@@ -1,4 +1,4 @@
-<?php namespace Songshenzong\Log\Twig\Extension;
+<?php namespace Songshenzong\RequestLog\Twig\Extension;
 
 use Illuminate\Foundation\Application;
 use Twig_Environment;
@@ -11,7 +11,7 @@ use Twig_SimpleFunction;
 class Debug extends Twig_Extension
 {
     /**
-     * @var \Songshenzong\Log\LaravelDebugbar
+     * @var \Songshenzong\RequestLog\LaravelDebugbar
      */
     protected $debugbar;
 

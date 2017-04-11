@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\Log\Storage;
+namespace Songshenzong\RequestLog\Storage;
 
 use PDO;
 

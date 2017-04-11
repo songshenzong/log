@@ -1,6 +1,6 @@
 <?php
 
-namespace Songshenzong\Log\DataFormatter;
+namespace Songshenzong\RequestLog\DataFormatter;
 
 
 class QueryFormatter extends DataFormatter
@@ -68,7 +68,8 @@ class QueryFormatter extends DataFormatter
         $parts = [];
 
         if ($source -> namespace) {
-            $parts['namespace'] = $source -> namespace . '::';
+        $parts['namespace'] = $source -> namespace .
+        '::';
         }
 
         $parts['name'] = $source -> name;

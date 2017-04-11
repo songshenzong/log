@@ -1,4 +1,4 @@
-<?php namespace Songshenzong\Log;
+<?php namespace Songshenzong\RequestLog;
 
 class Facade extends \Illuminate\Support\Facades\Facade
 {

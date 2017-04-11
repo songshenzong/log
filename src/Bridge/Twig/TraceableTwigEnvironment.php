@@ -8,9 +8,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\Log\Bridge\Twig;
+namespace Songshenzong\RequestLog\Bridge\Twig;
 
-use Songshenzong\Log\DataCollector\TimeDataCollector;
+use Songshenzong\RequestLog\DataCollector\TimeDataCollector;
 use Twig_CompilerInterface;
 use Twig_Environment;
 use Twig_ExtensionInterface;

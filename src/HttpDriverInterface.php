@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\Log;
+namespace Songshenzong\RequestLog;
 
 /**
  * Provides an abstraction of PHP native features for easier integration

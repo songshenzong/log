@@ -1,4 +1,4 @@
-<?php namespace Songshenzong\Log;
+<?php namespace Songshenzong\RequestLog;
 
 use Illuminate\Session\SessionManager;
 
@@ -29,8 +29,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
 
         $this -> app -> alias(
-            'Songshenzong\Log\DataFormatter\DataFormatter',
-            'Songshenzong\Log\DataFormatter\DataFormatterInterface'
+            'Songshenzong\RequestLog\DataFormatter\DataFormatter',
+            'Songshenzong\RequestLog\DataFormatter\DataFormatterInterface'
         );
 
         $this -> app -> singleton('songshenzong', function ($app) {
@@ -46,15 +46,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
         );
 
-        $this -> app -> alias('songshenzong', 'Songshenzong\Log\LaravelDebugbar');
+        $this -> app -> alias('songshenzong', 'Songshenzong\RequestLog\LaravelDebugbar');
 
-        $this -> app -> singleton('command.songshenzong.clear',
-            function ($app) {
-                return new Console\ClearCommand($app['songshenzong']);
-            }
-        );
 
-        $this -> commands(['command.songshenzong.clear']);
+
     }
 
 
@@ -92,11 +87,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
 
-        app('Illuminate\Contracts\Http\Kernel') -> pushMiddleware('Songshenzong\Log\Middleware');
+        app('Illuminate\Contracts\Http\Kernel') -> pushMiddleware('Songshenzong\RequestLog\Middleware');
 
 
         $routeConfig = [
-            'namespace' => 'Songshenzong\Log\Controllers',
+            'namespace' => 'Songshenzong\RequestLog\Controllers',
             'prefix'    => 'songshenzong',
         ];
 
@@ -104,7 +99,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
             $router -> get('', 'WebController@index');
 
-            $router -> group(['middleware' => 'Songshenzong\Log\TokenMiddleware'], function ($router) {
+            $router -> group(['middleware' => 'Songshenzong\RequestLog\TokenMiddleware'], function ($router) {
 
                 $router -> get('logs', 'ApiController@getList');
 
@@ -131,16 +126,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
 
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return ['songshenzong', 'command.songshenzong.clear'];
-    }
-
 
     /**
      * Publish the config file
@@ -149,7 +134,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     protected function publishConfig($configPath)
     {
-        $this -> publishes([$configPath => config_path('songshenzong.php')], 'config');
+        $this -> publishes([$configPath => config_path('request-log.php')], 'config');
     }
 
 }

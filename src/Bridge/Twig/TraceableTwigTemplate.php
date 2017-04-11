@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\Log\Bridge\Twig;
+namespace Songshenzong\RequestLog\Bridge\Twig;
 
 use Twig_Template;
 use Twig_TemplateInterface;

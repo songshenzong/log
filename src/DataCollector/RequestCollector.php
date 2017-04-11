@@ -1,9 +1,9 @@
 <?php
 
-namespace Songshenzong\Log\DataCollector;
+namespace Songshenzong\RequestLog\DataCollector;
 
-use Songshenzong\Log\DataCollector\DataCollector;
-use Songshenzong\Log\DataCollector\DataCollectorInterface;
+use Songshenzong\RequestLog\DataCollector\DataCollector;
+use Songshenzong\RequestLog\DataCollector\DataCollectorInterface;
 
 use Symfony\Component\HttpFoundation\Response;
 
