@@ -6,7 +6,7 @@ if (!function_exists('requestLog')) {
      *
      * @return \Songshenzong\RequestLog\LaravelDebugbar
      */
-    function songshenzong()
+    function requestLog()
     {
         return app('RequestLog');
     }

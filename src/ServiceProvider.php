@@ -46,7 +46,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
         );
 
-        $this -> app -> alias('RequestLog', 'Songshenzong\RequestLog\LaravelDebugbar');
+        $this -> app -> alias('RequestLog', 'Songshenzong\RequestLog\Facade');
 
 
     }
