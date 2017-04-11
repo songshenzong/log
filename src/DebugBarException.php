@@ -10,7 +10,12 @@
 
 namespace Songshenzong\RequestLog;
 
+use Throwable;
+
 class DebugBarException extends \Exception
 {
-    //
+    public function __construct($message)
+    {
+        dd($message);
+    }
 }

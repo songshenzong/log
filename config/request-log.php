@@ -49,27 +49,7 @@ return [
     |
     */
 
-    'table'   => 'request_logs',
-
-    /*
-     |--------------------------------------------------------------------------
-     | Storage settings
-     |--------------------------------------------------------------------------
-     |
-     | Songshenzong stores data for session/ajax requests.
-     | You can disable this, so the Songshenzong stores data in headers/session,
-     | but this can cause problems with large data collectors.
-     | By default, file storage (in the storage folder) is used. Redis and PDO
-     | can also be used. For PDO, run the package migrations first.
-     |
-     */
-    'storage' => [
-        'enabled'    => true,
-        'driver'     => 'pdo', // redis, file, pdo, custom
-        'path'       => storage_path('songshenzong'), // For file driver
-        'connection' => null,   // Leave null for default connection (Redis/PDO)
-        'provider'   => '' // Instance of StorageInterface for custom driver
-    ],
+    'table' => 'request_logs',
 
 
     /*

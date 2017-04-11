@@ -116,7 +116,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         app('RequestLog') -> enable();
         app('RequestLog') -> boot();
 
-
     }
 
 

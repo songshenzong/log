@@ -31,18 +31,19 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
      */
     public function __construct($name = 'messages')
     {
-        $this->name = $name;
+        $this -> name = $name;
     }
 
     /**
      * Sets the data formater instance used by this collector
      *
      * @param DataFormatterInterface $formater
+     *
      * @return $this
      */
     public function setDataFormatter(DataFormatterInterface $formater)
     {
-        $this->dataFormater = $formater;
+        $this -> dataFormater = $formater;
         return $this;
     }
 
@@ -51,10 +52,10 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
      */
     public function getDataFormatter()
     {
-        if ($this->dataFormater === null) {
-            $this->dataFormater = DataCollector::getDefaultDataFormatter();
+        if ($this -> dataFormater === null) {
+            $this -> dataFormater = DataCollector ::getDefaultDataFormatter();
         }
-        return $this->dataFormater;
+        return $this -> dataFormater;
     }
 
     /**
@@ -62,20 +63,20 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
      *
      * A message can be anything from an object to a string
      *
-     * @param mixed $message
+     * @param mixed  $message
      * @param string $label
      */
     public function addMessage($message, $label = 'info', $isString = true)
     {
         if (!is_string($message)) {
-            $message = $this->getDataFormatter()->formatVar($message);
+            $message  = $this -> getDataFormatter() -> formatVar($message);
             $isString = false;
         }
-        $this->messages[] = array(
-            'message' => $message,
+        $this -> messages[] = array(
+            'message'   => $message,
             'is_string' => $isString,
-            'label' => $label,
-            'time' => microtime(true)
+            'label'     => $label,
+            'time'      => microtime(true),
         );
     }
 
@@ -86,7 +87,7 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
      */
     public function aggregate(MessagesAggregateInterface $messages)
     {
-        $this->aggregates[] = $messages;
+        $this -> aggregates[] = $messages;
     }
 
     /**
@@ -94,12 +95,12 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
      */
     public function getMessages()
     {
-        $messages = $this->messages;
-        foreach ($this->aggregates as $collector) {
-            $msgs = array_map(function ($m) use ($collector) {
-                $m['collector'] = $collector->getName();
+        $messages = $this -> messages;
+        foreach ($this -> aggregates as $collector) {
+            $msgs     = array_map(function ($m) use ($collector) {
+                $m['collector'] = $collector -> getName();
                 return $m;
-            }, $collector->getMessages());
+            }, $collector -> getMessages());
             $messages = array_merge($messages, $msgs);
         }
 
@@ -115,13 +116,13 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
     }
 
     /**
-     * @param $level
-     * @param $message
+     * @param       $level
+     * @param       $message
      * @param array $context
      */
     public function log($level, $message, array $context = array())
     {
-        $this->addMessage($message, $level);
+        $this -> addMessage($message, $level);
     }
 
     /**
@@ -129,7 +130,7 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
      */
     public function clear()
     {
-        $this->messages = array();
+        $this -> messages = array();
     }
 
     /**
@@ -137,10 +138,10 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
      */
     public function collect()
     {
-        $messages = $this->getMessages();
+        $messages = $this -> getMessages();
         return array(
-            'count' => count($messages),
-            'messages' => $messages
+            'count'    => count($messages),
+            'messages' => $messages,
         );
     }
 
@@ -149,7 +150,7 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
      */
     public function getName()
     {
-        return $this->name;
+        return $this -> name;
     }
 
 

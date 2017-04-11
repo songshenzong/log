@@ -12,7 +12,6 @@ namespace Songshenzong\RequestLog;
 
 use ArrayAccess;
 use Songshenzong\RequestLog\DataCollector\DataCollectorInterface;
-use Songshenzong\RequestLog\Storage\StorageInterface;
 
 /**
  *
@@ -28,7 +27,7 @@ use Songshenzong\RequestLog\Storage\StorageInterface;
 class DebugBar implements ArrayAccess
 {
 
-    protected $collectors = array();
+    protected $collectors = [];
 
     protected $data;
 
@@ -54,10 +53,17 @@ class DebugBar implements ArrayAccess
         if ($collector -> getName() === '__meta') {
             throw new DebugBarException("'__meta' is a reserved name and cannot be used as a collector name");
         }
+
+
         if (isset($this -> collectors[$collector -> getName()])) {
+
             throw new DebugBarException("'{$collector->getName()}' is already a registered collector");
         }
+
+
         $this -> collectors[$collector -> getName()] = $collector;
+
+
         return $this;
     }
 

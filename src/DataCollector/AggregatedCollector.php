@@ -31,18 +31,18 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
 
     protected $sort;
 
-    protected $collectors = array();
+    protected $collectors = [];
 
     /**
-     * @param string $name
-     * @param string $mergeProperty
+     * @param string  $name
+     * @param string  $mergeProperty
      * @param boolean $sort
      */
     public function __construct($name, $mergeProperty = null, $sort = false)
     {
-        $this->name = $name;
-        $this->mergeProperty = $mergeProperty;
-        $this->sort = $sort;
+        $this -> name          = $name;
+        $this -> mergeProperty = $mergeProperty;
+        $this -> sort          = $sort;
     }
 
     /**
@@ -50,7 +50,7 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
      */
     public function addCollector(DataCollectorInterface $collector)
     {
-        $this->collectors[$collector->getName()] = $collector;
+        $this -> collectors[$collector -> getName()] = $collector;
     }
 
     /**
@@ -58,7 +58,7 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
      */
     public function getCollectors()
     {
-        return $this->collectors;
+        return $this -> collectors;
     }
 
     /**
@@ -68,7 +68,7 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
      */
     public function setMergeProperty($property)
     {
-        $this->mergeProperty = $property;
+        $this -> mergeProperty = $property;
     }
 
     /**
@@ -76,7 +76,7 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
      */
     public function getMergeProperty()
     {
-        return $this->mergeProperty;
+        return $this -> mergeProperty;
     }
 
     /**
@@ -89,7 +89,7 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
      */
     public function setSort($sort)
     {
-        $this->sort = $sort;
+        $this -> sort = $sort;
     }
 
     /**
@@ -97,7 +97,7 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
      */
     public function getSort()
     {
-        return $this->sort;
+        return $this -> sort;
     }
 
     /**
@@ -105,35 +105,36 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
      */
     public function collect()
     {
-        $aggregate = array();
-        foreach ($this->collectors as $collector) {
-            $data = $collector->collect();
-            if ($this->mergeProperty !== null) {
-                $data = $data[$this->mergeProperty];
+        $aggregate = [];
+        foreach ($this -> collectors as $collector) {
+            $data = $collector -> collect();
+            if ($this -> mergeProperty !== null) {
+                $data = $data[$this -> mergeProperty];
             }
             $aggregate = array_merge($aggregate, $data);
         }
 
-        return $this->sort($aggregate);
+        return $this -> sort($aggregate);
     }
 
     /**
      * Sorts the collected data
      *
      * @param array $data
+     *
      * @return array
      */
     protected function sort($data)
     {
-        if (is_string($this->sort)) {
-            $p = $this->sort;
+        if (is_string($this -> sort)) {
+            $p = $this -> sort;
             usort($data, function ($a, $b) use ($p) {
                 if ($a[$p] == $b[$p]) {
                     return 0;
                 }
                 return $a[$p] < $b[$p] ? -1 : 1;
             });
-        } elseif ($this->sort === true) {
+        } elseif ($this -> sort === true) {
             sort($data);
         }
         return $data;
@@ -144,7 +145,7 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
      */
     public function getName()
     {
-        return $this->name;
+        return $this -> name;
     }
 
     // --------------------------------------------
@@ -153,6 +154,7 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
     /**
      * @param mixed $key
      * @param mixed $value
+     *
      * @throws DebugBarException
      */
     public function offsetSet($key, $value)
@@ -162,24 +164,27 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
 
     /**
      * @param mixed $key
+     *
      * @return mixed
      */
     public function offsetGet($key)
     {
-        return $this->collectors[$key];
+        return $this -> collectors[$key];
     }
 
     /**
      * @param mixed $key
+     *
      * @return bool
      */
     public function offsetExists($key)
     {
-        return isset($this->collectors[$key]);
+        return isset($this -> collectors[$key]);
     }
 
     /**
      * @param mixed $key
+     *
      * @throws DebugBarException
      */
     public function offsetUnset($key)

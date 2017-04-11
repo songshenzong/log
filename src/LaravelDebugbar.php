@@ -19,7 +19,6 @@ use Songshenzong\RequestLog\DataCollector\MessagesCollector;
 use Songshenzong\RequestLog\DataCollector\PhpInfoCollector;
 use Songshenzong\RequestLog\DataCollector\TimeDataCollector;
 
-use Songshenzong\RequestLog\Storage\FilesystemStorage;
 use Songshenzong\RequestLog\Bridge\MonologCollector;
 use Songshenzong\RequestLog\Bridge\SwiftMailer\SwiftLogCollector;
 use Songshenzong\RequestLog\Bridge\SwiftMailer\SwiftMailCollector;
@@ -27,8 +26,6 @@ use Songshenzong\RequestLog\Bridge\SwiftMailer\SwiftMailCollector;
 
 use Songshenzong\RequestLog\DataFormatter\QueryFormatter;
 use Songshenzong\RequestLog\DebugBar;
-use Songshenzong\RequestLog\Storage\PdoStorage;
-use Songshenzong\RequestLog\Storage\RedisStorage;
 use Exception;
 
 use Illuminate\Contracts\Foundation\Application;
@@ -134,6 +131,7 @@ class LaravelDebugbar extends DebugBar
         /**---------------------------------------------------------
          *   phpinfo
          *---------------------------------------------------------*/
+
         if ($this -> shouldCollect('phpinfo', true)) {
             $this -> addCollector(new PhpInfoCollector());
         }
@@ -660,11 +658,12 @@ class LaravelDebugbar extends DebugBar
          *---------------------------------------------------------*/
         if ($this -> shouldCollect('request', true) && !$this -> hasCollector('request')) {
             try {
+
                 $this -> addCollector(new RequestCollector($request, $response, $sessionManager));
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add RequestCollector to Songshenzong: ' . $e -> getMessage(),
+                        'Cannot add RequestCollector to Request Log: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
@@ -766,6 +765,7 @@ class LaravelDebugbar extends DebugBar
             'ip'     => $meta['ip'],
             'method' => $meta['method'],
         ];
+
 
         return RequestLog ::create($data);
     }
