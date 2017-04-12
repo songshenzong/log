@@ -3,7 +3,7 @@
 namespace Songshenzong\RequestLog\Controllers;
 
 use Illuminate\Contracts\Foundation\Application;
-use Songshenzong\RequestLog\SongshenzongLog;
+use Songshenzong\RequestLog\RequestLog;
 use Songshenzong\RequestLog\LaravelDebugbar;
 
 class ApiController extends BaseController
@@ -26,7 +26,7 @@ class ApiController extends BaseController
     /**
      * @var string\
      */
-    protected $table = 'songshenzong_logs';
+    protected $table;
 
 
     /**
@@ -37,6 +37,7 @@ class ApiController extends BaseController
     public function __construct(Application $app, LaravelDebugbar $songshenzong)
     {
         $this -> app          = $app;
+        $this -> table        = config('request-log.table', 'request_logs');
         $this -> songshenzong = $songshenzong;
     }
 
@@ -78,11 +79,11 @@ HEREDOC;
 
     /**
      * @param                                          $id
-     * @param \Songshenzong\RequestLog\SongshenzongLog $songshenzong_log
+     * @param \Songshenzong\RequestLog\RequestLog $songshenzong_log
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getData($id, SongshenzongLog $songshenzong_log)
+    public function getData($id, RequestLog $songshenzong_log)
     {
         return $this -> songshenzong -> json(200, 'OK', $songshenzong_log -> find($id));
     }
@@ -96,7 +97,7 @@ HEREDOC;
 
         $index = isset(\request() -> per_page) ? \request() -> per_page : 23;
 
-        $list = SongshenzongLog :: orderBy('created_at', 'desc')
+        $list = RequestLog :: orderBy('created_at', 'desc')
                                 -> paginate($index)
                                 -> appends(\request() -> all())
                                 -> toArray();
@@ -112,10 +113,10 @@ HEREDOC;
     public function destroy()
     {
         if (\request() -> has('id')) {
-            return SongshenzongLog ::destroy(\request() -> id);
+            return RequestLog ::destroy(\request() -> id);
         }
 
-        SongshenzongLog ::where('id', '!=', 0) -> delete();
+        RequestLog ::where('id', '!=', 0) -> delete();
 
         return $this -> getList();
 

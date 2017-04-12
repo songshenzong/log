@@ -94,7 +94,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $routeConfig = [
             'namespace' => 'Songshenzong\RequestLog\Controllers',
-            'prefix'    => 'songshenzong',
+            'prefix'    => config('request-log.route_prefix', 'request_logs'),
         ];
 
         app('router') -> group($routeConfig, function ($router) {

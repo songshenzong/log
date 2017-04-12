@@ -687,12 +687,7 @@ class LaravelDebugbar extends DebugBar
     public function isEnabled()
     {
 
-
         if ($this -> enabled === null) {
-            $this -> enabled = value($this -> app['config'] -> get('request-log.enabled'));
-        }
-
-        if ($this -> enabled === true) {
             $environments = config('request-log.env', ['dev', 'local', 'production']);
 
             $this -> enabled = in_array(env('APP_ENV'), $environments);
@@ -708,7 +703,7 @@ class LaravelDebugbar extends DebugBar
      */
     protected function isDebugbarRequest()
     {
-        return $this -> app['request'] -> segment(1) == 'songshenzong';
+        return $this -> app['request'] -> segment(1) == config('request-log.route_prefix', 'request_logs');
     }
 
 
@@ -764,7 +759,8 @@ class LaravelDebugbar extends DebugBar
             'method' => $meta['method'],
         ];
 
-        return SongshenzongLog ::create($data);
+
+        return RequestLog ::create($data);
     }
 
 

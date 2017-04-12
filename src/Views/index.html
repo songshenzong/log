@@ -3,19 +3,18 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>Songshenzong</title>
+    <title>Request Log</title>
     <meta name="robots" content="noindex,nofollow">
     <script src='http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js'></script>
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-
     <script>
         var List;
         var loading;
         var token;
-
+        var route = '/request_logs/';
 
         /**---------------------------------------------------------
          *   Clear Token.
@@ -23,7 +22,7 @@
         function clearToken() {
             token = '';
             jQuery("#token").val('');
-            localStorage.setItem('songshenzong_token', token);
+            localStorage.setItem('request_log_token', token);
             jQuery.ajaxSetup({
                 data: {token: token},
             });
@@ -33,7 +32,7 @@
          *---------------------------------------------------------*/
         jQuery(document).ready(function () {
 
-            jQuery("#token").val(localStorage.getItem('songshenzong_token'));
+            jQuery("#token").val(localStorage.getItem('request_log_token'));
 
             token = jQuery("#token").val().toString();
 
@@ -42,8 +41,8 @@
                 jQuery.ajaxSetup({
                     data: {token: token},
                 });
-                localStorage.setItem('songshenzong_token', token);
-                console.log(localStorage.getItem('songshenzong_token'));
+                localStorage.setItem('request_log_token', token);
+                console.log(localStorage.getItem('request_log_token'));
             })
 
 
@@ -83,7 +82,7 @@
             /**---------------------------------------------------------
              *   Get list of the logs.
              *---------------------------------------------------------*/
-            logList('/songshenzong/logs');
+            logList('logs');
 
 
         });
@@ -93,7 +92,7 @@
          *   Get list of logs.
          *---------------------------------------------------------*/
         function logList(url) {
-            jQuery.getJSON(url,
+            jQuery.getJSON(route + url,
                 function (result) {
                     if (!verify(result)) {
                         return false;
@@ -125,7 +124,7 @@
                                     }
                                 },
                                 getDetail: function (item) {
-                                    window.open("/songshenzong/logs/" + item.id + '?token=' + jQuery("#token").val());
+                                    window.open(route + "logs/" + item.id + '?token=' + jQuery("#token").val());
                                 },
                                 getNewList: function (url) {
                                     logList(url);
@@ -133,7 +132,7 @@
                                 remove: function (id, index) {
 
 
-                                    jQuery.getJSON('/songshenzong/destroy', {
+                                    jQuery.getJSON(route + 'destroy', {
                                             id: id
                                         }, function (result) {
 
@@ -146,7 +145,7 @@
                         });
                     }
 
-                    jQuery("#token").val(localStorage.getItem('songshenzong_token'));
+                    jQuery("#token").val(localStorage.getItem('request_log_token'));
                 }
             )
             ;
@@ -180,8 +179,9 @@
          *   Destroy all of the logs.
          *---------------------------------------------------------*/
         function destroy() {
-            jQuery.getJSON('/songshenzong/destroy', function (result) {
-                    List.items = result.data;
+            jQuery.getJSON(route + 'destroy', function (result) {
+                    List.items = null;
+
                 }
             );
         }
@@ -190,7 +190,7 @@
          *   Create Table.
          *---------------------------------------------------------*/
         function createTable() {
-            jQuery.getJSON('/songshenzong/create', function (result) {
+            jQuery.getJSON(route + 'create', function (result) {
                     List.items = result.data;
                     layer.msg(result.message);
                 }
@@ -216,7 +216,6 @@
 
 <body>
 
-
 <div id="items" class="bs-example" data-example-id="hoverable-table">
 
     <nav class="navbar navbar-inverse">
@@ -240,11 +239,10 @@
 
                 </div>
 
-
                 <div class="navbar-form navbar-right">
 
 
-                    <button onclick="logList('/songshenzong/logs')" type="button" class="btn btn-sm btn-success">Refresh
+                    <button onclick="logList('logs')" type="button" class="btn btn-sm btn-success">Refresh
                         Home
                     </button>
 
