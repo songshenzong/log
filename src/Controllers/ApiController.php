@@ -69,7 +69,7 @@ HEREDOC;
             \DB ::statement("CREATE INDEX {$this->table}_method_index ON {$this->table} (method);");
             \DB ::statement("CREATE INDEX {$this->table}_uri_index ON {$this->table} (uri);");
             \DB ::statement("CREATE INDEX {$this->table}_time_index ON {$this->table} (time);");
-            return $this -> songshenzong -> json(200, 'OK');
+            return $this -> getList();
         }
         return $this -> songshenzong -> json(500, 'Error');
 
@@ -77,7 +77,7 @@ HEREDOC;
 
 
     /**
-     * @param                                   $id
+     * @param                                          $id
      * @param \Songshenzong\RequestLog\SongshenzongLog $songshenzong_log
      *
      * @return \Illuminate\Http\JsonResponse

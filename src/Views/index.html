@@ -191,6 +191,7 @@
          *---------------------------------------------------------*/
         function createTable() {
             jQuery.getJSON('/songshenzong/create', function (result) {
+                    List.items = result.data;
                     layer.msg(result.message);
                 }
             );
