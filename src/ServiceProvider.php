@@ -33,7 +33,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             'Songshenzong\RequestLog\DataFormatter\DataFormatterInterface'
         );
 
-        $this -> app -> singleton('RequestLog', function ($app) {
+        $this -> app -> singleton('songshenzong', function ($app) {
             $debugbar = new LaravelDebugbar($app);
 
             if ($app -> bound(SessionManager::class)) {
@@ -46,9 +46,15 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
         );
 
-        $this -> app -> alias('RequestLog', 'Songshenzong\RequestLog\Facade');
+        $this -> app -> alias('songshenzong', 'Songshenzong\RequestLog\LaravelDebugbar');
 
+        $this -> app -> singleton('command.songshenzong.clear',
+            function ($app) {
+                return new Console\ClearCommand($app['songshenzong']);
+            }
+        );
 
+        $this -> commands(['command.songshenzong.clear']);
     }
 
 
@@ -60,7 +66,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function isEnabled()
     {
         if ($this -> enabled === null) {
-            $environments    = config('request-log.env', ['dev', 'local', 'production']);
+            $this -> enabled = (boolean)config('songshenzong.enabled');;
+        }
+
+
+        if ($this -> enabled === true) {
+            $environments    = config('songshenzong.env', ['dev', 'local', 'production']);
             $this -> enabled = in_array(env('APP_ENV'), $environments);
         }
 
@@ -86,7 +97,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $routeConfig = [
             'namespace' => 'Songshenzong\RequestLog\Controllers',
-            'prefix'    => config('request-log.route_prefix', 'request_logs'),
+            'prefix'    => 'songshenzong',
         ];
 
         app('router') -> group($routeConfig, function ($router) {
@@ -113,9 +124,21 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
 
-        app('RequestLog') -> enable();
-        app('RequestLog') -> boot();
+        app('songshenzong') -> enable();
+        app('songshenzong') -> boot();
 
+
+    }
+
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return ['songshenzong', 'command.songshenzong.clear'];
     }
 
 
@@ -126,7 +149,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     protected function publishConfig($configPath)
     {
-        $this -> publishes([$configPath => config_path('request-log.php')], 'config');
+        $this -> publishes([$configPath => config_path('songshenzong.php')], 'config');
     }
 
 }

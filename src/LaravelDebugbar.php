@@ -11,19 +11,15 @@ use Songshenzong\RequestLog\DataCollector\QueryCollector;
 use Songshenzong\RequestLog\DataCollector\SessionCollector;
 use Songshenzong\RequestLog\DataCollector\ViewCollector;
 use Songshenzong\RequestLog\DataCollector\RequestCollector;
-
 use Songshenzong\RequestLog\DataCollector\ConfigCollector;
 use Songshenzong\RequestLog\DataCollector\ExceptionsCollector;
 use Songshenzong\RequestLog\DataCollector\MemoryCollector;
 use Songshenzong\RequestLog\DataCollector\MessagesCollector;
 use Songshenzong\RequestLog\DataCollector\PhpInfoCollector;
 use Songshenzong\RequestLog\DataCollector\TimeDataCollector;
-
 use Songshenzong\RequestLog\Bridge\MonologCollector;
 use Songshenzong\RequestLog\Bridge\SwiftMailer\SwiftLogCollector;
 use Songshenzong\RequestLog\Bridge\SwiftMailer\SwiftMailCollector;
-
-
 use Songshenzong\RequestLog\DataFormatter\QueryFormatter;
 use Songshenzong\RequestLog\DebugBar;
 use Exception;
@@ -131,7 +127,6 @@ class LaravelDebugbar extends DebugBar
         /**---------------------------------------------------------
          *   phpinfo
          *---------------------------------------------------------*/
-
         if ($this -> shouldCollect('phpinfo', true)) {
             $this -> addCollector(new PhpInfoCollector());
         }
@@ -179,7 +174,7 @@ class LaravelDebugbar extends DebugBar
             try {
                 $exceptionCollector = new ExceptionsCollector();
                 $exceptionCollector -> setChainExceptions(
-                    $this -> app['config'] -> get('request-log.options.exceptions.chain', true)
+                    $this -> app['config'] -> get('songshenzong.options.exceptions.chain', true)
                 );
                 $this -> addCollector($exceptionCollector);
             } catch (\Exception $e) {
@@ -220,7 +215,7 @@ class LaravelDebugbar extends DebugBar
          *---------------------------------------------------------*/
         if ($this -> shouldCollect('views', true) && isset($this -> app['events'])) {
             try {
-                $collectData = $this -> app['config'] -> get('request-log.options.views.data', true);
+                $collectData = $this -> app['config'] -> get('songshenzong.options.views.data', true);
                 $this -> addCollector(new ViewCollector($collectData));
                 $this -> app['events'] -> listen(
                     'composing:*',
@@ -316,7 +311,7 @@ class LaravelDebugbar extends DebugBar
         if ($this -> shouldCollect('db', true) && isset($this -> app['db'])) {
             $db = $this -> app['db'];
             if ($debugbar -> hasCollector('time') && $this -> app['config'] -> get(
-                    'request-log.options.db.timeline',
+                    'songshenzong.options.db.timeline',
                     false
                 )
             ) {
@@ -328,21 +323,21 @@ class LaravelDebugbar extends DebugBar
 
             $queryCollector -> setDataFormatter(new QueryFormatter());
 
-            if ($this -> app['config'] -> get('request-log.options.db.with_params')) {
+            if ($this -> app['config'] -> get('songshenzong.options.db.with_params')) {
                 $queryCollector -> setRenderSqlWithParams(true);
             }
 
-            if ($this -> app['config'] -> get('request-log.options.db.backtrace')) {
+            if ($this -> app['config'] -> get('songshenzong.options.db.backtrace')) {
                 $middleware = !$this -> is_lumen ? $this -> app['router'] -> getMiddleware() : [];
                 $queryCollector -> setFindSource(true, $middleware);
             }
 
-            if ($this -> app['config'] -> get('request-log.options.db.explain.enabled')) {
-                $types = $this -> app['config'] -> get('request-log.options.db.explain.types');
+            if ($this -> app['config'] -> get('songshenzong.options.db.explain.enabled')) {
+                $types = $this -> app['config'] -> get('songshenzong.options.db.explain.types');
                 $queryCollector -> setExplainSource(true, $types);
             }
 
-            if ($this -> app['config'] -> get('request-log.options.db.hints', true)) {
+            if ($this -> app['config'] -> get('songshenzong.options.db.hints', true)) {
                 $queryCollector -> setShowHints(true);
             }
 
@@ -417,7 +412,7 @@ class LaravelDebugbar extends DebugBar
             try {
                 $mailer = $this -> app['mailer'] -> getSwiftMailer();
                 $this -> addCollector(new SwiftMailCollector($mailer));
-                if ($this -> app['config'] -> get('request-log.options.mail.full_log') && $this -> hasCollector(
+                if ($this -> app['config'] -> get('songshenzong.options.mail.full_log') && $this -> hasCollector(
                         'messages'
                     )
                 ) {
@@ -438,7 +433,7 @@ class LaravelDebugbar extends DebugBar
          *---------------------------------------------------------*/
         if ($this -> shouldCollect('logs', false)) {
             try {
-                $file = $this -> app['config'] -> get('request-log.options.logs.file');
+                $file = $this -> app['config'] -> get('songshenzong.options.logs.file');
                 $this -> addCollector(new LogsCollector($file));
             } catch (\Exception $e) {
                 $this -> addThrowable(
@@ -471,7 +466,7 @@ class LaravelDebugbar extends DebugBar
                 }
 
                 $authCollector -> setShowName(
-                    $this -> app['config'] -> get('request-log.options.auth.show_name')
+                    $this -> app['config'] -> get('songshenzong.options.auth.show_name')
                 );
                 $this -> addCollector($authCollector);
             } catch (\Exception $e) {
@@ -501,7 +496,7 @@ class LaravelDebugbar extends DebugBar
 
     public function shouldCollect($name, $default = false)
     {
-        return config('request-log.collectors.' . $name, $default);
+        return config('songshenzong.collectors.' . $name, $default);
     }
 
     /**
@@ -658,12 +653,11 @@ class LaravelDebugbar extends DebugBar
          *---------------------------------------------------------*/
         if ($this -> shouldCollect('request', true) && !$this -> hasCollector('request')) {
             try {
-
                 $this -> addCollector(new RequestCollector($request, $response, $sessionManager));
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add RequestCollector to Request Log: ' . $e -> getMessage(),
+                        'Cannot add RequestCollector to Songshenzong: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
@@ -678,7 +672,7 @@ class LaravelDebugbar extends DebugBar
         try {
             $this -> collect();
         } catch (\Exception $e) {
-            $app['log'] -> error('RequestLog Exception: ' . $e -> getMessage());
+            $app['log'] -> error('Songshenzong exception: ' . $e -> getMessage());
         }
 
 
@@ -695,7 +689,11 @@ class LaravelDebugbar extends DebugBar
 
 
         if ($this -> enabled === null) {
-            $environments = config('request-log.env', ['dev', 'local', 'production']);
+            $this -> enabled = value($this -> app['config'] -> get('songshenzong.enabled'));
+        }
+
+        if ($this -> enabled === true) {
+            $environments = config('songshenzong.env', ['dev', 'local', 'production']);
 
             $this -> enabled = in_array(env('APP_ENV'), $environments);
         }
@@ -710,7 +708,7 @@ class LaravelDebugbar extends DebugBar
      */
     protected function isDebugbarRequest()
     {
-        return $this -> app['request'] -> segment(1) == config('request-log.route_prefix', 'request_logs');
+        return $this -> app['request'] -> segment(1) == 'songshenzong';
     }
 
 
@@ -766,8 +764,7 @@ class LaravelDebugbar extends DebugBar
             'method' => $meta['method'],
         ];
 
-
-        return RequestLog ::create($data);
+        return SongshenzongLog ::create($data);
     }
 
 

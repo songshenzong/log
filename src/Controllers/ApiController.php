@@ -3,7 +3,7 @@
 namespace Songshenzong\RequestLog\Controllers;
 
 use Illuminate\Contracts\Foundation\Application;
-use Songshenzong\RequestLog\RequestLog;
+use Songshenzong\RequestLog\SongshenzongLog;
 use Songshenzong\RequestLog\LaravelDebugbar;
 
 class ApiController extends BaseController
@@ -20,13 +20,13 @@ class ApiController extends BaseController
      *
      * @var LaravelDebugbar
      */
-    protected $request_log;
+    protected $songshenzong;
 
 
     /**
      * @var string\
      */
-    protected $table;
+    protected $table = 'songshenzong_logs';
 
 
     /**
@@ -34,11 +34,10 @@ class ApiController extends BaseController
      *
      * @param \Illuminate\Contracts\Foundation\Application $app
      */
-    public function __construct(Application $app, LaravelDebugbar $request_log)
+    public function __construct(Application $app, LaravelDebugbar $songshenzong)
     {
-        $this -> app         = $app;
-        $this -> table       = config('request-log.table', 'request_logs');
-        $this -> request_log = $request_log;
+        $this -> app          = $app;
+        $this -> songshenzong = $songshenzong;
     }
 
 
@@ -70,22 +69,22 @@ HEREDOC;
             \DB ::statement("CREATE INDEX {$this->table}_method_index ON {$this->table} (method);");
             \DB ::statement("CREATE INDEX {$this->table}_uri_index ON {$this->table} (uri);");
             \DB ::statement("CREATE INDEX {$this->table}_time_index ON {$this->table} (time);");
-            return $this -> request_log -> json(200, 'OK');
+            return $this -> songshenzong -> json(200, 'OK');
         }
-        return $this -> request_log -> json(500, 'Error');
+        return $this -> songshenzong -> json(500, 'Error');
 
     }
 
 
     /**
-     * @param                                     $id
-     * @param \Songshenzong\RequestLog\RequestLog $request_log
+     * @param                                   $id
+     * @param \Songshenzong\RequestLog\SongshenzongLog $songshenzong_log
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getData($id, RequestLog $request_log)
+    public function getData($id, SongshenzongLog $songshenzong_log)
     {
-        return $this -> request_log -> json(200, 'OK', $request_log -> find($id));
+        return $this -> songshenzong -> json(200, 'OK', $songshenzong_log -> find($id));
     }
 
 
@@ -97,13 +96,13 @@ HEREDOC;
 
         $index = isset(\request() -> per_page) ? \request() -> per_page : 23;
 
-        $list = RequestLog :: orderBy('created_at', 'desc')
-                           -> paginate($index)
-                           -> appends(\request() -> all())
-                           -> toArray();
+        $list = SongshenzongLog :: orderBy('created_at', 'desc')
+                                -> paginate($index)
+                                -> appends(\request() -> all())
+                                -> toArray();
 
 
-        return $this -> request_log -> json(200, 'OK', $list);
+        return $this -> songshenzong -> json(200, 'OK', $list);
     }
 
 
@@ -113,10 +112,10 @@ HEREDOC;
     public function destroy()
     {
         if (\request() -> has('id')) {
-            return RequestLog ::destroy(\request() -> id);
+            return SongshenzongLog ::destroy(\request() -> id);
         }
 
-        RequestLog ::where('id', '!=', 0) -> delete();
+        SongshenzongLog ::where('id', '!=', 0) -> delete();
 
         return $this -> getList();
 

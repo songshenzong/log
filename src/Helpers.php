@@ -1,14 +1,14 @@
 <?php
 
-if (!function_exists('requestLog')) {
+if (!function_exists('songshenzong')) {
     /**
      * Get the instance
      *
      * @return \Songshenzong\RequestLog\LaravelDebugbar
      */
-    function requestLog()
+    function songshenzong()
     {
-        return app('RequestLog');
+        return app('songshenzong');
     }
 }
 
@@ -21,7 +21,7 @@ if (!function_exists('debug')) {
      */
     function debug($value)
     {
-        $debug = app('RequestLog');
+        $debug = app('songshenzong');
         foreach (func_get_args() as $value) {
             $debug->addMessage($value, 'debug');
         }
@@ -37,7 +37,7 @@ if (!function_exists('start_measure')) {
      */
     function start_measure($name, $label = null)
     {
-        app('RequestLog')->startMeasure($name, $label);
+        app('songshenzong')->startMeasure($name, $label);
     }
 }
 
@@ -49,7 +49,7 @@ if (!function_exists('stop_measure')) {
      */
     function stop_measure($name)
     {
-        app('RequestLog')->stopMeasure($name);
+        app('songshenzong')->stopMeasure($name);
     }
 }
 
@@ -63,7 +63,7 @@ if (!function_exists('add_measure')) {
      */
     function add_measure($label, $start, $end)
     {
-        app('RequestLog')->addMeasure($label, $start, $end);
+        app('songshenzong')->addMeasure($label, $start, $end);
     }
 }
 
@@ -76,6 +76,6 @@ if (!function_exists('measure')) {
      */
     function measure($label, \Closure $closure)
     {
-        app('RequestLog')->measure($label, $closure);
+        app('songshenzong')->measure($label, $closure);
     }
 }

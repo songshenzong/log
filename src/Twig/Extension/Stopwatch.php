@@ -22,8 +22,8 @@ class Stopwatch extends Twig_Extension
      */
     public function __construct(Application $app)
     {
-        if ($app->bound('RequestLog')) {
-            $this->debugbar = $app['RequestLog'];
+        if ($app->bound('songshenzong')) {
+            $this->debugbar = $app['songshenzong'];
         } else {
             $this->debugbar = null;
         }

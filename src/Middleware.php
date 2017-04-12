@@ -28,21 +28,20 @@ class Middleware
     /**
      * Create a new middleware instance.
      *
-     * @param  Container       $container
+     * @param  Container $container
      * @param  LaravelDebugbar $debugbar
      */
     public function __construct(Container $container, LaravelDebugbar $debugbar)
     {
-        $this -> container = $container;
-        $this -> debugbar  = $debugbar;
+        $this->container = $container;
+        $this->debugbar = $debugbar;
     }
 
     /**
      * Handle an incoming request.
      *
-     * @param  Request $request
-     * @param  Closure $next
-     *
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -51,14 +50,14 @@ class Middleware
             /** @var \Illuminate\Http\Response $response */
             $response = $next($request);
         } catch (Exception $e) {
-            $response = $this -> handleException($request, $e);
+            $response = $this->handleException($request, $e);
         } catch (Error $error) {
-            $e        = new FatalThrowableError($error);
-            $response = $this -> handleException($request, $e);
+            $e = new FatalThrowableError($error);
+            $response = $this->handleException($request, $e);
         }
 
         // Modify the response to add
-        $this -> debugbar -> modifyResponse($request, $response);
+        $this->debugbar->modifyResponse($request, $response);
 
         return $response;
 
@@ -69,22 +68,21 @@ class Middleware
      *
      * (Copy from Illuminate\Routing\Pipeline by Taylor Otwell)
      *
-     * @param            $passable
+     * @param $passable
      * @param  Exception $e
-     *
      * @return mixed
      * @throws Exception
      */
     protected function handleException($passable, Exception $e)
     {
-        if (!$this -> container -> bound(ExceptionHandler::class) || !$passable instanceof Request) {
+        if (! $this->container->bound(ExceptionHandler::class) || ! $passable instanceof Request) {
             throw $e;
         }
 
-        $handler = $this -> container -> make(ExceptionHandler::class);
+        $handler = $this->container->make(ExceptionHandler::class);
 
-        $handler -> report($e);
+        $handler->report($e);
 
-        return $handler -> render($passable, $e);
+        return $handler->render($passable, $e);
     }
 }
