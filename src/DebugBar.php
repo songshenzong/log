@@ -2,7 +2,6 @@
 /*
  * This file is part of the package.
  *
- * (c) 2013 Maxime Bouroumeau-Fuseau
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -27,7 +26,7 @@ use Songshenzong\RequestLog\DataCollector\DataCollectorInterface;
 class DebugBar implements ArrayAccess
 {
 
-    protected $collectors = array();
+    protected $collectors = [];
 
     protected $data;
 
@@ -184,7 +183,7 @@ class DebugBar implements ArrayAccess
             $http -> deleteSessionValue($this -> stackSessionNamespace);
         }
 
-        $datasets = array();
+        $datasets = [];
         if ($this -> isDataPersisted() && !$this -> stackAlwaysUseSessionStorage) {
             foreach ($stackedData as $id => $data) {
                 $datasets[$id] = $this -> getStorage() -> get($id);
@@ -236,7 +235,7 @@ class DebugBar implements ArrayAccess
         }
 
         if (!$http -> hasSessionValue($this -> stackSessionNamespace)) {
-            $http -> setSessionValue($this -> stackSessionNamespace, array());
+            $http -> setSessionValue($this -> stackSessionNamespace, []);
         }
 
         return $http;
