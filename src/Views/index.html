@@ -112,10 +112,11 @@
 
                     layer.msg(result.message);
 
-                    jQuery("#destroyLogs").show();
+                    jQuery("#refreshHome").show();
                     jQuery("#totalButton").show();
-                    jQuery("#nextPage").show();
                     jQuery("#prevPage").show();
+                    jQuery("#nextPage").show();
+                    jQuery("#destroyLogs").show();
 
 
                     if (List) {
@@ -230,8 +231,7 @@
 
                     layer.msg(result.message);
 
-                    jQuery("#collectStatus").html(result.message);
-
+                    jQuery("#collectStatus").html(result.message).show();
                     if (result.data.enable == false) {
                         jQuery("#collectStatus").addClass("btn-warning");
                     } else {
@@ -311,11 +311,12 @@
                 <div class="navbar-form navbar-right">
 
 
-                    <button onclick="logList('logs')" type="button" class="btn btn-sm btn-success">Refresh
+                    <button id="refreshHome" onclick="logList('logs')" type="button" class="btn btn-sm btn-success">
+                        Refresh
                         Home
                     </button>
 
-                    <button id="collectStatus" onclick="getOrSetCollectStatus(true)" type="button"
+                    <button id="collectStatus" style="display: none" onclick="getOrSetCollectStatus(true)" type="button"
                             class="btn btn-sm btn-warning"
                     >Collect Disabled
                     </button>
