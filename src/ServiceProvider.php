@@ -43,8 +43,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             }
 
             return $debugbar;
-        }
-        );
+        });
 
         $this -> app -> alias('songshenzong', 'Songshenzong\RequestLog\LaravelDebugbar');
 

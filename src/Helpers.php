@@ -1,12 +1,12 @@
 <?php
 
-if (!function_exists('songshenzong')) {
+if (!function_exists('requestLog')) {
     /**
      * Get the instance
      *
      * @return \Songshenzong\RequestLog\LaravelDebugbar
      */
-    function songshenzong()
+    function requestLog()
     {
         return app('songshenzong');
     }
