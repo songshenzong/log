@@ -47,13 +47,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this -> app -> alias('songshenzong', 'Songshenzong\RequestLog\LaravelDebugbar');
 
-        $this -> app -> singleton('command.songshenzong.clear',
-            function ($app) {
-                return new Console\ClearCommand($app['songshenzong']);
-            }
-        );
 
-        $this -> commands(['command.songshenzong.clear']);
     }
 
 
