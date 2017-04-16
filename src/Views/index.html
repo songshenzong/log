@@ -180,8 +180,7 @@
          *---------------------------------------------------------*/
         function destroy() {
             jQuery.getJSON(route + 'destroy', function (result) {
-                    List.items = null;
-
+                    List.items = result.data;
                 }
             );
         }
