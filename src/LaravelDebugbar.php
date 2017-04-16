@@ -117,6 +117,7 @@ class LaravelDebugbar extends DebugBar
             return;
         }
 
+
         /** @var \Songshenzong\RequestLog\LaravelDebugbar $debugbar */
         $debugbar = $this;
 
@@ -591,7 +592,9 @@ class LaravelDebugbar extends DebugBar
      */
     public function modifyResponse(Request $request, Response $response)
     {
-
+        if ($this -> isCollect() === false) {
+            return;
+        }
 
         $app = $this -> app;
 
@@ -938,7 +941,10 @@ class LaravelDebugbar extends DebugBar
      */
     public function unlinkCollectLockFile()
     {
-        return unlink($this -> collectLockFile);
+        if (file_exists($this -> collectLockFile)) {
+            return unlink($this -> collectLockFile);
+        }
+
     }
 
     /**

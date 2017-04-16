@@ -106,6 +106,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
                 $router -> get('collect/status', 'ApiController@getOrSetCollectStatus');
 
+                $router -> get('table/status', 'ApiController@getTableStatus');
+
             });
 
 

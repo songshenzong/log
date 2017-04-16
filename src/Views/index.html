@@ -15,6 +15,7 @@
         var loading;
         var token;
         var route = '/request_logs/';
+        var tableStatus = false;
 
         /**---------------------------------------------------------
          *   Clear Token.
@@ -49,7 +50,6 @@
             /**---------------------------------------------------------
              *   Global settings of the Ajax.
              *---------------------------------------------------------*/
-
             jQuery.ajaxSetup({
                 cache: false,
                 aysnc: true,
@@ -79,17 +79,17 @@
                 }
             });
 
-            /**---------------------------------------------------------
-             *   Get list of the logs.
-             *---------------------------------------------------------*/
-            logList('logs');
-
 
             /**---------------------------------------------------------
              *   Get or Set Collect Status
              *---------------------------------------------------------*/
             getOrSetCollectStatus();
 
+
+            /**---------------------------------------------------------
+             *   Get Table Status.
+             *---------------------------------------------------------*/
+            gettableStatus();
         });
 
 
@@ -97,13 +97,26 @@
          *   Get list of logs.
          *---------------------------------------------------------*/
         function logList(url) {
+
+            if (tableStatus == false) {
+                information('Please Create Logs Table First.');
+                return false;
+            }
+
             jQuery.getJSON(route + url,
                 function (result) {
+
                     if (!verify(result)) {
                         return false;
                     }
 
                     layer.msg(result.message);
+
+                    jQuery("#destroyLogs").show();
+                    jQuery("#totalButton").show();
+                    jQuery("#nextPage").show();
+                    jQuery("#prevPage").show();
+
 
                     if (List) {
                         List.items = result.data;
@@ -177,6 +190,7 @@
                 btn: ['Got It'],
                 time: 20000,
             });
+
         }
 
 
@@ -195,8 +209,10 @@
          *---------------------------------------------------------*/
         function createTable() {
             jQuery.getJSON(route + 'create', function (result) {
-                    List.items = result.data;
                     layer.msg(result.message);
+                    if (result.status_code == 200) {
+                        window.location.reload();
+                    }
                 }
             );
         }
@@ -207,13 +223,20 @@
         function getOrSetCollectStatus() {
             var isSet = arguments[0] ? 'true' : 'false';
             jQuery.getJSON(route + 'collect/status', {set: isSet}, function (result) {
+                    if (result.status_code != 200) {
+                        information(result.message);
+                        return false;
+                    }
+
                     layer.msg(result.message);
+
                     jQuery("#collectStatus").html(result.message);
 
                     if (result.data.enable == false) {
-                        jQuery("#collectStatus").addClass("btn btn-sm btn-warning");
+                        jQuery("#collectStatus").addClass("btn-warning");
                     } else {
-                        jQuery("#collectStatus").addClass("btn btn-sm btn-success");
+                        jQuery("#collectStatus").removeClass("btn-warning");
+                        jQuery("#collectStatus").addClass("btn-success");
                     }
 
                 }
@@ -221,6 +244,29 @@
         }
 
 
+        /**---------------------------------------------------------
+         *   Get Table Status.
+         *---------------------------------------------------------*/
+        function gettableStatus() {
+            jQuery.getJSON(route + 'table/status', function (result) {
+
+                    if (result.message) {
+                        jQuery("#tableStatus").html(result.message);
+                        jQuery("#tableStatus").show();
+                    }
+
+                    /**---------------------------------------------------------
+                     *   Get list of the logs.
+                     *---------------------------------------------------------*/
+                    tableStatus = result.data.enable;
+                    if (tableStatus == true) {
+                        logList('logs');
+                    }
+
+
+                }
+            );
+        }
     </script>
     <style>
         .navbar {
@@ -269,29 +315,37 @@
                         Home
                     </button>
 
-                    <button onclick="getOrSetCollectStatus(true)" type="button" class="btn btn-sm btn-success"
-                            id="collectStatus">Collect Enabled
+                    <button id="collectStatus" onclick="getOrSetCollectStatus(true)" type="button"
+                            class="btn btn-sm btn-success"
+                    >Collect Enabled
                     </button>
 
-                    <button v-if="items.prev_page_url" @click="getNewList(items.prev_page_url)" type="button"
+                    <button id="prevPage" style="display: none;" v-if="items.prev_page_url"
+                            @click="getNewList(items.prev_page_url)"
+                            type="button"
                             class="btn btn-sm btn-info">Prev Page
                     </button>
 
 
-                    <button v-if="items.next_page_url" @click="getNewList(items.next_page_url)" type="button
+                    <button id="nextPage" style="display: none;" v-if="items.next_page_url"
+                            @click="getNewList(items.next_page_url)" type="button
         " class="btn btn-sm btn-info">Next Page
                     </button>
 
-                    <button type="button" class="btn btn-sm btn-success">Total:
+                    <button id="totalButton" style="display: none;" v-if="items.total" type="button"
+                            class="btn btn-sm btn-success">Total:
                         [[items.total]]
                     </button>
 
-                    <button onclick="destroy()" v-if="items.total" type="button" class="btn btn-sm btn-warning">Destroy
+                    <button id="destroyLogs" style="display: none;" onclick="destroy()" v-if="items.total" type="button"
+                            class="btn btn-sm btn-danger">Destroy
                         Logs
                     </button>
 
 
-                    <button onclick="createTable()" type="button" class="btn btn-sm btn-danger">Create/Recreate Table
+                    <button id="tableStatus" style="display: none;" onclick="createTable()" type="button"
+                            class="btn btn-sm btn-danger">
+                        Create/Recreate Table
                     </button>
 
 

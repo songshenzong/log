@@ -94,7 +94,6 @@ HEREDOC;
      */
     public function getList()
     {
-
         $index = isset(\request() -> per_page) ? \request() -> per_page : 23;
 
         $list = RequestLog :: orderBy('created_at', 'desc')
@@ -130,11 +129,17 @@ HEREDOC;
     public function getOrSetCollectStatus()
     {
 
+
         if (request() -> has('set') && request() -> set == 'true') {
+
 
             if ($this -> songshenzong -> isCollect()) {
                 $this -> songshenzong -> unlinkCollectLockFile();
             } else {
+                // Check Logs Table Status
+                if (!$this -> isTableExists()) {
+                    return $this -> songshenzong -> json(400, 'Please Create Logs Table First.');
+                }
                 $this -> songshenzong -> linkCollectLockFile();
             }
 
@@ -151,4 +156,34 @@ HEREDOC;
     }
 
 
+    /**
+     * Get Table Status.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTableStatus()
+    {
+        if ($status = $this -> isTableExists()) {
+            $message = 'Recreate Logs Table';
+        } else {
+            $message = 'Create Logs Table';
+        }
+
+
+        return $this -> songshenzong -> json(200, $message, ['enable' => $status]);
+    }
+
+    /**
+     * Check the Logs table exists.
+     *
+     * @return bool
+     */
+    public function isTableExists()
+    {
+        $status = (bool)\DB ::select("SHOW TABLES LIKE '" . $this -> table . "';");
+        if (!$status) {
+            $this -> songshenzong -> unlinkCollectLockFile();
+        }
+        return $status;
+    }
 }
