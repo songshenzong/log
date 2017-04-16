@@ -46,7 +46,7 @@ php artisan vendor:publish --provider="Songshenzong\RequestLog\ServiceProvider"
 ```
 ## Let's start
 ```
-http://your.domain/songshenzong
+http://your.domain/request_logs
 ```
 
 ## Usage
