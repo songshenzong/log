@@ -77,6 +77,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
 
+        $configPath = __DIR__ . '/../config/request-log.php';
+        $this -> publishes([$configPath => config_path('request-log.php')], 'config');
+
+
         if (!$this -> isEnabled()) {
             return;
         }
