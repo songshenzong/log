@@ -112,7 +112,6 @@
 
                     layer.msg(result.message);
 
-                    jQuery("#refreshHome").show();
                     jQuery("#totalButton").show();
                     jQuery("#prevPage").show();
                     jQuery("#nextPage").show();
@@ -311,10 +310,9 @@
                 <div class="navbar-form navbar-right">
 
 
-                    <button id="refreshHome" style="display: none" onclick="logList('logs')" type="button"
+                    <button onclick="logList('logs')" type="button"
                             class="btn btn-sm btn-success">
                         Refresh
-                        Home
                     </button>
 
                     <button id="collectStatus" style="display: none" onclick="getOrSetCollectStatus(true)" type="button"
