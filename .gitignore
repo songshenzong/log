@@ -1,5 +1,5 @@
-.DS_Store
 /.idea
+.DS_Store
 /composer.lock
 /vendor/
 /src/collect.lock
