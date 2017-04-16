@@ -198,7 +198,7 @@ class TimeDataCollector extends DataCollector
             $this->stopMeasure($name);
         }
 
-        usort($this->measures, function($a, $b) {
+        usort($this->measures, function ($a, $b) {
             if ($a['start'] == $b['start']) {
                 return 0;
             }
@@ -221,6 +221,4 @@ class TimeDataCollector extends DataCollector
     {
         return 'time';
     }
-
-
 }

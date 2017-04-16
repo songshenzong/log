@@ -14,7 +14,6 @@ class LogsCollector extends MessagesCollector
         parent::__construct($name);
 
         $path = $path ?: $this->getLogsFile();
-
     }
 
     /**

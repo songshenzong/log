@@ -119,6 +119,4 @@ class ExceptionsCollector extends DataCollector
     {
         return 'exceptions';
     }
-
-
 }

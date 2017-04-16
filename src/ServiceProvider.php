@@ -27,7 +27,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
-
         $this -> app -> alias(
             'Songshenzong\RequestLog\DataFormatter\DataFormatter',
             'Songshenzong\RequestLog\DataFormatter\DataFormatterInterface'
@@ -46,8 +45,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         });
 
         $this -> app -> alias('songshenzong', 'Songshenzong\RequestLog\LaravelDebugbar');
-
-
     }
 
 
@@ -58,8 +55,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function isEnabled()
     {
-
-
         if ($this -> enabled === null) {
             $environments    = config('request-log.env', ['dev', 'local', 'production']);
             $this -> enabled = in_array(env('APP_ENV'), $environments);
@@ -76,7 +71,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-
         $configPath = __DIR__ . '/../config/request-log.php';
         $this -> publishes([$configPath => config_path('request-log.php')], 'config');
 
@@ -95,11 +89,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         ];
 
         app('router') -> group($routeConfig, function ($router) {
-
             $router -> get('', 'WebController@index');
 
             $router -> group(['middleware' => 'Songshenzong\RequestLog\TokenMiddleware'], function ($router) {
-
                 $router -> get('logs', 'ApiController@getList');
 
                 $router -> get('logs/{id}', 'ApiController@getData') -> where('id', '[0-9\.]+');
@@ -111,10 +103,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 $router -> get('collect/status', 'ApiController@getOrSetCollectStatus');
 
                 $router -> get('table/status', 'ApiController@getTableStatus');
-
             });
-
-
         });
 
         if (app() -> runningInConsole() || app() -> environment('testing')) {
@@ -124,8 +113,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         app('songshenzong') -> enable();
         app('songshenzong') -> boot();
-
-
     }
 
 
@@ -149,5 +136,4 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $this -> publishes([$configPath => config_path('request-log.php')], 'config');
     }
-
 }

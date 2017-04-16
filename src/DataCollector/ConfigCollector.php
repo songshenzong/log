@@ -54,6 +54,4 @@ class ConfigCollector extends DataCollector
     {
         return $this -> name;
     }
-
-
 }

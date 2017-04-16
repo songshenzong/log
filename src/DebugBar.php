@@ -25,7 +25,6 @@ use Songshenzong\RequestLog\DataCollector\DataCollectorInterface;
  */
 class DebugBar implements ArrayAccess
 {
-
     protected $collectors = [];
 
     protected $data;

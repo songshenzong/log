@@ -69,6 +69,4 @@ class MultiAuthCollector extends AuthCollector
             return $guard -> user();
         }
     }
-
-
 }

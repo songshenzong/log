@@ -224,8 +224,4 @@ class PropelCollector extends DataCollector implements BasicLogger
     {
         return 'propel';
     }
-
-
-
-
 }

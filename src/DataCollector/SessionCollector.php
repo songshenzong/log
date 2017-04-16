@@ -5,7 +5,6 @@ namespace Songshenzong\RequestLog\DataCollector;
 use Songshenzong\RequestLog\DataCollector\DataCollector;
 use Songshenzong\RequestLog\DataCollector\DataCollectorInterface;
 
-
 class SessionCollector extends DataCollector implements DataCollectorInterface
 {
     /** @var  \Symfony\Component\HttpFoundation\Session\SessionInterface|\Illuminate\Contracts\Session\Session $session */
@@ -36,6 +35,4 @@ class SessionCollector extends DataCollector implements DataCollectorInterface
     {
         return 'session';
     }
-
-
 }

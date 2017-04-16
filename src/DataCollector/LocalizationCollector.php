@@ -53,6 +53,4 @@ class LocalizationCollector extends DataCollector
     {
         return 'localization';
     }
-
-
 }

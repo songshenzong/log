@@ -152,6 +152,4 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
     {
         return $this -> name;
     }
-
-
 }

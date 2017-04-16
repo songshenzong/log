@@ -54,6 +54,4 @@ class MemoryCollector extends DataCollector
     {
         return 'memory';
     }
-
-
 }

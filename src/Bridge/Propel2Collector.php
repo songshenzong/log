@@ -143,7 +143,7 @@ class Propel2Collector extends DataCollector
             $duration = null;
             $memory = null;
 
-            $isSuccess = ( LogLevel::INFO === strtolower($record['level_name']) );
+            $isSuccess = (LogLevel::INFO === strtolower($record['level_name']));
 
             $detailsCount = count($config['details']);
             $parameters = explode($config['outerGlue'], $record['message'], $detailsCount + 1);
@@ -189,7 +189,6 @@ class Propel2Collector extends DataCollector
                 if ($isSuccess) {
                     $this->queryCount++;
                 }
-
             } else {
                 $message = $record['message'];
             }
@@ -239,12 +238,10 @@ class Propel2Collector extends DataCollector
             return false === $statement['is_success'];
         }));
         $accumulatedDuration = array_reduce($statements, function ($accumulatedDuration, $statement) {
-        
             $time = isset($statement['duration']) ? $statement['duration'] : 0;
             return $accumulatedDuration += $time;
         });
         $memoryUsage = array_reduce($statements, function ($memoryUsage, $statement) {
-        
             $time = isset($statement['memory']) ? $statement['memory'] : 0;
             return $memoryUsage += $time;
         });
@@ -272,8 +269,4 @@ class Propel2Collector extends DataCollector
 
         return 'propel2'.$additionalName;
     }
-
-
-
-
 }

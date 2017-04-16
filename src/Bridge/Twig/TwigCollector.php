@@ -58,7 +58,4 @@ class TwigCollector extends DataCollector
     {
         return 'twig';
     }
-
-
-
 }

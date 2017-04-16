@@ -88,6 +88,4 @@ class AuthCollector extends DataCollector
     {
         return 'auth';
     }
-
-
 }

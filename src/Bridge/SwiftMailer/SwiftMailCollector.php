@@ -62,8 +62,4 @@ class SwiftMailCollector extends DataCollector
     {
         return 'swiftmailer_mails';
     }
-
-
-
-
 }

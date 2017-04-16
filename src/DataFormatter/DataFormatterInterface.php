@@ -22,7 +22,7 @@ interface DataFormatterInterface
      *
      * @return string
      */
-    function formatVar($data);
+    public function formatVar($data);
 
     /**
      * Transforms a duration in seconds in a readable string
@@ -31,7 +31,7 @@ interface DataFormatterInterface
      *
      * @return string
      */
-    function formatDuration($seconds);
+    public function formatDuration($seconds);
 
     /**
      * Transforms a size in bytes to a human readable string
@@ -41,5 +41,5 @@ interface DataFormatterInterface
      *
      * @return string
      */
-    function formatBytes($size, $precision = 2);
+    public function formatBytes($size, $precision = 2);
 }

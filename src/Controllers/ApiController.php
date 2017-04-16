@@ -73,7 +73,6 @@ HEREDOC;
             return $this -> getList();
         }
         return $this -> songshenzong -> json(500, 'Error');
-
     }
 
 
@@ -118,7 +117,6 @@ HEREDOC;
         RequestLog ::where('id', '!=', 0) -> delete();
 
         return $this -> getList();
-
     }
 
     /**
@@ -128,11 +126,7 @@ HEREDOC;
      */
     public function getOrSetCollectStatus()
     {
-
-
         if (request() -> has('set') && request() -> set == 'true') {
-
-
             if ($this -> songshenzong -> isCollect()) {
                 $this -> songshenzong -> unlinkCollectLockFile();
             } else {
@@ -142,7 +136,6 @@ HEREDOC;
                 }
                 $this -> songshenzong -> linkCollectLockFile();
             }
-
         }
 
 

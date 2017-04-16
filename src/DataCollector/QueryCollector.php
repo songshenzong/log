@@ -70,7 +70,7 @@ class QueryCollector extends PDOCollector
     public function setExplainSource($enabled, $types)
     {
         $this->explainQuery = $enabled;
-        if($types){
+        if ($types) {
             $this->explainTypes = $types;
         }
     }
@@ -172,7 +172,7 @@ class QueryCollector extends PDOCollector
             $hints[] = '<code>LIMIT</code> without <code>ORDER BY</code> causes non-deterministic results, depending on the query execution plan';
         }
         if (preg_match('/LIKE\\s[\'"](%.*?)[\'"]/i', $query, $matches)) {
-            $hints[] = 	'An argument has a leading wildcard character: <code>' . $matches[1]. '</code>.
+            $hints[] =    'An argument has a leading wildcard character: <code>' . $matches[1]. '</code>.
 								The predicate with this argument is not sargable and cannot use an index if one exists.';
         }
         return $hints;
@@ -297,7 +297,7 @@ class QueryCollector extends PDOCollector
             $this->reflection['viewfinderViews'] = $property;
         }
 
-        foreach ($property->getValue($finder) as $name => $path){
+        foreach ($property->getValue($finder) as $name => $path) {
             if (sha1($path) == $hash || md5($path) == $hash) {
                 return $name;
             }
@@ -402,7 +402,7 @@ class QueryCollector extends PDOCollector
             ];
 
             //Add the results from the explain as new rows
-            foreach($query['explain'] as $explain){
+            foreach ($query['explain'] as $explain) {
                 $statements[] = [
                     'sql' => ' - EXPLAIN #' . $explain->id . ': `' . $explain->table . '` (' . $explain->select_type . ')',
                     'type' => 'explain',
@@ -434,6 +434,4 @@ class QueryCollector extends PDOCollector
     {
         return 'queries';
     }
-
-
 }

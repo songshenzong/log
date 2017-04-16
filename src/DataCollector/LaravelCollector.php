@@ -40,6 +40,4 @@ class LaravelCollector extends DataCollector
     {
         return 'laravel';
     }
-
-
 }

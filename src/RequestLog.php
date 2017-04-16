@@ -4,7 +4,6 @@ namespace Songshenzong\RequestLog;
 
 use Illuminate\Database\Eloquent\Model;
 
-
 class RequestLog extends Model
 {
 
@@ -43,5 +42,4 @@ class RequestLog extends Model
     {
         return date('m/d/y H:i:s:ms', $key);
     }
-
 }

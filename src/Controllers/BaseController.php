@@ -5,7 +5,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 
 if (class_exists('Illuminate\Routing\Controller')) {
-
     class BaseController extends Controller
     {
         protected $debugbar;
@@ -19,9 +18,7 @@ if (class_exists('Illuminate\Routing\Controller')) {
             }
         }
     }
-
 } else {
-
     class BaseController
     {
         protected $debugbar;

@@ -22,7 +22,6 @@ class WebController extends BaseController
     public function __construct(Application $app)
     {
         $this -> app = $app;
-
     }
 
 
@@ -35,6 +34,4 @@ class WebController extends BaseController
         echo file_get_contents($file);
         exit;
     }
-
-
 }

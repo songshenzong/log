@@ -94,6 +94,4 @@ class MonologCollector extends AbstractProcessingHandler implements DataCollecto
     {
         return $this -> name;
     }
-
-
 }

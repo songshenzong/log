@@ -48,7 +48,6 @@ class TokenMiddleware
      */
     public function handle($request, Closure $next)
     {
-
         if (isset($request -> token)) {
             $tokens = config('request-log.token', ['songshenzong']);
             if (in_array($request -> token, $tokens)) {
@@ -57,7 +56,5 @@ class TokenMiddleware
             return $this -> songshenzong -> json(403, $request -> token . ' is Invalid Token !');
         }
         return $this -> songshenzong -> json(403, 'No Token !');
-
     }
-
 }

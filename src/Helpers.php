@@ -27,7 +27,6 @@ if (!function_exists('debug')) {
         foreach (func_get_args() as $value) {
             app('songshenzong') -> addMessage($value, 'debug');
         }
-
     }
 }
 

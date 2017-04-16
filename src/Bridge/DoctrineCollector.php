@@ -80,8 +80,4 @@ class DoctrineCollector extends DataCollector
     {
         return 'doctrine';
     }
-
-
-
-
 }

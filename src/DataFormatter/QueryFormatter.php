@@ -2,7 +2,6 @@
 
 namespace Songshenzong\RequestLog\DataFormatter;
 
-
 class QueryFormatter extends DataFormatter
 {
 

@@ -201,7 +201,6 @@ class LaravelDebugbar extends DebugBar
                 $eventCollector = new EventCollector($startTime);
                 $this -> addCollector($eventCollector);
                 $this -> app['events'] -> subscribe($eventCollector);
-
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
@@ -261,7 +260,6 @@ class LaravelDebugbar extends DebugBar
          *   Logs from Mongolog (merged in messages if enabled)
          *---------------------------------------------------------*/
         if (!$this -> isLumen() && $this -> shouldCollect('log', true)) {
-
             try {
                 if ($this -> hasCollector('messages')) {
                     $logger = new MessagesCollector('log');
@@ -304,7 +302,6 @@ class LaravelDebugbar extends DebugBar
                     )
                 );
             }
-
         }
 
 
@@ -380,22 +377,22 @@ class LaravelDebugbar extends DebugBar
                                                           \Illuminate\Database\Events\TransactionBeginning::class,
                                                           'connection.*.beganTransaction',
                                                       ], function ($transaction) use ($queryCollector) {
-                    $queryCollector -> collectTransactionEvent('Begin Transaction', $transaction -> connection);
-                });
+                                                          $queryCollector -> collectTransactionEvent('Begin Transaction', $transaction -> connection);
+                                                      });
 
                 $db -> getEventDispatcher() -> listen([
                                                           \Illuminate\Database\Events\TransactionCommitted::class,
                                                           'connection.*.committed',
                                                       ], function ($transaction) use ($queryCollector) {
-                    $queryCollector -> collectTransactionEvent('Commit Transaction', $transaction -> connection);
-                });
+                                                          $queryCollector -> collectTransactionEvent('Commit Transaction', $transaction -> connection);
+                                                      });
 
                 $db -> getEventDispatcher() -> listen([
                                                           \Illuminate\Database\Events\TransactionRolledBack::class,
                                                           'connection.*.rollingBack',
                                                       ], function ($transaction) use ($queryCollector) {
-                    $queryCollector -> collectTransactionEvent('Rollback Transaction', $transaction -> connection);
-                });
+                                                          $queryCollector -> collectTransactionEvent('Rollback Transaction', $transaction -> connection);
+                                                      });
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
@@ -691,7 +688,6 @@ class LaravelDebugbar extends DebugBar
      */
     public function isEnabled()
     {
-
         if ($this -> enabled === null) {
             $environments = config('request-log.env', ['dev', 'local', 'production']);
 
@@ -933,7 +929,6 @@ class LaravelDebugbar extends DebugBar
     public function isCollect()
     {
         return file_exists($this -> collectLockFile);
-
     }
 
     /**
@@ -944,7 +939,6 @@ class LaravelDebugbar extends DebugBar
         if (file_exists($this -> collectLockFile)) {
             return unlink($this -> collectLockFile);
         }
-
     }
 
     /**
@@ -954,6 +948,4 @@ class LaravelDebugbar extends DebugBar
     {
         return file_put_contents($this -> collectLockFile, date('y-m-d h:i:s'));
     }
-
-
 }

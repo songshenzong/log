@@ -102,6 +102,4 @@ class EventCollector extends TimeDataCollector
     {
         return 'event';
     }
-
-
 }
