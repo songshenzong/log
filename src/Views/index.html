@@ -85,6 +85,11 @@
             logList('logs');
 
 
+            /**---------------------------------------------------------
+             *   Get or Set Collect Status
+             *---------------------------------------------------------*/
+            getOrSetCollectStatus();
+
         });
 
 
@@ -196,6 +201,25 @@
             );
         }
 
+        /**---------------------------------------------------------
+         *   Get Collect Status.
+         *---------------------------------------------------------*/
+        function getOrSetCollectStatus() {
+            var isSet = arguments[0] ? 'true' : 'false';
+            jQuery.getJSON(route + 'collect/status', {set: isSet}, function (result) {
+                    layer.msg(result.message);
+                    jQuery("#collectStatus").html(result.message);
+
+                    if (result.data.enable == false) {
+                        jQuery("#collectStatus").addClass("btn btn-sm btn-warning");
+                    } else {
+                        jQuery("#collectStatus").addClass("btn btn-sm btn-success");
+                    }
+
+                }
+            );
+        }
+
 
     </script>
     <style>
@@ -243,6 +267,10 @@
 
                     <button onclick="logList('logs')" type="button" class="btn btn-sm btn-success">Refresh
                         Home
+                    </button>
+
+                    <button onclick="getOrSetCollectStatus(true)" type="button" class="btn btn-sm btn-success"
+                            id="collectStatus">Collect Enabled
                     </button>
 
                     <button v-if="items.prev_page_url" @click="getNewList(items.prev_page_url)" type="button"

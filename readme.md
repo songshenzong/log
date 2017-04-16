@@ -85,7 +85,7 @@ There are also helper functions available for the most common calls:
 
 ```php
 // All arguments will be dumped as a debug message
-songshenzong($var1, $someString, $intValue, $object);
+debug($var1, $someString, $intValue, $object);
 
 start_measure('render','Time for rendering');
 stop_measure('render');

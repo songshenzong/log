@@ -104,6 +104,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
                 $router -> get('create', 'ApiController@createTable');
 
+                $router -> get('collect/status', 'ApiController@getOrSetCollectStatus');
+
             });
 
 
@@ -126,10 +128,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      *
      * @return array
      */
-    public function provides()
-    {
-        return ['songshenzong', 'command.songshenzong.clear'];
-    }
+    // public function provides()
+    // {
+    //     return ['songshenzong', 'command.songshenzong.clear'];
+    // }
 
 
     /**

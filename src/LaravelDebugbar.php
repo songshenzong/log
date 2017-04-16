@@ -73,6 +73,8 @@ class LaravelDebugbar extends DebugBar
      */
     protected $enabled = null;
 
+
+    protected $collectLockFile = __DIR__ . '/collect.lock';
     /**
      * True when this is a Lumen application
      *
@@ -917,6 +919,34 @@ class LaravelDebugbar extends DebugBar
                                       'data'        => $data,
                                       'token'       => \request() -> token,
                                   ]);
+    }
+
+
+    /**
+     * Get collect status by check collect lock file.
+     *
+     * @return bool
+     */
+    public function isCollect()
+    {
+        return file_exists($this -> collectLockFile);
+
+    }
+
+    /**
+     * Unlink Collect Lock File.
+     */
+    public function unlinkCollectLockFile()
+    {
+        return unlink($this -> collectLockFile);
+    }
+
+    /**
+     * Link Collect Lock File.
+     */
+    public function linkCollectLockFile()
+    {
+        return file_put_contents($this -> collectLockFile, date('y-m-d h:i:s'));
     }
 
 

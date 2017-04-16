@@ -79,7 +79,7 @@ HEREDOC;
 
     /**
      * @param                                          $id
-     * @param \Songshenzong\RequestLog\RequestLog $songshenzong_log
+     * @param \Songshenzong\RequestLog\RequestLog      $songshenzong_log
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -98,9 +98,9 @@ HEREDOC;
         $index = isset(\request() -> per_page) ? \request() -> per_page : 23;
 
         $list = RequestLog :: orderBy('created_at', 'desc')
-                                -> paginate($index)
-                                -> appends(\request() -> all())
-                                -> toArray();
+                           -> paginate($index)
+                           -> appends(\request() -> all())
+                           -> toArray();
 
 
         return $this -> songshenzong -> json(200, 'OK', $list);
@@ -121,4 +121,34 @@ HEREDOC;
         return $this -> getList();
 
     }
+
+    /**
+     * Get Collect Status.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getOrSetCollectStatus()
+    {
+
+        if (request() -> has('set') && request() -> set == 'true') {
+
+            if ($this -> songshenzong -> isCollect()) {
+                $this -> songshenzong -> unlinkCollectLockFile();
+            } else {
+                $this -> songshenzong -> linkCollectLockFile();
+            }
+
+        }
+
+
+        if ($status = $this -> songshenzong -> isCollect()) {
+            $message = 'Collect Enabled';
+        } else {
+            $message = 'Collect Disabled';
+        }
+
+        return $this -> songshenzong -> json(200, $message, ['enable' => $status]);
+    }
+
+
 }

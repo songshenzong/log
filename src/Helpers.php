@@ -1,5 +1,6 @@
 <?php
 
+
 if (!function_exists('requestLog')) {
     /**
      * Get the instance
@@ -12,6 +13,7 @@ if (!function_exists('requestLog')) {
     }
 }
 
+
 if (!function_exists('debug')) {
     /**
      * Adds one or more messages to the MessagesCollector
@@ -20,11 +22,30 @@ if (!function_exists('debug')) {
      *
      * @return string
      */
-    function debug($value, $label = 'debug')
+    function debug($value)
+    {
+        foreach (func_get_args() as $value) {
+            app('songshenzong') -> addMessage($value, 'debug');
+        }
+
+    }
+}
+
+
+if (!function_exists('addMessage')) {
+    /**
+     * Adds one or more messages to the MessagesCollector
+     *
+     * @param  mixed ...$value
+     *
+     * @return string
+     */
+    function addMessage($value, $label = 'info')
     {
         app('songshenzong') -> addMessage($value, $label);
     }
 }
+
 
 if (!function_exists('start_measure')) {
     /**
@@ -39,6 +60,7 @@ if (!function_exists('start_measure')) {
     }
 }
 
+
 if (!function_exists('stop_measure')) {
     /**
      * Stop a measure
@@ -50,6 +72,7 @@ if (!function_exists('stop_measure')) {
         app('songshenzong') -> stopMeasure($name);
     }
 }
+
 
 if (!function_exists('add_measure')) {
     /**
@@ -64,6 +87,7 @@ if (!function_exists('add_measure')) {
         app('songshenzong') -> addMeasure($label, $start, $end);
     }
 }
+
 
 if (!function_exists('measure')) {
     /**
