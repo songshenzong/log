@@ -378,22 +378,22 @@ class LaravelDebugbar extends DebugBar
                                                           \Illuminate\Database\Events\TransactionBeginning::class,
                                                           'connection.*.beganTransaction',
                                                       ], function ($transaction) use ($queryCollector) {
-                    $queryCollector -> collectTransactionEvent('Begin Transaction', $transaction -> connection);
-                });
+                                                          $queryCollector -> collectTransactionEvent('Begin Transaction', $transaction -> connection);
+                                                      });
 
                 $db -> getEventDispatcher() -> listen([
                                                           \Illuminate\Database\Events\TransactionCommitted::class,
                                                           'connection.*.committed',
                                                       ], function ($transaction) use ($queryCollector) {
-                    $queryCollector -> collectTransactionEvent('Commit Transaction', $transaction -> connection);
-                });
+                                                          $queryCollector -> collectTransactionEvent('Commit Transaction', $transaction -> connection);
+                                                      });
 
                 $db -> getEventDispatcher() -> listen([
                                                           \Illuminate\Database\Events\TransactionRolledBack::class,
                                                           'connection.*.rollingBack',
                                                       ], function ($transaction) use ($queryCollector) {
-                    $queryCollector -> collectTransactionEvent('Rollback Transaction', $transaction -> connection);
-                });
+                                                          $queryCollector -> collectTransactionEvent('Rollback Transaction', $transaction -> connection);
+                                                      });
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
@@ -751,7 +751,6 @@ class LaravelDebugbar extends DebugBar
     // Persist the collect information the database
     private function persistData()
     {
-
         $data = [
             'time'   => $this -> meta['time'],
             'ip'     => $this -> meta['ip'],
