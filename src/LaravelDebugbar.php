@@ -932,7 +932,7 @@ class LaravelDebugbar extends DebugBar
     public function item($data = null)
     {
         return response() -> json([
-                                      'request' => \request(),
+                                      'request' => \request() -> all(),
                                       'data'    => $data,
                                   ]);
     }
