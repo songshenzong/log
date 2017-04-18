@@ -718,13 +718,11 @@ class LaravelDebugbar extends DebugBar
         /** @var Request $request */
         $request = app('request');
 
-        $this -> data = [
-            '__meta' => [
-                'time'   => microtime(true),
-                'method' => $request -> getMethod(),
-                'uri'    => $request -> getRequestUri(),
-                'ip'     => $request -> getClientIp(),
-            ],
+        $this -> meta = [
+            'time'   => microtime(true),
+            'method' => $request -> getMethod(),
+            'uri'    => $request -> getRequestUri(),
+            'ip'     => $request -> getClientIp(),
         ];
 
         foreach ($this -> collectors as $name => $collector) {
@@ -751,13 +749,13 @@ class LaravelDebugbar extends DebugBar
     // Persist the collect information the database
     private function persistData()
     {
-        $meta = $this -> data['__meta'];
+
         $data = [
             'data'   => $this -> data,
-            'time'   => $meta['time'],
-            'uri'    => $meta['uri'],
-            'ip'     => $meta['ip'],
-            'method' => $meta['method'],
+            'time'   => $this -> meta['time'],
+            'uri'    => $this -> meta['uri'],
+            'ip'     => $this -> meta['ip'],
+            'method' => $this -> meta['method'],
         ];
 
 
@@ -818,13 +816,11 @@ class LaravelDebugbar extends DebugBar
         }
 
 
-        $this -> data = [
-            '__meta' => [
-                'time'   => microtime(true),
-                'method' => 'CLI',
-                'uri'    => isset($_SERVER['argv']) ? implode(' ', $_SERVER['argv']) : null,
-                'ip'     => isset($_SERVER['SSH_CLIENT']) ? $_SERVER['SSH_CLIENT'] : null,
-            ],
+        $this -> meta = [
+            'time'   => microtime(true),
+            'method' => 'CLI',
+            'uri'    => isset($_SERVER['argv']) ? implode(' ', $_SERVER['argv']) : null,
+            'ip'     => isset($_SERVER['SSH_CLIENT']) ? $_SERVER['SSH_CLIENT'] : null,
         ];
 
         foreach ($this -> collectors as $name => $collector) {

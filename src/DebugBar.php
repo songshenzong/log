@@ -30,6 +30,7 @@ class DebugBar implements ArrayAccess
     protected $data;
 
 
+    protected $meta;
     protected $storage;
 
     protected $httpDriver;
