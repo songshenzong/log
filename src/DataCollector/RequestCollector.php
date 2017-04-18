@@ -81,9 +81,10 @@ class RequestCollector extends DataCollector implements DataCollectorInterface
             'status_code'      => $statusCode,
             'path_info'        => $request -> getPathInfo(),
             'query'            => $request -> query -> all(),
-            'request'          => $request -> request -> all(),
-            'get'              => $GLOBALS['_GET'],
-            'post'             => $GLOBALS['_POST'],
+            'request'          => [
+                'get'  => $GLOBALS['_GET'],
+                'post' => $GLOBALS['_POST'],
+            ],
             'session'          => isset($GLOBALS['_SESSION']) ? $GLOBALS['_SESSION'] : '',
             'headers'          => $request -> headers -> all(),
             'server'           => array_change_key_case($request -> server -> all(), CASE_LOWER),
