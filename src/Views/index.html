@@ -103,7 +103,7 @@
                 return false;
             }
 
-            jQuery.getJSON(route + url,
+            jQuery.getJSON(url,
                 function (result) {
 
                     if (!verify(result)) {
@@ -259,7 +259,7 @@
                      *---------------------------------------------------------*/
                     tableStatus = result.data.enable;
                     if (tableStatus == true) {
-                        logList('logs');
+                        logList(route + 'logs');
                     }
 
 
