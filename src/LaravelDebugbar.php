@@ -134,22 +134,6 @@ class LaravelDebugbar extends DebugBar
             $this -> addCollector(new PhpInfoCollector());
         }
 
-        /**---------------------------------------------------------
-         *   Only one can be enabled.
-         *---------------------------------------------------------*/
-        if ($this -> shouldCollect('request', true) && !$this -> hasCollector('request')) {
-            try {
-                $this -> addCollector(new RequestCollector($request, $response, $sessionManager));
-            } catch (\Exception $e) {
-                $this -> addThrowable(
-                    new Exception(
-                        'Cannot add RequestCollector to Songshenzong: ' . $e -> getMessage(),
-                        $e -> getCode(),
-                        $e
-                    )
-                );
-            }
-        }
 
         /**---------------------------------------------------------
          *   Messages
@@ -669,6 +653,24 @@ class LaravelDebugbar extends DebugBar
 
 
         /**---------------------------------------------------------
+         *   Only one can be enabled.
+         *---------------------------------------------------------*/
+        if ($this -> shouldCollect('request', true) && !$this -> hasCollector('request')) {
+            try {
+                $this -> addCollector(new RequestCollector($request, $response, $sessionManager));
+            } catch (\Exception $e) {
+                $this -> addThrowable(
+                    new Exception(
+                        'Cannot add RequestCollector to Songshenzong: ' . $e -> getMessage(),
+                        $e -> getCode(),
+                        $e
+                    )
+                );
+            }
+        }
+
+
+        /**---------------------------------------------------------
          *   Just collect + store data
          *---------------------------------------------------------*/
         try {
@@ -913,7 +915,7 @@ class LaravelDebugbar extends DebugBar
                                       'status_code' => $status_code,
                                       'message'     => $message,
                                       'data'        => $data,
-                                      'token'       => \request() -> token,
+                                      'request'     => \request() -> all(),
                                   ]);
     }
 
