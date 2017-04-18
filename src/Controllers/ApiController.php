@@ -77,14 +77,14 @@ HEREDOC;
 
 
     /**
-     * @param                                          $id
-     * @param \Songshenzong\RequestLog\RequestLog      $songshenzong_log
+     * @param                                     $id
+     * @param \Songshenzong\RequestLog\RequestLog $songshenzong_log
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return mixed
      */
-    public function getData($id, RequestLog $songshenzong_log)
+    public function getItem($id, RequestLog $songshenzong_log)
     {
-        return $this -> songshenzong -> json(200, 'OK', $songshenzong_log -> find($id));
+        return $this -> songshenzong -> item($songshenzong_log -> find($id));
     }
 
 

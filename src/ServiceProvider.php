@@ -94,7 +94,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             $router -> group(['middleware' => 'Songshenzong\RequestLog\TokenMiddleware'], function ($router) {
                 $router -> get('logs', 'ApiController@getList');
 
-                $router -> get('logs/{id}', 'ApiController@getData') -> where('id', '[0-9\.]+');
+                $router -> get('logs/{id}', 'ApiController@getItem') -> where('id', '[0-9\.]+');
 
                 $router -> get('destroy', 'ApiController@destroy');
 

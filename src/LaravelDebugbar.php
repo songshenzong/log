@@ -135,6 +135,23 @@ class LaravelDebugbar extends DebugBar
         }
 
         /**---------------------------------------------------------
+         *   Only one can be enabled.
+         *---------------------------------------------------------*/
+        if ($this -> shouldCollect('request', true) && !$this -> hasCollector('request')) {
+            try {
+                $this -> addCollector(new RequestCollector($request, $response, $sessionManager));
+            } catch (\Exception $e) {
+                $this -> addThrowable(
+                    new Exception(
+                        'Cannot add RequestCollector to Songshenzong: ' . $e -> getMessage(),
+                        $e -> getCode(),
+                        $e
+                    )
+                );
+            }
+        }
+
+        /**---------------------------------------------------------
          *   Messages
          *---------------------------------------------------------*/
         if ($this -> shouldCollect('messages', true)) {
@@ -377,22 +394,22 @@ class LaravelDebugbar extends DebugBar
                                                           \Illuminate\Database\Events\TransactionBeginning::class,
                                                           'connection.*.beganTransaction',
                                                       ], function ($transaction) use ($queryCollector) {
-                                                          $queryCollector -> collectTransactionEvent('Begin Transaction', $transaction -> connection);
-                                                      });
+                    $queryCollector -> collectTransactionEvent('Begin Transaction', $transaction -> connection);
+                });
 
                 $db -> getEventDispatcher() -> listen([
                                                           \Illuminate\Database\Events\TransactionCommitted::class,
                                                           'connection.*.committed',
                                                       ], function ($transaction) use ($queryCollector) {
-                                                          $queryCollector -> collectTransactionEvent('Commit Transaction', $transaction -> connection);
-                                                      });
+                    $queryCollector -> collectTransactionEvent('Commit Transaction', $transaction -> connection);
+                });
 
                 $db -> getEventDispatcher() -> listen([
                                                           \Illuminate\Database\Events\TransactionRolledBack::class,
                                                           'connection.*.rollingBack',
                                                       ], function ($transaction) use ($queryCollector) {
-                                                          $queryCollector -> collectTransactionEvent('Rollback Transaction', $transaction -> connection);
-                                                      });
+                    $queryCollector -> collectTransactionEvent('Rollback Transaction', $transaction -> connection);
+                });
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
@@ -650,23 +667,6 @@ class LaravelDebugbar extends DebugBar
             $sessionManager = null;
         }
 
-        /**---------------------------------------------------------
-         *   Only one can be enabled.
-         *---------------------------------------------------------*/
-        if ($this -> shouldCollect('request', true) && !$this -> hasCollector('request')) {
-            try {
-                $this -> addCollector(new RequestCollector($request, $response, $sessionManager));
-            } catch (\Exception $e) {
-                $this -> addThrowable(
-                    new Exception(
-                        'Cannot add RequestCollector to Songshenzong: ' . $e -> getMessage(),
-                        $e -> getCode(),
-                        $e
-                    )
-                );
-            }
-        }
-
 
         /**---------------------------------------------------------
          *   Just collect + store data
@@ -901,6 +901,7 @@ class LaravelDebugbar extends DebugBar
         return $this -> is_lumen;
     }
 
+
     /**
      * Basic Json method.
      *
@@ -908,7 +909,7 @@ class LaravelDebugbar extends DebugBar
      * @param      $message
      * @param null $data
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return mixed
      */
     public function json($status_code, $message, $data = null)
     {
@@ -920,6 +921,21 @@ class LaravelDebugbar extends DebugBar
                                   ]);
     }
 
+
+    /**
+     * Get Item
+     *
+     * @param null $data
+     *
+     * @return mixed
+     */
+    public function item($data = null)
+    {
+        return response() -> json([
+                                      'data'  => $data,
+                                      'token' => \request() -> token,
+                                  ]);
+    }
 
     /**
      * Get collect status by check collect lock file.
