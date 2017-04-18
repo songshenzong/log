@@ -751,11 +751,11 @@ class LaravelDebugbar extends DebugBar
     {
 
         $data = [
-            'data'   => $this -> data,
             'time'   => $this -> meta['time'],
-            'uri'    => $this -> meta['uri'],
             'ip'     => $this -> meta['ip'],
             'method' => $this -> meta['method'],
+            'uri'    => $this -> meta['uri'],
+            'data'   => $this -> data,
         ];
 
 

@@ -53,11 +53,11 @@ class ApiController extends BaseController
 CREATE TABLE IF NOT EXISTS {$this -> table}
 (
   id         INT UNSIGNED     NOT NULL  AUTO_INCREMENT  PRIMARY KEY,
-  data       LONGTEXT         NOT NULL,
   time       VARCHAR(100)     NOT NULL,
-  uri        VARCHAR(300)     NOT NULL,
   ip         VARCHAR(50)      NOT NULL,
   method     VARCHAR(10)      NOT NULL,
+  uri        VARCHAR(300)     NOT NULL,
+  data       LONGTEXT         NOT NULL,
   created_at TIMESTAMP        NULL,
   updated_at TIMESTAMP        NULL
 );

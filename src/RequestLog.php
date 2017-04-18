@@ -13,11 +13,11 @@ class RequestLog extends Model
      * @var array
      */
     protected $fillable = [
-        'data',
         'time',
-        'uri',
         'ip',
         'method',
+        'uri',
+        'data',
     ];
 
     protected $casts = [
