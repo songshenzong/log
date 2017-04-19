@@ -47,6 +47,7 @@ class ApiController extends BaseController
      */
     public function createTable()
     {
+        $this -> songshenzong -> stopCollect();
         \DB ::statement("DROP TABLE IF EXISTS {$this->table};");
 
         $createTable = <<<"HEREDOC"
@@ -70,6 +71,7 @@ HEREDOC;
             \DB ::statement("CREATE INDEX {$this->table}_method_index ON {$this->table} (method);");
             \DB ::statement("CREATE INDEX {$this->table}_uri_index ON {$this->table} (uri);");
             \DB ::statement("CREATE INDEX {$this->table}_time_index ON {$this->table} (time);");
+            $this -> songshenzong -> startCollect();
             return $this -> getList();
         }
         return $this -> songshenzong -> json(500, 'Error');
@@ -128,13 +130,13 @@ HEREDOC;
     {
         if (request() -> has('set') && request() -> set == 'true') {
             if ($this -> songshenzong -> isCollect()) {
-                $this -> songshenzong -> unlinkCollectLockFile();
+                $this -> songshenzong -> stopCollect();
             } else {
                 // Check Logs Table Status
                 if (!$this -> isTableExists()) {
                     return $this -> songshenzong -> json(400, 'Please Create Logs Table First.');
                 }
-                $this -> songshenzong -> linkCollectLockFile();
+                $this -> songshenzong -> startCollect();
             }
         }
 
@@ -175,7 +177,7 @@ HEREDOC;
     {
         $status = (bool)\DB ::select("SHOW TABLES LIKE '" . $this -> table . "';");
         if (!$status) {
-            $this -> songshenzong -> unlinkCollectLockFile();
+            $this -> songshenzong -> stopCollect();
         }
         return $status;
     }
