@@ -16,12 +16,18 @@
         var token;
         var route = '/request_logs/';
         var tableStatus = false;
+        var currentUrl;
 
         /**---------------------------------------------------------
          *   Logout
          *---------------------------------------------------------*/
         function Logout() {
             localStorage.setItem('request_log_token', '');
+            goLogin();
+        }
+
+
+        function goLogin() {
             window.location.href = route + 'login';
         }
         /**---------------------------------------------------------
@@ -33,10 +39,9 @@
             token = localStorage.getItem('request_log_token');
 
 
-
             if (!token) {
                 information('Enter Token First.');
-                window.location.href = route + 'login';
+                goLogin();
             }
 
             jQuery("#token").val(token);
@@ -118,6 +123,7 @@
                         return false;
                     }
 
+                    currentUrl = url;
                     layer.msg(result.message);
 
                     jQuery("#totalButton").show();
@@ -274,6 +280,17 @@
                 }
             );
         }
+
+        /**---------------------------------------------------------
+         *   Refresh Current Page.
+         *---------------------------------------------------------*/
+
+
+        function refresh() {
+            if (currentUrl) {
+                logList(currentUrl);
+            }
+        }
     </script>
     <style>
         .navbar {
@@ -304,28 +321,13 @@
                 <div class="navbar-form navbar-left">
 
 
-                    <button id="collectStatus" style="display: none" onclick="getOrSetCollectStatus(true)" type="button"
-                            class="btn btn-sm btn-warning"
-                    >Collect Disabled
+                    <button onclick="logList('logs')" type="button"
+                            class="btn btn-sm btn-success">
+                        Newest Page
                     </button>
 
 
-                    <div class="input-group input-group-sm">
-                        <!--<span class="input-group-addon" id="sizing-addon3">Token</span>-->
-                        <input type="text" class="form-control" placeholder="Token" name="token" id="token"
-                               aria-describedby="sizing-addon3" readonly>
-                        <span class="input-group-btn">
-            <button class="btn btn-default" type="button" onclick="Logout()">Logout</button>
-          </span>
-                    </div>
-
-
-                </div>
-
-                <div class="navbar-form navbar-right">
-
-
-                    <button onclick="logList('request_logs/logs')" type="button"
+                    <button onclick="refresh()" type="button"
                             class="btn btn-sm btn-success">
                         Refresh
                     </button>
@@ -348,6 +350,20 @@
                         [[items.total]]
                     </button>
 
+
+                </div>
+
+                <!--Right Start-->
+
+                <div class="navbar-form navbar-right">
+
+
+                    <button id="collectStatus" style="display: none" onclick="getOrSetCollectStatus(true)" type="button"
+                            class="btn btn-sm btn-warning"
+                    >Collect Disabled
+                    </button>
+
+
                     <button id="destroyLogs" style="display: none;" onclick="destroy()" v-if="items.total" type="button"
                             class="btn btn-sm btn-danger">Destroy
                         Logs
@@ -360,7 +376,18 @@
                     </button>
 
 
+                    <div class="input-group input-group-sm">
+                        <!--<span class="input-group-addon" id="sizing-addon3">Token</span>-->
+                        <input type="text" class="form-control" placeholder="Token" name="token" id="token"
+                               aria-describedby="sizing-addon3" readonly>
+                        <span class="input-group-btn">
+            <button class="btn btn-sm btn-success" type="button" onclick="Logout()">Logout</button>
+          </span>
+                    </div>
+
                 </div>
+
+                <!--Right End-->
 
             </div>
 
