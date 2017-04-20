@@ -26,7 +26,7 @@ class WebController extends BaseController
 
 
     /**
-     * Index
+     * Index Page
      */
     public function index()
     {
@@ -34,4 +34,16 @@ class WebController extends BaseController
         echo file_get_contents($file);
         exit;
     }
+
+    /**
+     * Login Page
+     */
+    public function login()
+    {
+        $file = __DIR__ . '/../Views/login.html';
+        echo file_get_contents($file);
+        exit;
+    }
+
+
 }

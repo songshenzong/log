@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>Request Log Login</title>
+    <meta name="robots" content="noindex,nofollow">
+    <script src='http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js'></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script>
+
+        var loading;
+        var token;
+        var route = '/request_logs/';
+
+
+        /**---------------------------------------------------------
+         *   Ready Go!
+         *---------------------------------------------------------*/
+        jQuery(document).ready(function () {
+
+            jQuery("#token").val(localStorage.getItem('request_log_token'));
+
+            token = jQuery("#token").val().toString();
+
+            jQuery("#token").bind('input propertychange', function () {
+                token = jQuery("#token").val().toString();
+                jQuery.ajaxSetup({
+                    data: {token: token},
+                });
+                localStorage.setItem('request_log_token', token);
+                console.log(localStorage.getItem('request_log_token'));
+            });
+
+
+            /**---------------------------------------------------------
+             *   Global settings of the Ajax.
+             *---------------------------------------------------------*/
+            jQuery.ajaxSetup({
+                cache: false,
+                aysnc: true,
+                url: "",
+                type: "GET",
+                data: {token: token},
+                dataType: "json",
+                beforeSend: function () {
+
+
+                    layer.closeAll();
+                    loading = layer.load(1, {
+                        shade: [0.4, '#000']
+                    });
+
+                },
+                complete: function () {
+                    layer.close(loading);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    information('May be a network error.');
+                }
+            });
+
+
+        });
+
+        /**---------------------------------------------------------
+         *   Layer alert.
+         *---------------------------------------------------------*/
+        function information(message) {
+            layer.alert(message, {
+                closeBtn: 0,
+                title: 'Alert',
+                btn: ['Got It'],
+                time: 20000,
+            });
+
+        }
+
+
+        /**---------------------------------------------------------
+         *   Get Table Status.
+         *---------------------------------------------------------*/
+        function login() {
+
+            if (!token) {
+                information('Enter Token First.');
+                jQuery("#token").focus();
+                return false;
+            }
+
+            jQuery.getJSON(route + 'api/login', function (result) {
+
+                    if (result.status_code != 200) {
+                        information(result.message);
+                        return false;
+                    }
+
+                    window.location.href = route;
+
+
+                }
+            );
+        }
+
+
+    </script>
+    <style>
+        .navbar {
+            background: #3e70a4;
+            color: #F2F4F6;
+            border-radius: 0;
+            margin-bottom: 0;
+        }
+
+        .glyphicon {
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div id="items" class="bs-example" data-example-id="hoverable-table">
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+
+
+                <div class="navbar-form navbar-left">
+
+
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" placeholder="Token" name="token" id="token"
+                               aria-describedby="sizing-addon3">
+                        <span class="input-group-btn">
+            <button class="btn btn-sm btn-success" type="button" onclick="login()">Login</button>
+          </span>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </nav>
+
+
+</div>
+
+
+</body>
+</html>

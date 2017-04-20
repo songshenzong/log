@@ -18,24 +18,28 @@
         var tableStatus = false;
 
         /**---------------------------------------------------------
-         *   Clear Token.
+         *   Logout
          *---------------------------------------------------------*/
-        function clearToken() {
-            token = '';
-            jQuery("#token").val('');
-            localStorage.setItem('request_log_token', token);
-            jQuery.ajaxSetup({
-                data: {token: token},
-            });
+        function Logout() {
+            localStorage.setItem('request_log_token', '');
+            window.location.href = route + 'login';
         }
         /**---------------------------------------------------------
          *   Ready Go!
          *---------------------------------------------------------*/
         jQuery(document).ready(function () {
 
-            jQuery("#token").val(localStorage.getItem('request_log_token'));
 
-            token = jQuery("#token").val().toString();
+            token = localStorage.getItem('request_log_token');
+
+
+
+            if (!token) {
+                information('Enter Token First.');
+                window.location.href = route + 'login';
+            }
+
+            jQuery("#token").val(token);
 
             jQuery("#token").bind('input propertychange', function () {
                 token = jQuery("#token").val().toString();
@@ -44,7 +48,7 @@
                 });
                 localStorage.setItem('request_log_token', token);
                 console.log(localStorage.getItem('request_log_token'));
-            })
+            });
 
 
             /**---------------------------------------------------------
@@ -59,11 +63,6 @@
                 dataType: "json",
                 beforeSend: function () {
 
-                    if (!token) {
-                        information('Enter Token First.');
-                        return false;
-                        jQuery("#token").focus();
-                    }
 
                     layer.closeAll();
                     loading = layer.load(1, {
@@ -94,14 +93,23 @@
 
 
         /**---------------------------------------------------------
+         *   Check Table Status
+         *---------------------------------------------------------*/
+
+
+        function checkTableStatus() {
+            if (tableStatus == false) {
+                information('Please Create Logs Table First.');
+                exit;
+            }
+        }
+
+        /**---------------------------------------------------------
          *   Get list of logs.
          *---------------------------------------------------------*/
         function logList(url) {
 
-            if (tableStatus == false) {
-                information('Please Create Logs Table First.');
-                return false;
-            }
+            checkTableStatus();
 
             jQuery.getJSON(url,
                 function (result) {
@@ -223,9 +231,9 @@
         function getOrSetCollectStatus() {
             var isSet = arguments[0] ? 'true' : 'false';
             jQuery.getJSON(route + 'collect/status', {set: isSet}, function (result) {
+
                     if (result.status_code != 200) {
-                        information(result.message);
-                        return false;
+                        window.location.href = route + 'login';
                     }
 
                     layer.msg(result.message);
@@ -296,21 +304,20 @@
                 <div class="navbar-form navbar-left">
 
 
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-addon" id="sizing-addon3">Token</span>
-                        <input type="text" class="form-control" placeholder="Token" name="token" id="token"
-                               aria-describedby="sizing-addon3">
-                        <span class="input-group-btn">
-            <button class="btn btn-default" type="button" onclick="clearToken()">Clear</button>
-          </span>
-                    </div>
-
-
                     <button id="collectStatus" style="display: none" onclick="getOrSetCollectStatus(true)" type="button"
                             class="btn btn-sm btn-warning"
                     >Collect Disabled
                     </button>
 
+
+                    <div class="input-group input-group-sm">
+                        <!--<span class="input-group-addon" id="sizing-addon3">Token</span>-->
+                        <input type="text" class="form-control" placeholder="Token" name="token" id="token"
+                               aria-describedby="sizing-addon3" readonly>
+                        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" onclick="Logout()">Logout</button>
+          </span>
+                    </div>
 
 
                 </div>
@@ -322,7 +329,6 @@
                             class="btn btn-sm btn-success">
                         Refresh
                     </button>
-
 
 
                     <button id="prevPage" style="display: none;" v-if="items.prev_page_url"

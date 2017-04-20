@@ -3,6 +3,7 @@
 namespace Songshenzong\RequestLog\Controllers;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\Request;
 use Songshenzong\RequestLog\RequestLog;
 use Songshenzong\RequestLog\LaravelDebugbar;
 
@@ -180,5 +181,25 @@ HEREDOC;
             $this -> songshenzong -> stopCollect();
         }
         return $status;
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return mixed
+     */
+    public function login(Request $request)
+    {
+        if ($request -> has('token')) {
+            $tokens = config('request-log.token', ['songshenzong']);
+            if (in_array($request -> token, $tokens)) {
+                return $this -> songshenzong -> json(200, 'OK');
+            }
+
+            return $this -> songshenzong -> json(403, $request -> token . ' is Invalid Token !');
+        }
+
+        return $this -> songshenzong -> json(403, 'No Token !');
+
     }
 }

@@ -91,6 +91,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         app('router') -> group($routeConfig, function ($router) {
             $router -> get('', 'WebController@index');
 
+            $router -> get('login', 'WebController@login');
+
+            $router -> get('api/login', 'ApiController@login');
+
             $router -> group(['middleware' => 'Songshenzong\RequestLog\TokenMiddleware'], function ($router) {
                 $router -> get('logs', 'ApiController@getList');
 
