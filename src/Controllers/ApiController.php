@@ -96,7 +96,7 @@ HEREDOC;
      */
     public function getList()
     {
-        $index = isset(\request() -> per_page) ? \request() -> per_page : 28;
+        $index = isset(\request() -> per_page) ? \request() -> per_page : 30;
 
         $list = RequestLog :: orderBy('created_at', 'desc')
                            -> paginate($index)
