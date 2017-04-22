@@ -52,6 +52,8 @@ class LaravelDebugbar extends DebugBar
      */
     protected $app;
 
+
+    protected $created;
     /**
      * Normalized Laravel Version
      *
@@ -205,7 +207,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add EventCollector to Songshenzong: ' . $e -> getMessage(),
+                        'Cannot add EventCollector to RequestLog: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
@@ -232,7 +234,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add ViewCollector to Songshenzong: ' . $e -> getMessage(), $e -> getCode(), $e
+                        'Cannot add ViewCollector to RequestLog: ' . $e -> getMessage(), $e -> getCode(), $e
                     )
                 );
             }
@@ -248,7 +250,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add RouteCollector to Songshenzong: ' . $e -> getMessage(),
+                        'Cannot add RouteCollector to RequestLog: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
@@ -299,7 +301,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add LogsCollector to Songshenzong: ' . $e -> getMessage(), $e -> getCode(), $e
+                        'Cannot add LogsCollector to RequestLog: ' . $e -> getMessage(), $e -> getCode(), $e
                     )
                 );
             }
@@ -378,22 +380,22 @@ class LaravelDebugbar extends DebugBar
                                                           \Illuminate\Database\Events\TransactionBeginning::class,
                                                           'connection.*.beganTransaction',
                                                       ], function ($transaction) use ($queryCollector) {
-                                                          $queryCollector -> collectTransactionEvent('Begin Transaction', $transaction -> connection);
-                                                      });
+                    $queryCollector -> collectTransactionEvent('Begin Transaction', $transaction -> connection);
+                });
 
                 $db -> getEventDispatcher() -> listen([
                                                           \Illuminate\Database\Events\TransactionCommitted::class,
                                                           'connection.*.committed',
                                                       ], function ($transaction) use ($queryCollector) {
-                                                          $queryCollector -> collectTransactionEvent('Commit Transaction', $transaction -> connection);
-                                                      });
+                    $queryCollector -> collectTransactionEvent('Commit Transaction', $transaction -> connection);
+                });
 
                 $db -> getEventDispatcher() -> listen([
                                                           \Illuminate\Database\Events\TransactionRolledBack::class,
                                                           'connection.*.rollingBack',
                                                       ], function ($transaction) use ($queryCollector) {
-                                                          $queryCollector -> collectTransactionEvent('Rollback Transaction', $transaction -> connection);
-                                                      });
+                    $queryCollector -> collectTransactionEvent('Rollback Transaction', $transaction -> connection);
+                });
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
@@ -422,7 +424,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add MailCollector to Songshenzong: ' . $e -> getMessage(), $e -> getCode(), $e
+                        'Cannot add MailCollector to RequestLog: ' . $e -> getMessage(), $e -> getCode(), $e
                     )
                 );
             }
@@ -439,7 +441,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add LogsCollector to Songshenzong: ' . $e -> getMessage(), $e -> getCode(), $e
+                        'Cannot add LogsCollector to RequestLog: ' . $e -> getMessage(), $e -> getCode(), $e
                     )
                 );
             }
@@ -473,7 +475,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add AuthCollector to Songshenzong: ' . $e -> getMessage(), $e -> getCode(), $e
+                        'Cannot add AuthCollector to RequestLog: ' . $e -> getMessage(), $e -> getCode(), $e
                     )
                 );
             }
@@ -618,7 +620,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add ConfigCollector to Songshenzong: ' . $e -> getMessage(),
+                        'Cannot add ConfigCollector to RequestLog: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
@@ -640,7 +642,7 @@ class LaravelDebugbar extends DebugBar
                 } catch (\Exception $e) {
                     $this -> addThrowable(
                         new Exception(
-                            'Cannot add SessionCollector to Songshenzong: ' . $e -> getMessage(),
+                            'Cannot add SessionCollector to RequestLog: ' . $e -> getMessage(),
                             $e -> getCode(),
                             $e
                         )
@@ -661,7 +663,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add RequestCollector to Songshenzong: ' . $e -> getMessage(),
+                        'Cannot add RequestCollector to RequestLog: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
@@ -717,7 +719,6 @@ class LaravelDebugbar extends DebugBar
      */
     public function collect()
     {
-        /** @var Request $request */
         $request = app('request');
 
         $this -> meta = [
@@ -748,9 +749,54 @@ class LaravelDebugbar extends DebugBar
         return $this -> data;
     }
 
+
+    /**
+     * Collect data in a CLI request
+     *
+     * @return array
+     */
+    public function collectConsole()
+    {
+        if (!$this -> isEnabled()) {
+            return;
+        }
+
+
+        $this -> meta = [
+            'time'   => microtime(true),
+            'method' => 'CLI',
+            'uri'    => isset($_SERVER['argv']) ? implode(' ', $_SERVER['argv']) : null,
+            'ip'     => isset($_SERVER['SSH_CLIENT']) ? $_SERVER['SSH_CLIENT'] : null,
+        ];
+
+        foreach ($this -> collectors as $name => $collector) {
+            $this -> data[$name] = $collector -> collect();
+        }
+
+        // Remove all invalid (non UTF-8) characters
+        array_walk_recursive(
+            $this -> data,
+            function (&$item) {
+                if (is_string($item) && !mb_check_encoding($item, 'UTF-8')) {
+                    $item = mb_convert_encoding($item, 'UTF-8', 'UTF-8');
+                }
+            }
+        );
+
+
+        $this -> persistData();
+
+
+        return $this -> data;
+    }
+
+
     // Persist the collect information the database
     private function persistData()
     {
+        if ($this -> created) {
+            return false;
+        }
         $data = [
             'time'   => $this -> meta['time'],
             'ip'     => $this -> meta['ip'],
@@ -759,8 +805,11 @@ class LaravelDebugbar extends DebugBar
             'data'   => $this -> data,
         ];
 
+        if (RequestLog ::create($data)) {
+            $this -> created = true;
+        }
 
-        return RequestLog ::create($data);
+        return $this -> created;
     }
 
 
@@ -805,45 +854,6 @@ class LaravelDebugbar extends DebugBar
         }
     }
 
-    /**
-     * Collect data in a CLI request
-     *
-     * @return array
-     */
-    public function collectConsole()
-    {
-        if (!$this -> isEnabled()) {
-            return;
-        }
-
-
-        $this -> meta = [
-            'time'   => microtime(true),
-            'method' => 'CLI',
-            'uri'    => isset($_SERVER['argv']) ? implode(' ', $_SERVER['argv']) : null,
-            'ip'     => isset($_SERVER['SSH_CLIENT']) ? $_SERVER['SSH_CLIENT'] : null,
-        ];
-
-        foreach ($this -> collectors as $name => $collector) {
-            $this -> data[$name] = $collector -> collect();
-        }
-
-        // Remove all invalid (non UTF-8) characters
-        array_walk_recursive(
-            $this -> data,
-            function (&$item) {
-                if (is_string($item) && !mb_check_encoding($item, 'UTF-8')) {
-                    $item = mb_convert_encoding($item, 'UTF-8', 'UTF-8');
-                }
-            }
-        );
-
-
-        $this -> persistData();
-
-
-        return $this -> data;
-    }
 
     /**
      * Magic calls for adding messages
