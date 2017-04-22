@@ -970,6 +970,7 @@ class LaravelDebugbar extends DebugBar
      */
     public function startCollect()
     {
+        $this -> stopCollect();
         return file_put_contents($this -> collectLockFile, date('y-m-d h:i:s'));
     }
 }
