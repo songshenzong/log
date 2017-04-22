@@ -44,6 +44,4 @@ class WebController extends BaseController
         echo file_get_contents($file);
         exit;
     }
-
-
 }

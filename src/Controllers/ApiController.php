@@ -200,6 +200,5 @@ HEREDOC;
         }
 
         return $this -> songshenzong -> json(403, 'No Token !');
-
     }
 }
