@@ -103,11 +103,16 @@ class PDOCollector extends DataCollector
             $data['accumulated_duration'] += $pdodata['accumulated_duration'];
             $data['memory_usage'] += $pdodata['memory_usage'];
             $data['peak_memory_usage'] = max($data['peak_memory_usage'], $pdodata['peak_memory_usage']);
-            $data['statements'] = array_merge($data['statements'],
-                array_map(function ($s) use ($name) {
-                    $s['connection'] = $name;
-                    return $s;
-                }, $pdodata['statements']));
+            $data['statements'] = array_merge(
+                $data['statements'],
+                array_map(
+                    function ($s) use ($name) {
+                        $s['connection'] = $name;
+                        return $s;
+                    },
+                    $pdodata['statements']
+                )
+            );
         }
 
         $data['accumulated_duration_str'] = $this->getDataFormatter()->formatDuration($data['accumulated_duration']);

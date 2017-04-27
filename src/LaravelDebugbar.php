@@ -234,7 +234,9 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add ViewCollector to RequestLog: ' . $e -> getMessage(), $e -> getCode(), $e
+                        'Cannot add ViewCollector to RequestLog: ' . $e -> getMessage(),
+                        $e -> getCode(),
+                        $e
                     )
                 );
             }
@@ -301,7 +303,9 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add LogsCollector to RequestLog: ' . $e -> getMessage(), $e -> getCode(), $e
+                        'Cannot add LogsCollector to RequestLog: ' . $e -> getMessage(),
+                        $e -> getCode(),
+                        $e
                     )
                 );
             }
@@ -314,9 +318,9 @@ class LaravelDebugbar extends DebugBar
         if ($this -> shouldCollect('db', true) && isset($this -> app['db'])) {
             $db = $this -> app['db'];
             if ($debugbar -> hasCollector('time') && $this -> app['config'] -> get(
-                    'request-log.options.db.timeline',
-                    false
-                )
+                'request-log.options.db.timeline',
+                false
+            )
             ) {
                 $timeCollector = $debugbar -> getCollector('time');
             } else {
@@ -416,15 +420,17 @@ class LaravelDebugbar extends DebugBar
                 $mailer = $this -> app['mailer'] -> getSwiftMailer();
                 $this -> addCollector(new SwiftMailCollector($mailer));
                 if ($this -> app['config'] -> get('request-log.options.mail.full_log') && $this -> hasCollector(
-                        'messages'
-                    )
+                    'messages'
+                )
                 ) {
                     $this['messages'] -> aggregate(new SwiftLogCollector($mailer));
                 }
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add MailCollector to RequestLog: ' . $e -> getMessage(), $e -> getCode(), $e
+                        'Cannot add MailCollector to RequestLog: ' . $e -> getMessage(),
+                        $e -> getCode(),
+                        $e
                     )
                 );
             }
@@ -441,7 +447,9 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add LogsCollector to RequestLog: ' . $e -> getMessage(), $e -> getCode(), $e
+                        'Cannot add LogsCollector to RequestLog: ' . $e -> getMessage(),
+                        $e -> getCode(),
+                        $e
                     )
                 );
             }
@@ -475,7 +483,9 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add AuthCollector to RequestLog: ' . $e -> getMessage(), $e -> getCode(), $e
+                        'Cannot add AuthCollector to RequestLog: ' . $e -> getMessage(),
+                        $e -> getCode(),
+                        $e
                     )
                 );
             }
