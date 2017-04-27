@@ -44,6 +44,7 @@ class PhpHttpDriver implements HttpDriverInterface
 
     /**
      * @param string $name
+     *
      * @return bool
      */
     public function hasSessionValue($name)
@@ -53,6 +54,7 @@ class PhpHttpDriver implements HttpDriverInterface
 
     /**
      * @param string $name
+     *
      * @return mixed
      */
     public function getSessionValue($name)
