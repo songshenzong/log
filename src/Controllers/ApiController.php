@@ -111,20 +111,19 @@ HEREDOC;
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy()
+    public function destroy(RequestLog $request_log)
     {
         if (\request() -> has('id')) {
-            return RequestLog ::destroy(\request() -> id);
+            return $request_log -> destroy(\request() -> id);
         }
 
 
-        $count = RequestLog ::count();
+        $total = $request_log -> count();
         $chunk = 1000;
-        $times = $count / $chunk;
+        $times = $total / $chunk;
 
-        for ($i = 0; $i <= $times; $i++) {
-            $sql = "DELETE FROM $this->table LIMIT $chunk";
-            \DB ::statement($sql);
+        for ($time = 0; $time <= $times; $time++) {
+            \DB ::statement("DELETE FROM $this->table LIMIT $chunk");
         }
 
 
