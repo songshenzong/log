@@ -117,7 +117,16 @@ HEREDOC;
             return RequestLog ::destroy(\request() -> id);
         }
 
-        RequestLog ::where('id', '!=', 0) -> delete();
+
+        $count = RequestLog ::count();
+        $chunk = 1000;
+        $times = $count / $chunk;
+
+        for ($i = 0; $i <= $times; $i++) {
+            $sql = "DELETE FROM $this->table LIMIT $chunk";
+            \DB ::statement($sql);
+        }
+
 
         return $this -> getList();
     }
