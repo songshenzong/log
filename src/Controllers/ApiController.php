@@ -122,8 +122,9 @@ HEREDOC;
         $chunk = 1000;
         $times = $total / $chunk;
 
+
         for ($time = 0; $time <= $times; $time++) {
-            \DB ::statement("DELETE FROM $this->table LIMIT $chunk");
+            $request_log -> take($chunk) -> delete();
         }
 
 
