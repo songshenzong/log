@@ -77,7 +77,7 @@ Or log exceptions:
 try {
     throw new Exception('foobar');
 } catch (Exception $e) {
-    Songshenzong::addThrowable($e);
+    songshenzongLog() -> addThrowable($e);
 }
 ```
 
@@ -98,7 +98,7 @@ measure('My long operation', function() {
 If you want you can add your own DataCollectors, through the Container or the Facade:
 
 ```php
-SongshenzongLog::addCollector(new Songshenzong\Log\DataCollector\MessagesCollector('my_messages'));
+songshenzongLog() -> addCollector(new Songshenzong\Log\DataCollector\MessagesCollector('my_messages'));
 //Or via the App container:
 $songshenzong_log = App::make('SongshenzongLog');
 $songshenzong_log->addCollector(new Songshenzong\Log\DataCollector\MessagesCollector('my_messages'));
@@ -113,8 +113,24 @@ You can add the default_request data collector in the config as alternative.
 You can enable or disable the Songshenzong during run time.
 
 ```php
-\Songshenzong::enable();
-\Songshenzong::disable();
+songshenzongLog() -> enable();
+songshenzongLog() -> disable();
 ```
 
 NB. Once enabled, the collectors are added (and could produce extra overhead), so if you want to use the Songshenzong in production, disable in the config and only enable when needed.
+
+
+
+## Documentation
+
+Please refer to our extensive [Wiki documentation](https://github.com/songshenzong/log/wiki) for more information.
+
+
+## Support
+
+For answers you may not find in the Wiki, avoid posting issues. Feel free to ask for support on Songshenzong.com
+
+
+## License
+
+This package is licensed under the [BSD 3-Clause license](http://opensource.org/licenses/BSD-3-Clause).
