@@ -22,10 +22,10 @@
     }
   ],
   "require": {
-    "league/fractal": ">=0.12.0",
     "php": ">=5.5.9",
     "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*",
     "illuminate/routing": "^5.1",
+    "league/fractal": ">=0.12.0",
     "symfony/finder": "~2.7|~3.0"
   },
   "require-dev": {
