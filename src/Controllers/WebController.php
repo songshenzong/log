@@ -3,7 +3,7 @@
 namespace Songshenzong\Log\Controllers;
 
 use Illuminate\Contracts\Foundation\Application;
-use Songshenzong\Log\RequestLog;
+use Songshenzong\Log\SongshenzongLog;
 
 class WebController extends BaseController
 {

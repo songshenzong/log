@@ -80,13 +80,13 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
 
-
-        app('Illuminate\Contracts\Http\Kernel') -> pushMiddleware('Songshenzong\Log\Middleware');
+        $this -> app -> make(\Illuminate\Contracts\Http\Kernel::class)
+                     -> prependMiddleware(Middleware::class);
 
 
         $routeConfig = [
             'namespace' => 'Songshenzong\Log\Controllers',
-            'prefix'    => config('songshenzong-log.route_prefix', 'request_logs'),
+            'prefix'    => config('songshenzong-log.route_prefix', 'songshenzong_logs'),
         ];
 
         app('router') -> group($routeConfig, function ($router) {

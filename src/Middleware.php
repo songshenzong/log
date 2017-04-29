@@ -47,6 +47,7 @@ class Middleware
      */
     public function handle($request, Closure $next)
     {
+
         try {
             $response = $next($request);
         } catch (Exception $e) {
@@ -57,6 +58,7 @@ class Middleware
         }
 
         $this -> debugbar -> modifyResponse($request, $response);
+
 
         return $response;
     }

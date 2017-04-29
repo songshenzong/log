@@ -46,7 +46,7 @@ php artisan vendor:publish --provider="Songshenzong\Log\ServiceProvider"
 ```
 ## Let's start
 ```
-http://your.domain/request_logs
+http://your.domain/songshenzong
 ```
 
 ## Usage
@@ -100,8 +100,8 @@ If you want you can add your own DataCollectors, through the Container or the Fa
 ```php
 SongshenzongLog::addCollector(new Songshenzong\Log\DataCollector\MessagesCollector('my_messages'));
 //Or via the App container:
-$request_log = App::make('SongshenzongLog');
-$request_log->addCollector(new Songshenzong\Log\DataCollector\MessagesCollector('my_messages'));
+$songshenzong_log = App::make('SongshenzongLog');
+$songshenzong_log->addCollector(new Songshenzong\Log\DataCollector\MessagesCollector('my_messages'));
 ```
 
 

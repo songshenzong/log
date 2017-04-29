@@ -115,10 +115,10 @@ class LaravelDebugbar extends DebugBar
      */
     public function boot()
     {
+
         if ($this -> booted) {
             return;
         }
-
 
         /** @var \Songshenzong\Log\LaravelDebugbar $debugbar */
         $debugbar = $this;
@@ -207,7 +207,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add EventCollector to RequestLog: ' . $e -> getMessage(),
+                        'Cannot add EventCollector to SongshenzongLog: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
@@ -234,7 +234,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add ViewCollector to RequestLog: ' . $e -> getMessage(),
+                        'Cannot add ViewCollector to SongshenzongLog: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
@@ -252,7 +252,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add RouteCollector to RequestLog: ' . $e -> getMessage(),
+                        'Cannot add RouteCollector to SongshenzongLog: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
@@ -303,7 +303,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add LogsCollector to RequestLog: ' . $e -> getMessage(),
+                        'Cannot add LogsCollector to SongshenzongLog: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
@@ -318,9 +318,9 @@ class LaravelDebugbar extends DebugBar
         if ($this -> shouldCollect('db', true) && isset($this -> app['db'])) {
             $db = $this -> app['db'];
             if ($debugbar -> hasCollector('time') && $this -> app['config'] -> get(
-                'songshenzong-log.options.db.timeline',
-                false
-            )
+                    'songshenzong-log.options.db.timeline',
+                    false
+                )
             ) {
                 $timeCollector = $debugbar -> getCollector('time');
             } else {
@@ -384,22 +384,22 @@ class LaravelDebugbar extends DebugBar
                                                           \Illuminate\Database\Events\TransactionBeginning::class,
                                                           'connection.*.beganTransaction',
                                                       ], function ($transaction) use ($queryCollector) {
-                                                          $queryCollector -> collectTransactionEvent('Begin Transaction', $transaction -> connection);
-                                                      });
+                    $queryCollector -> collectTransactionEvent('Begin Transaction', $transaction -> connection);
+                });
 
                 $db -> getEventDispatcher() -> listen([
                                                           \Illuminate\Database\Events\TransactionCommitted::class,
                                                           'connection.*.committed',
                                                       ], function ($transaction) use ($queryCollector) {
-                                                          $queryCollector -> collectTransactionEvent('Commit Transaction', $transaction -> connection);
-                                                      });
+                    $queryCollector -> collectTransactionEvent('Commit Transaction', $transaction -> connection);
+                });
 
                 $db -> getEventDispatcher() -> listen([
                                                           \Illuminate\Database\Events\TransactionRolledBack::class,
                                                           'connection.*.rollingBack',
                                                       ], function ($transaction) use ($queryCollector) {
-                                                          $queryCollector -> collectTransactionEvent('Rollback Transaction', $transaction -> connection);
-                                                      });
+                    $queryCollector -> collectTransactionEvent('Rollback Transaction', $transaction -> connection);
+                });
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
@@ -420,15 +420,15 @@ class LaravelDebugbar extends DebugBar
                 $mailer = $this -> app['mailer'] -> getSwiftMailer();
                 $this -> addCollector(new SwiftMailCollector($mailer));
                 if ($this -> app['config'] -> get('songshenzong-log.options.mail.full_log') && $this -> hasCollector(
-                    'messages'
-                )
+                        'messages'
+                    )
                 ) {
                     $this['messages'] -> aggregate(new SwiftLogCollector($mailer));
                 }
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add MailCollector to RequestLog: ' . $e -> getMessage(),
+                        'Cannot add MailCollector to SongshenzongLog: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
@@ -447,7 +447,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add LogsCollector to RequestLog: ' . $e -> getMessage(),
+                        'Cannot add LogsCollector to SongshenzongLog: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
@@ -483,7 +483,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add AuthCollector to RequestLog: ' . $e -> getMessage(),
+                        'Cannot add AuthCollector to SongshenzongLog: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
@@ -630,7 +630,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add ConfigCollector to RequestLog: ' . $e -> getMessage(),
+                        'Cannot add ConfigCollector to SongshenzongLog: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
@@ -652,7 +652,7 @@ class LaravelDebugbar extends DebugBar
                 } catch (\Exception $e) {
                     $this -> addThrowable(
                         new Exception(
-                            'Cannot add SessionCollector to RequestLog: ' . $e -> getMessage(),
+                            'Cannot add SessionCollector to SongshenzongLog: ' . $e -> getMessage(),
                             $e -> getCode(),
                             $e
                         )
@@ -673,7 +673,7 @@ class LaravelDebugbar extends DebugBar
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
-                        'Cannot add RequestCollector to RequestLog: ' . $e -> getMessage(),
+                        'Cannot add RequestCollector to SongshenzongLog: ' . $e -> getMessage(),
                         $e -> getCode(),
                         $e
                     )
@@ -692,6 +692,7 @@ class LaravelDebugbar extends DebugBar
         }
 
 
+
         return $response;
     }
 
@@ -702,6 +703,7 @@ class LaravelDebugbar extends DebugBar
      */
     public function isEnabled()
     {
+
         if ($this -> enabled === null) {
             $environments = config('songshenzong-log.env', ['dev', 'local', 'production']);
 
@@ -718,7 +720,7 @@ class LaravelDebugbar extends DebugBar
      */
     protected function isDebugbarRequest()
     {
-        return $this -> app['request'] -> segment(1) == config('songshenzong-log.route_prefix', 'request_logs');
+        return $this -> app['request'] -> segment(1) == config('songshenzong-log.route_prefix', 'songshenzong_logs');
     }
 
 
@@ -751,6 +753,7 @@ class LaravelDebugbar extends DebugBar
                 }
             }
         );
+
 
 
         $this -> persistData();
@@ -804,6 +807,7 @@ class LaravelDebugbar extends DebugBar
     // Persist the collect information the database
     private function persistData()
     {
+
         if ($this -> created) {
             return false;
         }
@@ -815,7 +819,7 @@ class LaravelDebugbar extends DebugBar
             'data'   => $this -> data,
         ];
 
-        if (RequestLog ::create($data)) {
+        if (SongshenzongLog ::create($data)) {
             $this -> created = true;
         }
 

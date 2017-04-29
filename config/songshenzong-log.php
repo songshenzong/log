@@ -26,9 +26,7 @@ return [
     */
 
     'token' => [
-        'lenovo520',
-        'shuaijiang520',
-        'shuangshuang520',
+        'songshenzong',
     ],
 
     /*
@@ -39,7 +37,7 @@ return [
     |
     */
 
-    'route_prefix' => 'request_logs',
+    'route_prefix' => 'songshenzong',
 
 
     /*
@@ -50,7 +48,7 @@ return [
     |
     */
 
-    'table'   => 'request_logs',
+    'table'   => 'songshenzong_logs',
 
     /*
      |--------------------------------------------------------------------------

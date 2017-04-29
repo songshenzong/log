@@ -4,7 +4,7 @@ namespace Songshenzong\Log;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RequestLog extends Model
+class SongshenzongLog extends Model
 {
 
     /**

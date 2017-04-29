@@ -4,7 +4,7 @@ namespace Songshenzong\Log\Controllers;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
-use Songshenzong\Log\RequestLog;
+use Songshenzong\Log\SongshenzongLog;
 use Songshenzong\Log\LaravelDebugbar;
 
 class ApiController extends BaseController
@@ -38,7 +38,7 @@ class ApiController extends BaseController
     public function __construct(Application $app, LaravelDebugbar $songshenzong)
     {
         $this -> app          = $app;
-        $this -> table        = config('songshenzong-log.table', 'request_logs');
+        $this -> table        = config('songshenzong-log.table', 'songshenzong_logs');
         $this -> songshenzong = $songshenzong;
     }
 
@@ -81,11 +81,11 @@ HEREDOC;
 
     /**
      * @param                                     $id
-     * @param \Songshenzong\Log\RequestLog $songshenzong_log
+     * @param \Songshenzong\Log\SongshenzongLog   $songshenzong_log
      *
      * @return mixed
      */
-    public function getItem($id, RequestLog $songshenzong_log)
+    public function getItem($id, SongshenzongLog $songshenzong_log)
     {
         return $this -> songshenzong -> item($songshenzong_log -> find($id));
     }
@@ -98,10 +98,10 @@ HEREDOC;
     {
         $index = isset(\request() -> per_page) ? \request() -> per_page : 30;
 
-        $list = RequestLog :: orderBy('created_at', 'desc')
-                           -> paginate($index)
-                           -> appends(\request() -> all())
-                           -> toArray();
+        $list = SongshenzongLog :: orderBy('created_at', 'desc')
+                                -> paginate($index)
+                                -> appends(\request() -> all())
+                                -> toArray();
 
 
         return $this -> songshenzong -> json(200, 'OK', $list);
@@ -111,20 +111,20 @@ HEREDOC;
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(RequestLog $request_log)
+    public function destroy(SongshenzongLog $songshenzong_log)
     {
         if (\request() -> has('id')) {
-            return $request_log -> destroy(\request() -> id);
+            return $songshenzong_log -> destroy(\request() -> id);
         }
 
 
-        $total = $request_log -> count();
+        $total = $songshenzong_log -> count();
         $chunk = 1000;
         $times = $total / $chunk;
 
 
         for ($time = 0; $time <= $times; $time++) {
-            $request_log -> take($chunk) -> delete();
+            $songshenzong_log -> take($chunk) -> delete();
         }
 
 

@@ -14,7 +14,7 @@
         var List;
         var loading;
         var token;
-        var route = '/request_logs/';
+        var route = '/songshenzong/';
         var tableStatus = false;
         var currentUrl;
 
@@ -22,7 +22,7 @@
          *   Logout
          *---------------------------------------------------------*/
         function Logout() {
-            localStorage.setItem('request_log_token', '');
+            localStorage.setItem('songshenzong_token', '');
             goLogin();
         }
 
@@ -36,7 +36,7 @@
         jQuery(document).ready(function () {
 
 
-            token = localStorage.getItem('request_log_token');
+            token = localStorage.getItem('songshenzong_token');
 
 
             if (!token) {
@@ -51,8 +51,8 @@
                 jQuery.ajaxSetup({
                     data: {token: token},
                 });
-                localStorage.setItem('request_log_token', token);
-                console.log(localStorage.getItem('request_log_token'));
+                localStorage.setItem('songshenzong_token', token);
+                console.log(localStorage.getItem('songshenzong_token'));
             });
 
 
@@ -177,7 +177,7 @@
                         });
                     }
 
-                    jQuery("#token").val(localStorage.getItem('request_log_token'));
+                    jQuery("#token").val(localStorage.getItem('songshenzong_token'));
                 }
             )
             ;
@@ -321,7 +321,7 @@
                 <div class="navbar-form navbar-left">
 
 
-                    <button onclick="logList('/request_logs/logs')" type="button"
+                    <button onclick="logList(route+'logs')" type="button"
                             class="btn btn-sm btn-success">Newest
                     </button>
 
