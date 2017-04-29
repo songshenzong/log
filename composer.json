@@ -1,6 +1,6 @@
 {
   "name": "songshenzong/request-log",
-  "description": "Record request & debug for Laravel",
+  "description": "Log Request & Debug for Laravel",
   "keywords": [
     "laravel",
     "request",
