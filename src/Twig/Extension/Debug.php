@@ -22,8 +22,8 @@ class Debug extends Twig_Extension
      */
     public function __construct(Application $app)
     {
-        if ($app->bound('songshenzong')) {
-            $this->debugbar = $app['songshenzong'];
+        if ($app->bound('songshenzongLog')) {
+            $this->debugbar = $app['songshenzongLog'];
         } else {
             $this->debugbar = null;
         }

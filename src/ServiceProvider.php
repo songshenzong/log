@@ -32,7 +32,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             'Songshenzong\Log\DataFormatter\DataFormatterInterface'
         );
 
-        $this -> app -> singleton('songshenzong', function ($app) {
+        $this -> app -> singleton('songshenzongLog', function ($app) {
             $debugbar = new LaravelDebugbar($app);
 
             if ($app -> bound(SessionManager::class)) {
@@ -44,7 +44,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             return $debugbar;
         });
 
-        $this -> app -> alias('songshenzong', 'Songshenzong\Log\LaravelDebugbar');
+        $this -> app -> alias('songshenzongLog', 'Songshenzong\Log\LaravelDebugbar');
     }
 
 
@@ -108,8 +108,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
 
-        app('songshenzong') -> enable();
-        app('songshenzong') -> boot();
+        app('songshenzongLog') -> enable();
+        app('songshenzongLog') -> boot();
     }
 
 

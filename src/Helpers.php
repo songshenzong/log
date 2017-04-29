@@ -1,15 +1,28 @@
 <?php
 
 
-if (!function_exists('requestLog')) {
+if (!function_exists('songshenzongLog')) {
     /**
      * Get the instance
      *
      * @return \Songshenzong\Log\LaravelDebugbar
      */
-    function requestLog()
+    function songshenzongLog()
     {
-        return app('songshenzong');
+        return app('songshenzongLog');
+    }
+}
+
+
+if (!function_exists('log')) {
+    /**
+     * Get the instance
+     *
+     * @return \Songshenzong\Log\LaravelDebugbar
+     */
+    function log()
+    {
+        return app('songshenzongLog');
     }
 }
 
@@ -25,7 +38,7 @@ if (!function_exists('debug')) {
     function debug($value)
     {
         foreach (func_get_args() as $value) {
-            app('songshenzong') -> addMessage($value, 'debug');
+            app('songshenzongLog') -> addMessage($value, 'debug');
         }
     }
 }
@@ -41,7 +54,7 @@ if (!function_exists('addMessage')) {
      */
     function addMessage($value, $label = 'info')
     {
-        app('songshenzong') -> addMessage($value, $label);
+        app('songshenzongLog') -> addMessage($value, $label);
     }
 }
 
@@ -55,7 +68,7 @@ if (!function_exists('start_measure')) {
      */
     function start_measure($name, $label = null)
     {
-        app('songshenzong') -> startMeasure($name, $label);
+        app('songshenzongLog') -> startMeasure($name, $label);
     }
 }
 
@@ -68,7 +81,7 @@ if (!function_exists('stop_measure')) {
      */
     function stop_measure($name)
     {
-        app('songshenzong') -> stopMeasure($name);
+        app('songshenzongLog') -> stopMeasure($name);
     }
 }
 
@@ -83,7 +96,7 @@ if (!function_exists('add_measure')) {
      */
     function add_measure($label, $start, $end)
     {
-        app('songshenzong') -> addMeasure($label, $start, $end);
+        app('songshenzongLog') -> addMeasure($label, $start, $end);
     }
 }
 
@@ -97,6 +110,6 @@ if (!function_exists('measure')) {
      */
     function measure($label, \Closure $closure)
     {
-        app('songshenzong') -> measure($label, $closure);
+        app('songshenzongLog') -> measure($label, $closure);
     }
 }
