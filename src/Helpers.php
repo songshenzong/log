@@ -5,7 +5,7 @@ if (!function_exists('requestLog')) {
     /**
      * Get the instance
      *
-     * @return \Songshenzong\RequestLog\LaravelDebugbar
+     * @return \Songshenzong\Log\LaravelDebugbar
      */
     function requestLog()
     {

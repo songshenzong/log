@@ -1,8 +1,8 @@
 <?php
 
-namespace Songshenzong\RequestLog;
+namespace Songshenzong\Log;
 
-use Songshenzong\RequestLog\HttpDriverInterface;
+use Songshenzong\Log\HttpDriverInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 

@@ -1,7 +1,7 @@
 <?php
-namespace Songshenzong\RequestLog\DataCollector;
+namespace Songshenzong\Log\DataCollector;
 
-use Songshenzong\RequestLog\DataCollector\TimeDataCollector;
+use Songshenzong\Log\DataCollector\TimeDataCollector;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\DataCollector\Util\ValueExporter;
@@ -53,7 +53,7 @@ class EventCollector extends TimeDataCollector
                 $reflector = new \ReflectionFunction($listener);
 
                 // Skip our own listeners
-                if ($reflector->getNamespaceName() == 'Songshenzong\RequestLog') {
+                if ($reflector->getNamespaceName() == 'Songshenzong\Log') {
                     continue;
                 }
 

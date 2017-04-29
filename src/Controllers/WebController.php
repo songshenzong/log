@@ -1,9 +1,9 @@
 <?php
 
-namespace Songshenzong\RequestLog\Controllers;
+namespace Songshenzong\Log\Controllers;
 
 use Illuminate\Contracts\Foundation\Application;
-use Songshenzong\RequestLog\RequestLog;
+use Songshenzong\Log\RequestLog;
 
 class WebController extends BaseController
 {

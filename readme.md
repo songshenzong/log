@@ -1,4 +1,4 @@
-# RequestLog
+# Songshenzong Log
 
 Log Request & Debug for Laravel
 
@@ -7,7 +7,7 @@ Log Request & Debug for Laravel
 Require this package with composer:
 
 ```shell
-composer require songshenzong/request-log
+composer require songshenzong/log
 ```
 
 After updating composer, add the ServiceProvider to the providers array in `config/app.php`
@@ -15,19 +15,19 @@ After updating composer, add the ServiceProvider to the providers array in `conf
 ### Laravel 5.x:
 
 ```php
-RequestLog\RequestLog\ServiceProvider::class,
+Songshenzong\Log\ServiceProvider::class,
 ```
 
 If you want to use the facade to log messages, add this to your facades in `config/app.php`:
 
 ```php
-'RequestLog' => Songshenzong\RequestLog\Facade::class,
+'SongshenzongLog' => Songshenzong\Log\Facade::class,
 ```
 
 > If you use a `dingo/api` route, make sure you load the Middleware in `config/api.php`.
 ```php
     'middleware' => [
-        'RequestLog\RequestLog\Middleware',
+        'Songshenzong\Log\Middleware',
     ],
 ```
 
@@ -35,14 +35,14 @@ If you want to use the facade to log messages, add this to your facades in `conf
 
 
 
-The profiler is enabled in all environment by default, You can override that in the config (`request-log.env`).
+The profiler is enabled in all environment by default, You can override that in the config (`songshenzong-log.env`).
 
 
 
 Copy the package config to your local config with the publish command:
 
 ```shell
-php artisan vendor:publish --provider="Songshenzong\RequestLog\ServiceProvider"
+php artisan vendor:publish --provider="Songshenzong\Log\ServiceProvider"
 ```
 ## Let's start
 ```
@@ -98,10 +98,10 @@ measure('My long operation', function() {
 If you want you can add your own DataCollectors, through the Container or the Facade:
 
 ```php
-RequestLog::addCollector(new Songshenzong\RequestLog\DataCollector\MessagesCollector('my_messages'));
+SongshenzongLog::addCollector(new Songshenzong\Log\DataCollector\MessagesCollector('my_messages'));
 //Or via the App container:
-$request_log = App::make('RequestLog');
-$request_log->addCollector(new Songshenzong\RequestLog\DataCollector\MessagesCollector('my_messages'));
+$request_log = App::make('SongshenzongLog');
+$request_log->addCollector(new Songshenzong\Log\DataCollector\MessagesCollector('my_messages'));
 ```
 
 

@@ -8,9 +8,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\RequestLog\DataCollector;
+namespace Songshenzong\Log\DataCollector;
 
-use Songshenzong\RequestLog\DebugBarException;
+use Songshenzong\Log\DebugBarException;
 
 /**
  * Collects info about the request duration as well as providing

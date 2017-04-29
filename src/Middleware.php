@@ -1,10 +1,10 @@
-<?php namespace Songshenzong\RequestLog;
+<?php namespace Songshenzong\Log;
 
 use Error;
 use Closure;
 use Exception;
 use Illuminate\Http\Request;
-use Songshenzong\RequestLog\LaravelDebugbar;
+use Songshenzong\Log\LaravelDebugbar;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Symfony\Component\Debug\Exception\FatalThrowableError;

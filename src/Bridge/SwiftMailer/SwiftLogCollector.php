@@ -8,9 +8,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\RequestLog\Bridge\SwiftMailer;
+namespace Songshenzong\Log\Bridge\SwiftMailer;
 
-use Songshenzong\RequestLog\DataCollector\MessagesCollector;
+use Songshenzong\Log\DataCollector\MessagesCollector;
 use Swift_Mailer;
 use Swift_Plugins_Logger;
 use Swift_Plugins_LoggerPlugin;

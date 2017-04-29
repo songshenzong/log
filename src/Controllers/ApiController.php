@@ -1,11 +1,11 @@
 <?php
 
-namespace Songshenzong\RequestLog\Controllers;
+namespace Songshenzong\Log\Controllers;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
-use Songshenzong\RequestLog\RequestLog;
-use Songshenzong\RequestLog\LaravelDebugbar;
+use Songshenzong\Log\RequestLog;
+use Songshenzong\Log\LaravelDebugbar;
 
 class ApiController extends BaseController
 {
@@ -38,7 +38,7 @@ class ApiController extends BaseController
     public function __construct(Application $app, LaravelDebugbar $songshenzong)
     {
         $this -> app          = $app;
-        $this -> table        = config('request-log.table', 'request_logs');
+        $this -> table        = config('songshenzong-log.table', 'request_logs');
         $this -> songshenzong = $songshenzong;
     }
 
@@ -81,7 +81,7 @@ HEREDOC;
 
     /**
      * @param                                     $id
-     * @param \Songshenzong\RequestLog\RequestLog $songshenzong_log
+     * @param \Songshenzong\Log\RequestLog $songshenzong_log
      *
      * @return mixed
      */
@@ -200,7 +200,7 @@ HEREDOC;
     public function login(Request $request)
     {
         if ($request -> has('token')) {
-            $tokens = config('request-log.token', ['songshenzong']);
+            $tokens = config('songshenzong-log.token', ['songshenzong']);
             if (in_array($request -> token, $tokens)) {
                 return $this -> songshenzong -> json(200, 'OK');
             }

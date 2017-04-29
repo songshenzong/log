@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\RequestLog;
+namespace Songshenzong\Log;
 
 use ArrayAccess;
-use Songshenzong\RequestLog\DataCollector\DataCollectorInterface;
+use Songshenzong\Log\DataCollector\DataCollectorInterface;
 
 /**
  *

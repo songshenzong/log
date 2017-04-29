@@ -1,6 +1,6 @@
-<?php namespace Songshenzong\RequestLog\Twig\TokenParser;
+<?php namespace Songshenzong\Log\Twig\TokenParser;
 
-use Songshenzong\RequestLog\Twig\Node\StopwatchNode;
+use Songshenzong\Log\Twig\Node\StopwatchNode;
 
 /**
  * Token Parser for the stopwatch tag. Based on Symfony\Bridge\Twig\TokenParser\StopwatchTokenParser;

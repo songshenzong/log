@@ -1,6 +1,6 @@
 <?php
 
-namespace Songshenzong\RequestLog\DataCollector;
+namespace Songshenzong\Log\DataCollector;
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Auth\SessionGuard;

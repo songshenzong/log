@@ -1,8 +1,8 @@
 <?php
 
-namespace Songshenzong\RequestLog\DataCollector;
+namespace Songshenzong\Log\DataCollector;
 
-use Songshenzong\RequestLog\Bridge\Twig\TwigCollector;
+use Songshenzong\Log\Bridge\Twig\TwigCollector;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\DataCollector\Util\ValueExporter;
 

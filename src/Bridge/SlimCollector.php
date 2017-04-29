@@ -8,9 +8,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\RequestLog\Bridge;
+namespace Songshenzong\Log\Bridge;
 
-use Songshenzong\RequestLog\DataCollector\MessagesCollector;
+use Songshenzong\Log\DataCollector\MessagesCollector;
 use Psr\Log\LogLevel;
 use Slim\Log;
 use Slim\Slim;

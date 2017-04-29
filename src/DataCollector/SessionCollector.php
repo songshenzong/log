@@ -1,9 +1,9 @@
 <?php
 
-namespace Songshenzong\RequestLog\DataCollector;
+namespace Songshenzong\Log\DataCollector;
 
-use Songshenzong\RequestLog\DataCollector\DataCollector;
-use Songshenzong\RequestLog\DataCollector\DataCollectorInterface;
+use Songshenzong\Log\DataCollector\DataCollector;
+use Songshenzong\Log\DataCollector\DataCollectorInterface;
 
 class SessionCollector extends DataCollector implements DataCollectorInterface
 {

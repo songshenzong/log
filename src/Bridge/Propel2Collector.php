@@ -8,9 +8,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\RequestLog\Bridge;
+namespace Songshenzong\Log\Bridge;
 
-use Songshenzong\RequestLog\DataCollector\DataCollector;
+use Songshenzong\Log\DataCollector\DataCollector;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use Propel\Runtime\Connection\ConnectionInterface;
@@ -28,7 +28,7 @@ use Psr\Log\LoggerInterface;
  *
  * Example:
  * <code>
- * $debugbar->addCollector(new \Songshenzong\RequestLog\Bridge\Propel2Collector(\Propel\Runtime\Propel::getServiceContainer()->getReadConnection()));
+ * $debugbar->addCollector(new \Songshenzong\Log\Bridge\Propel2Collector(\Propel\Runtime\Propel::getServiceContainer()->getReadConnection()));
  * </code>
  */
 class Propel2Collector extends DataCollector

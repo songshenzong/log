@@ -1,9 +1,9 @@
 <?php
 
-namespace Songshenzong\RequestLog\DataCollector;
+namespace Songshenzong\Log\DataCollector;
 
-use Songshenzong\RequestLog\DataCollector\PDO\PDOCollector;
-use Songshenzong\RequestLog\DataCollector\TimeDataCollector;
+use Songshenzong\Log\DataCollector\PDO\PDOCollector;
+use Songshenzong\Log\DataCollector\TimeDataCollector;
 
 /**
  * Collects data about SQL statements executed with PDO

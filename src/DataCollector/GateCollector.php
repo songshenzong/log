@@ -1,8 +1,8 @@
 <?php
 
-namespace Songshenzong\RequestLog\DataCollector;
+namespace Songshenzong\Log\DataCollector;
 
-use Songshenzong\RequestLog\DataCollector\MessagesCollector;
+use Songshenzong\Log\DataCollector\MessagesCollector;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Contracts\Auth\Authenticatable;
 

@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\RequestLog;
+namespace Songshenzong\Log;
 
 /**
  * HTTP driver for native php

@@ -8,9 +8,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\RequestLog\Bridge\Twig;
+namespace Songshenzong\Log\Bridge\Twig;
 
-use Songshenzong\RequestLog\DataCollector\DataCollector;
+use Songshenzong\Log\DataCollector\DataCollector;
 
 /**
  * Collects data about rendered templates

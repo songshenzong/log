@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\RequestLog\Bridge;
+namespace Songshenzong\Log\Bridge;
 
 use CacheCache\Cache;
 use CacheCache\LoggingBackend;

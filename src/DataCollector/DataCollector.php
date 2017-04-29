@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\RequestLog\DataCollector;
+namespace Songshenzong\Log\DataCollector;
 
-use Songshenzong\RequestLog\DataFormatter\DataFormatter;
-use Songshenzong\RequestLog\DataFormatter\DataFormatterInterface;
+use Songshenzong\Log\DataFormatter\DataFormatter;
+use Songshenzong\Log\DataFormatter\DataFormatterInterface;
 
 /**
  * Abstract class for data collectors

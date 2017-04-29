@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\RequestLog\DataCollector;
+namespace Songshenzong\Log\DataCollector;
 
 use Psr\Log\AbstractLogger;
-use Songshenzong\RequestLog\DataFormatter\DataFormatterInterface;
+use Songshenzong\Log\DataFormatter\DataFormatterInterface;
 
 /**
  * Provides a way to log messages

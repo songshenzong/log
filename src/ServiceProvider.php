@@ -1,4 +1,4 @@
-<?php namespace Songshenzong\RequestLog;
+<?php namespace Songshenzong\Log;
 
 use Illuminate\Session\SessionManager;
 
@@ -28,8 +28,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this -> app -> alias(
-            'Songshenzong\RequestLog\DataFormatter\DataFormatter',
-            'Songshenzong\RequestLog\DataFormatter\DataFormatterInterface'
+            'Songshenzong\Log\DataFormatter\DataFormatter',
+            'Songshenzong\Log\DataFormatter\DataFormatterInterface'
         );
 
         $this -> app -> singleton('songshenzong', function ($app) {
@@ -44,7 +44,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             return $debugbar;
         });
 
-        $this -> app -> alias('songshenzong', 'Songshenzong\RequestLog\LaravelDebugbar');
+        $this -> app -> alias('songshenzong', 'Songshenzong\Log\LaravelDebugbar');
     }
 
 
@@ -56,7 +56,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function isEnabled()
     {
         if ($this -> enabled === null) {
-            $environments    = config('request-log.env', ['dev', 'local', 'production']);
+            $environments    = config('songshenzong-log.env', ['dev', 'local', 'production']);
             $this -> enabled = in_array(env('APP_ENV'), $environments);
         }
 
@@ -71,8 +71,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        $configPath = __DIR__ . '/../config/request-log.php';
-        $this -> publishes([$configPath => config_path('request-log.php')], 'config');
+        $configPath = __DIR__ . '/../config/songshenzong-log.php';
+        $this -> publishes([$configPath => config_path('songshenzong-log.php')], 'config');
 
 
         if (!$this -> isEnabled()) {
@@ -81,19 +81,19 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
 
 
-        app('Illuminate\Contracts\Http\Kernel') -> pushMiddleware('Songshenzong\RequestLog\Middleware');
+        app('Illuminate\Contracts\Http\Kernel') -> pushMiddleware('Songshenzong\Log\Middleware');
 
 
         $routeConfig = [
-            'namespace' => 'Songshenzong\RequestLog\Controllers',
-            'prefix'    => config('request-log.route_prefix', 'request_logs'),
+            'namespace' => 'Songshenzong\Log\Controllers',
+            'prefix'    => config('songshenzong-log.route_prefix', 'request_logs'),
         ];
 
         app('router') -> group($routeConfig, function ($router) {
             $router -> get('', 'WebController@index');
             $router -> get('login', 'WebController@login');
             $router -> get('api/login', 'ApiController@login');
-            $router -> group(['middleware' => 'Songshenzong\RequestLog\TokenMiddleware'], function ($router) {
+            $router -> group(['middleware' => 'Songshenzong\Log\TokenMiddleware'], function ($router) {
                 $router -> get('logs', 'ApiController@getList');
                 $router -> get('logs/{id}', 'ApiController@getItem') -> where('id', '[0-9\.]+');
                 $router -> get('destroy', 'ApiController@destroy');
@@ -131,6 +131,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     protected function publishConfig($configPath)
     {
-        $this -> publishes([$configPath => config_path('request-log.php')], 'config');
+        $this -> publishes([$configPath => config_path('songshenzong-log.php')], 'config');
     }
 }

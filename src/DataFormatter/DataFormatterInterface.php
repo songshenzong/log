@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\RequestLog\DataFormatter;
+namespace Songshenzong\Log\DataFormatter;
 
 /**
  * Formats data to be outputed as string

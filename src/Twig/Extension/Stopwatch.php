@@ -1,6 +1,6 @@
-<?php namespace Songshenzong\RequestLog\Twig\Extension;
+<?php namespace Songshenzong\Log\Twig\Extension;
 
-use Songshenzong\RequestLog\Twig\TokenParser\StopwatchTokenParser;
+use Songshenzong\Log\Twig\TokenParser\StopwatchTokenParser;
 use Illuminate\Foundation\Application;
 use Twig_Extension;
 
@@ -11,7 +11,7 @@ use Twig_Extension;
 class Stopwatch extends Twig_Extension
 {
     /**
-     * @var \Songshenzong\RequestLog\LaravelDebugbar
+     * @var \Songshenzong\Log\LaravelDebugbar
      */
     protected $debugbar;
 

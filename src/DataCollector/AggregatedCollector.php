@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Songshenzong\RequestLog\DataCollector;
+namespace Songshenzong\Log\DataCollector;
 
 use ArrayAccess;
-use Songshenzong\RequestLog\DebugBarException;
+use Songshenzong\Log\DebugBarException;
 
 /**
  * Aggregates data from multiple collectors

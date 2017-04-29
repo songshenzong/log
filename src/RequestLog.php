@@ -1,6 +1,6 @@
 <?php
 
-namespace Songshenzong\RequestLog;
+namespace Songshenzong\Log;
 
 use Illuminate\Database\Eloquent\Model;
 

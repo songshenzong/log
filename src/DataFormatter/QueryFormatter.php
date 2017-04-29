@@ -1,6 +1,6 @@
 <?php
 
-namespace Songshenzong\RequestLog\DataFormatter;
+namespace Songshenzong\Log\DataFormatter;
 
 class QueryFormatter extends DataFormatter
 {

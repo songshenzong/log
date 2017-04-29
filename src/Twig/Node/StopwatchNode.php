@@ -1,4 +1,4 @@
-<?php namespace Songshenzong\RequestLog\Twig\Node;
+<?php namespace Songshenzong\Log\Twig\Node;
 
 /**
  * Represents a stopwatch node. Based on Symfony\Bridge\Twig\Node\StopwatchNode
