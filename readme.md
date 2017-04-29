@@ -1,6 +1,6 @@
 # RequestLog
 
-Record request & debug for Laravel
+Log Request & Debug for Laravel
 
 ## Installation
 
