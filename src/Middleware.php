@@ -47,7 +47,6 @@ class Middleware
      */
     public function handle($request, Closure $next)
     {
-
         try {
             $response = $next($request);
         } catch (Exception $e) {

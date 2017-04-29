@@ -1,6 +1,7 @@
 <?php namespace Songshenzong\Log;
 
 use Illuminate\Session\SessionManager;
+use Illuminate\Contracts\Http\Kernel;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -80,8 +81,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
 
-        $this -> app -> make(\Illuminate\Contracts\Http\Kernel::class)
-                     -> prependMiddleware(Middleware::class);
+        $kernel = $this -> app -> make(Kernel::class);
+        $kernel -> prependMiddleware(Middleware::class);
 
 
         $routeConfig = [
