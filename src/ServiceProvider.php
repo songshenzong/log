@@ -80,6 +80,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
 
+
         app('Illuminate\Contracts\Http\Kernel') -> pushMiddleware('Songshenzong\RequestLog\Middleware');
 
 
