@@ -26,7 +26,7 @@ return [
     */
 
     'token' => [
-        'songshenzong',
+        'jiang.cool',
     ],
 
     /*
