@@ -609,7 +609,7 @@ class LaravelDebugbar extends DebugBar
         $app = $this -> app;
 
 
-        if ($app -> runningInConsole() || !$this -> isEnabled() || $this -> isDebugbarRequest()) {
+        if ($app -> runningInConsole() || !$this -> isEnabled() || $this -> isMyselfRequest()) {
             return $response;
         }
 
@@ -718,9 +718,9 @@ class LaravelDebugbar extends DebugBar
      *
      * @return bool
      */
-    protected function isDebugbarRequest()
+    protected function isMyselfRequest()
     {
-        return $this -> app['request'] -> segment(1) == config('songshenzong-log.route_prefix', 'songshenzong_logs');
+        return $this -> app['request'] -> segment(1) == config('songshenzong-log.route_prefix', 'songshenzong');
     }
 
 

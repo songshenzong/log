@@ -87,7 +87,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $routeConfig = [
             'namespace' => 'Songshenzong\Log\Controllers',
-            'prefix'    => config('songshenzong-log.route_prefix', 'songshenzong_logs'),
+            'prefix'    => config('songshenzong-log.route_prefix', 'songshenzong/log'),
         ];
 
         app('router') -> group($routeConfig, function ($router) {

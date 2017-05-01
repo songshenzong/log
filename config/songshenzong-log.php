@@ -37,7 +37,7 @@ return [
     |
     */
 
-    'route_prefix' => 'songshenzong',
+    'route_prefix' => 'songshenzong/log',
 
 
     /*
