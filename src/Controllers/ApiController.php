@@ -4,6 +4,7 @@ namespace Songshenzong\Log\Controllers;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Songshenzong\Log\SongshenzongLog;
 use Songshenzong\Log\LaravelDebugbar;
 
@@ -118,14 +119,7 @@ HEREDOC;
         }
 
 
-        $total = $songshenzong_log -> count();
-        $chunk = 1000;
-        $times = $total / $chunk;
-
-
-        for ($time = 0; $time <= $times; $time++) {
-            $songshenzong_log -> take($chunk) -> delete();
-        }
+        \DB ::statement("TRUNCATE TABLE $this->table");
 
 
         return $this -> getList();
