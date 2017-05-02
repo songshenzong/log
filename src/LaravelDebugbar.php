@@ -318,9 +318,9 @@ class LaravelDebugbar extends DebugBar
         if ($this -> shouldCollect('db', true) && isset($this -> app['db'])) {
             $db = $this -> app['db'];
             if ($debugbar -> hasCollector('time') && $this -> app['config'] -> get(
-                'songshenzong-log.options.db.timeline',
-                false
-            )
+                    'songshenzong-log.options.db.timeline',
+                    false
+                )
             ) {
                 $timeCollector = $debugbar -> getCollector('time');
             } else {
@@ -384,22 +384,22 @@ class LaravelDebugbar extends DebugBar
                                                           \Illuminate\Database\Events\TransactionBeginning::class,
                                                           'connection.*.beganTransaction',
                                                       ], function ($transaction) use ($queryCollector) {
-                                                        $queryCollector -> collectTransactionEvent('Begin Transaction', $transaction -> connection);
-                                                      });
+                    $queryCollector -> collectTransactionEvent('Begin Transaction', $transaction -> connection);
+                });
 
                 $db -> getEventDispatcher() -> listen([
                                                           \Illuminate\Database\Events\TransactionCommitted::class,
                                                           'connection.*.committed',
                                                       ], function ($transaction) use ($queryCollector) {
-                                                        $queryCollector -> collectTransactionEvent('Commit Transaction', $transaction -> connection);
-                                                      });
+                    $queryCollector -> collectTransactionEvent('Commit Transaction', $transaction -> connection);
+                });
 
                 $db -> getEventDispatcher() -> listen([
                                                           \Illuminate\Database\Events\TransactionRolledBack::class,
                                                           'connection.*.rollingBack',
                                                       ], function ($transaction) use ($queryCollector) {
-                                                        $queryCollector -> collectTransactionEvent('Rollback Transaction', $transaction -> connection);
-                                                      });
+                    $queryCollector -> collectTransactionEvent('Rollback Transaction', $transaction -> connection);
+                });
             } catch (\Exception $e) {
                 $this -> addThrowable(
                     new Exception(
@@ -420,8 +420,8 @@ class LaravelDebugbar extends DebugBar
                 $mailer = $this -> app['mailer'] -> getSwiftMailer();
                 $this -> addCollector(new SwiftMailCollector($mailer));
                 if ($this -> app['config'] -> get('songshenzong-log.options.mail.full_log') && $this -> hasCollector(
-                    'messages'
-                )
+                        'messages'
+                    )
                 ) {
                     $this['messages'] -> aggregate(new SwiftLogCollector($mailer));
                 }
@@ -723,7 +723,7 @@ class LaravelDebugbar extends DebugBar
      */
     protected function isMyselfRequest()
     {
-        return $this -> app['request'] -> segment(1) == config('songshenzong-log.route_prefix', 'songshenzong');
+        return $this -> app['request'] -> segment(1) == 'songshenzong';
     }
 
 
