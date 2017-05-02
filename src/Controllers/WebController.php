@@ -3,7 +3,7 @@
 namespace Songshenzong\Log\Controllers;
 
 use Illuminate\Contracts\Foundation\Application;
-use Songshenzong\Log\SongshenzongLog;
+use Illuminate\Http\Response;
 
 class WebController extends BaseController
 {
@@ -30,9 +30,9 @@ class WebController extends BaseController
      */
     public function index()
     {
-        $file = __DIR__ . '/../Views/index.html';
-        echo file_get_contents($file);
-        exit;
+        $file_path = __DIR__ . '/../Views/index.html';
+        $file      = file_get_contents($file_path);
+        return new Response($file, 200);
     }
 
     /**
@@ -40,8 +40,8 @@ class WebController extends BaseController
      */
     public function login()
     {
-        $file = __DIR__ . '/../Views/login.html';
-        echo file_get_contents($file);
-        exit;
+        $file_path = __DIR__ . '/../Views/login.html';
+        $file      = file_get_contents($file_path);
+        return new Response($file, 200);
     }
 }
