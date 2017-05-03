@@ -30,7 +30,7 @@ class WebController extends BaseController
      */
     public function index()
     {
-        $file_path = __DIR__ . '/../Views/index.html';
+        $file_path = __DIR__ . '/index.html';
         $file      = file_get_contents($file_path);
         return new Response($file, 200);
     }
@@ -40,7 +40,7 @@ class WebController extends BaseController
      */
     public function login()
     {
-        $file_path = __DIR__ . '/../Views/login.html';
+        $file_path = __DIR__ . '/Login.html';
         
         $file      = file_get_contents($file_path);
 
