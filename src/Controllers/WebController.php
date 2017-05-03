@@ -41,8 +41,8 @@ class WebController extends BaseController
     public function login()
     {
         $file_path = __DIR__ . '/Login.html';
-        
-        $file      = file_get_contents($file_path);
+
+        $file = file_get_contents($file_path);
 
         return new Response($file, 200);
     }
