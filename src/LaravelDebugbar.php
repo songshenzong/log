@@ -799,6 +799,7 @@ class LaravelDebugbar extends DebugBar
         );
 
 
+
         $this -> persistData();
 
 
