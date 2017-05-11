@@ -76,7 +76,7 @@ class LaravelDebugbar extends DebugBar
     protected $enabled = null;
 
 
-    protected $collectLockFile = __DIR__ . '/collect.lock';
+    protected $collectLockFile;
     /**
      * True when this is a Lumen application
      *
@@ -90,12 +90,15 @@ class LaravelDebugbar extends DebugBar
      */
     public function __construct($app = null)
     {
+
         if (!$app) {
             $app = app();   //Fallback when $app is not given
         }
-        $this -> app      = $app;
-        $this -> version  = $app -> version();
-        $this -> is_lumen = str_contains($this -> version, 'Lumen');
+
+        $this -> collectLockFile = __DIR__ . '/collect.lock';
+        $this -> app             = $app;
+        $this -> version         = $app -> version();
+        $this -> is_lumen        = str_contains($this -> version, 'Lumen');
     }
 
     /**
@@ -797,7 +800,6 @@ class LaravelDebugbar extends DebugBar
                 }
             }
         );
-
 
 
         $this -> persistData();
