@@ -30,13 +30,15 @@ class RequestCollector extends DataCollector implements DataCollectorInterface
      */
     public function __construct($request, $response, $session = null)
     {
-        $this -> request  = $request;
-        $this -> response = $response;
-        $this -> session  = $session;
+        $this->request  = $request;
+        $this->response = $response;
+        $this->session  = $session;
     }
 
     /**
-     * {@inheritDoc}
+     * Returns the unique name of the collector
+     *
+     * @return string
      */
     public function getName()
     {
@@ -45,50 +47,51 @@ class RequestCollector extends DataCollector implements DataCollectorInterface
 
 
     /**
-     * {@inheritdoc}
+     * Called by the DebugBar when data needs to be collected
+     *
+     * @return array Collected data
+     * @throws \InvalidArgumentException
      */
     public function collect()
     {
-        $request  = $this -> request;
-        $response = $this -> response;
+        $request  = $this->request;
+        $response = $this->response;
 
-        $responseHeaders = $response -> headers -> all();
+        $responseHeaders = $response->headers->all();
         $cookies         = [];
-        foreach ($response -> headers -> getCookies() as $cookie) {
-            $cookies[] = $this -> getCookieHeader(
-                $cookie -> getName(),
-                $cookie -> getValue(),
-                $cookie -> getExpiresTime(),
-                $cookie -> getPath(),
-                $cookie -> getDomain(),
-                $cookie -> isSecure(),
-                $cookie -> isHttpOnly()
+        foreach ($response->headers->getCookies() as $cookie) {
+            $cookies[] = $this->getCookieHeader(
+                $cookie->getName(),
+                $cookie->getValue(),
+                $cookie->getExpiresTime(),
+                $cookie->getPath(),
+                $cookie->getDomain(),
+                $cookie->isSecure(),
+                $cookie->isHttpOnly()
             );
         }
         if (count($cookies) > 0) {
             $responseHeaders['Set-Cookie'] = $cookies;
         }
 
-        $statusCode = $response -> getStatusCode();
+        $statusCode = $response->getStatusCode();
 
 
         $data = [
-            'format'           => $request -> getRequestFormat(),
-            'content_type'     => $response -> headers -> get('Content-Type') ? $response -> headers -> get(
-                'Content-Type'
-            ) : 'text/html',
-            'status_text'      => isset(Response ::$statusTexts[$statusCode]) ? Response ::$statusTexts[$statusCode] : '',
+            'format'           => $request->getRequestFormat(),
+            'content_type'     => $response->headers->get('Content-Type') ?: 'text/html',
+            'status_text'      => isset(Response::$statusTexts[$statusCode]) ? Response::$statusTexts[$statusCode] : '',
             'status_code'      => $statusCode,
-            'path_info'        => $request -> getPathInfo(),
-            'query'            => $request -> query -> all(),
+            'path_info'        => $request->getPathInfo(),
+            'query'            => $request->query->all(),
             'request'          => [
                 'get'  => $GLOBALS['_GET'],
                 'post' => $GLOBALS['_POST'],
             ],
             'session'          => isset($GLOBALS['_SESSION']) ? $GLOBALS['_SESSION'] : '',
-            'headers'          => $request -> headers -> all(),
-            'server'           => array_change_key_case($request -> server -> all(), CASE_LOWER),
-            'cookies'          => $request -> cookies -> all(),
+            'headers'          => $request->headers->all(),
+            'server'           => array_change_key_case($request->server->all(), CASE_LOWER),
+            'cookies'          => $request->cookies->all(),
             'response_headers' => $responseHeaders,
         ];
 
@@ -109,15 +112,27 @@ class RequestCollector extends DataCollector implements DataCollectorInterface
         return $data;
     }
 
+    /**
+     * @param $name
+     * @param $value
+     * @param $expires
+     * @param $path
+     * @param $domain
+     * @param $secure
+     * @param $httponly
+     *
+     * @return string
+     * @throws \InvalidArgumentException
+     */
     private function getCookieHeader($name, $value, $expires, $path, $domain, $secure, $httponly)
     {
         $cookie = sprintf('%s=%s', $name, urlencode($value));
 
         if (0 !== $expires) {
             if (is_numeric($expires)) {
-                $expires = (int)$expires;
-            } elseif ($expires instanceof \DateTime) {
-                $expires = $expires -> getTimestamp();
+                $expires = (int) $expires;
+            } else if ($expires instanceof \DateTime) {
+                $expires = $expires->getTimestamp();
             } else {
                 $expires = strtotime($expires);
                 if (false === $expires || -1 == $expires) {
@@ -128,10 +143,10 @@ class RequestCollector extends DataCollector implements DataCollectorInterface
             }
 
             $cookie .= '; expires=' . substr(
-                \DateTime ::createFromFormat('U', $expires, new \DateTimeZone('UTC')) -> format('D, d-M-Y H:i:s T'),
-                0,
-                -5
-            );
+                    \DateTime::createFromFormat('U', $expires, new \DateTimeZone('UTC'))->format('D, d-M-Y H:i:s T'),
+                    0,
+                    -5
+                );
         }
 
         if ($domain) {

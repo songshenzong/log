@@ -18,8 +18,14 @@ use Songshenzong\Log\DataFormatter\DataFormatterInterface;
  */
 abstract class DataCollector implements DataCollectorInterface
 {
+    /**
+     * @var
+     */
     private static $defaultDataFormatter;
 
+    /**
+     * @var
+     */
     protected $dataFormater;
 
     /**
@@ -49,6 +55,7 @@ abstract class DataCollector implements DataCollectorInterface
      * Sets the data formater instance used by this collector
      *
      * @param DataFormatterInterface $formater
+     *
      * @return $this
      */
     public function setDataFormatter(DataFormatterInterface $formater)
@@ -70,6 +77,10 @@ abstract class DataCollector implements DataCollectorInterface
 
     /**
      * @deprecated
+     *
+     * @param $var
+     *
+     * @return string
      */
     public function formatVar($var)
     {
@@ -78,6 +89,10 @@ abstract class DataCollector implements DataCollectorInterface
 
     /**
      * @deprecated
+     *
+     * @param $seconds
+     *
+     * @return string
      */
     public function formatDuration($seconds)
     {
@@ -86,6 +101,11 @@ abstract class DataCollector implements DataCollectorInterface
 
     /**
      * @deprecated
+     *
+     * @param     $size
+     * @param int $precision
+     *
+     * @return string
      */
     public function formatBytes($size, $precision = 2)
     {

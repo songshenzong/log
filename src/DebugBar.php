@@ -25,18 +25,39 @@ use Songshenzong\Log\DataCollector\DataCollectorInterface;
  */
 class DebugBar implements ArrayAccess
 {
+    /**
+     * @var array
+     */
     protected $collectors = [];
 
+    /**
+     * @var
+     */
     protected $data;
 
 
+    /**
+     * @var
+     */
     protected $meta;
+    /**
+     * @var
+     */
     protected $storage;
 
+    /**
+     * @var
+     */
     protected $httpDriver;
 
+    /**
+     * @var string
+     */
     protected $stackSessionNamespace = 'PHPDEBUGBAR_STACK_DATA';
 
+    /**
+     * @var bool
+     */
     protected $stackAlwaysUseSessionStorage = false;
 
     /**
@@ -49,13 +70,13 @@ class DebugBar implements ArrayAccess
      */
     public function addCollector(DataCollectorInterface $collector)
     {
-        if ($collector -> getName() === '__meta') {
+        if ($collector->getName() === '__meta') {
             throw new DebugBarException("'__meta' is a reserved name and cannot be used as a collector name");
         }
-        if (isset($this -> collectors[$collector -> getName()])) {
+        if (isset($this->collectors[$collector->getName()])) {
             throw new DebugBarException("'{$collector->getName()}' is already a registered collector");
         }
-        $this -> collectors[$collector -> getName()] = $collector;
+        $this->collectors[$collector->getName()] = $collector;
         return $this;
     }
 
@@ -68,7 +89,7 @@ class DebugBar implements ArrayAccess
      */
     public function hasCollector($name)
     {
-        return isset($this -> collectors[$name]);
+        return isset($this->collectors[$name]);
     }
 
     /**
@@ -81,10 +102,10 @@ class DebugBar implements ArrayAccess
      */
     public function getCollector($name)
     {
-        if (!isset($this -> collectors[$name])) {
+        if (!isset($this->collectors[$name])) {
             throw new DebugBarException("'$name' is not a registered collector");
         }
-        return $this -> collectors[$name];
+        return $this->collectors[$name];
     }
 
     /**
@@ -94,7 +115,7 @@ class DebugBar implements ArrayAccess
      */
     public function getCollectors()
     {
-        return $this -> collectors;
+        return $this->collectors;
     }
 
 
@@ -105,7 +126,7 @@ class DebugBar implements ArrayAccess
      */
     public function isDataPersisted()
     {
-        return $this -> storage !== null;
+        return $this->storage !== null;
     }
 
     /**
@@ -117,7 +138,7 @@ class DebugBar implements ArrayAccess
      */
     public function setHttpDriver(HttpDriverInterface $driver)
     {
-        $this -> httpDriver = $driver;
+        $this->httpDriver = $driver;
         return $this;
     }
 
@@ -130,10 +151,10 @@ class DebugBar implements ArrayAccess
      */
     public function getHttpDriver()
     {
-        if ($this -> httpDriver === null) {
-            $this -> httpDriver = new PhpHttpDriver();
+        if ($this->httpDriver === null) {
+            $this->httpDriver = new PhpHttpDriver();
         }
-        return $this -> httpDriver;
+        return $this->httpDriver;
     }
 
 
@@ -146,10 +167,10 @@ class DebugBar implements ArrayAccess
      */
     public function getData()
     {
-        if ($this -> data === null) {
-            $this -> collect();
+        if ($this->data === null) {
+            $this->collect();
         }
-        return $this -> data;
+        return $this->data;
     }
 
 
@@ -161,11 +182,11 @@ class DebugBar implements ArrayAccess
     public function hasStackedData()
     {
         try {
-            $http = $this -> initStackSession();
+            $http = $this->initStackSession();
         } catch (DebugBarException $e) {
             return false;
         }
-        return count($http -> getSessionValue($this -> stackSessionNamespace)) > 0;
+        return count($http->getSessionValue($this->stackSessionNamespace)) > 0;
     }
 
     /**
@@ -174,19 +195,20 @@ class DebugBar implements ArrayAccess
      * @param boolean $delete Whether to delete the data in the session
      *
      * @return array
+     * @throws DebugBarException
      */
     public function getStackedData($delete = true)
     {
-        $http        = $this -> initStackSession();
-        $stackedData = $http -> getSessionValue($this -> stackSessionNamespace);
+        $http        = $this->initStackSession();
+        $stackedData = $http->getSessionValue($this->stackSessionNamespace);
         if ($delete) {
-            $http -> deleteSessionValue($this -> stackSessionNamespace);
+            $http->deleteSessionValue($this->stackSessionNamespace);
         }
 
         $datasets = [];
-        if ($this -> isDataPersisted() && !$this -> stackAlwaysUseSessionStorage) {
+        if ($this->isDataPersisted() && !$this->stackAlwaysUseSessionStorage) {
             foreach ($stackedData as $id => $data) {
-                $datasets[$id] = $this -> getStorage() -> get($id);
+                $datasets[$id] = $this->getStorage()->get($id);
             }
         } else {
             $datasets = $stackedData;
@@ -206,7 +228,7 @@ class DebugBar implements ArrayAccess
      */
     public function setStackAlwaysUseSessionStorage($enabled = true)
     {
-        $this -> stackAlwaysUseSessionStorage = $enabled;
+        $this->stackAlwaysUseSessionStorage = $enabled;
         return $this;
     }
 
@@ -218,7 +240,7 @@ class DebugBar implements ArrayAccess
      */
     public function isStackAlwaysUseSessionStorage()
     {
-        return $this -> stackAlwaysUseSessionStorage;
+        return $this->stackAlwaysUseSessionStorage;
     }
 
     /**
@@ -229,13 +251,13 @@ class DebugBar implements ArrayAccess
      */
     protected function initStackSession()
     {
-        $http = $this -> getHttpDriver();
-        if (!$http -> isSessionStarted()) {
+        $http = $this->getHttpDriver();
+        if (!$http->isSessionStarted()) {
             throw new DebugBarException("Session must be started before using stack data in the songshenzong");
         }
 
-        if (!$http -> hasSessionValue($this -> stackSessionNamespace)) {
-            $http -> setSessionValue($this -> stackSessionNamespace, []);
+        if (!$http->hasSessionValue($this->stackSessionNamespace)) {
+            $http->setSessionValue($this->stackSessionNamespace, []);
         }
 
         return $http;
@@ -246,21 +268,55 @@ class DebugBar implements ArrayAccess
     // --------------------------------------------
     // ArrayAccess implementation
 
+    /**
+     * {@inheritDoc}
+     */
+    /**
+     * @param mixed $key
+     * @param mixed $value
+     *
+     * @throws DebugBarException
+     */
     public function offsetSet($key, $value)
     {
         throw new DebugBarException("Songshenzong[] is read-only");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    /**
+     * @param mixed $key
+     *
+     * @return DataCollectorInterface
+     * @throws DebugBarException
+     */
     public function offsetGet($key)
     {
-        return $this -> getCollector($key);
+        return $this->getCollector($key);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    /**
+     * @param mixed $key
+     *
+     * @return bool
+     */
     public function offsetExists($key)
     {
-        return $this -> hasCollector($key);
+        return $this->hasCollector($key);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    /**
+     * @param mixed $key
+     *
+     * @throws DebugBarException
+     */
     public function offsetUnset($key)
     {
         throw new DebugBarException("Songshenzong[] is read-only");

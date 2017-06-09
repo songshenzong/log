@@ -15,7 +15,7 @@ class TraceablePDOStatement extends PDOStatement
     protected $pdo;
 
     /** @var array */
-    protected $boundParameters = array();
+    protected $boundParameters = [];
 
     /**
      * TraceablePDOStatement constructor.
@@ -31,73 +31,83 @@ class TraceablePDOStatement extends PDOStatement
      * Bind a column to a PHP variable
      *
      * @link   http://php.net/manual/en/pdostatement.bindcolumn.php
-     * @param  mixed $column Number of the column (1-indexed) or name of the column in the result set
-     * @param  mixed $param  Name of the PHP variable to which the column will be bound.
-     * @param  int   $type [optional] Data type of the parameter, specified by the PDO::PARAM_*
-     * constants.
-     * @param  int   $maxlen [optional] A hint for pre-allocation.
+     *
+     * @param  mixed $column     Number of the column (1-indexed) or name of the column in the result set
+     * @param  mixed $param      Name of the PHP variable to which the column will be bound.
+     * @param  int   $type       [optional] Data type of the parameter, specified by the PDO::PARAM_*
+     *                           constants.
+     * @param  int   $maxlen     [optional] A hint for pre-allocation.
      * @param  mixed $driverdata [optional] Optional parameter(s) for the driver.
+     *
      * @return bool  TRUE on success or FALSE on failure.
      */
     public function bindColumn($column, &$param, $type = null, $maxlen = null, $driverdata = null)
     {
         $this->boundParameters[$column] = $param;
-        $args = array_merge(array($column, &$param), array_slice(func_get_args(), 2));
-        return call_user_func_array(array("parent", 'bindColumn'), $args);
+        $args                           = array_merge([$column, &$param], array_slice(func_get_args(), 2));
+        return call_user_func_array(["parent", 'bindColumn'], $args);
     }
 
     /**
      * Binds a parameter to the specified variable name
      *
      * @link   http://php.net/manual/en/pdostatement.bindparam.php
-     * @param  mixed $parameter Parameter identifier. For a prepared statement using named
-     * placeholders, this will be a parameter name of the form :name. For a prepared statement using
-     * question mark placeholders, this will be the 1-indexed position of the parameter.
-     * @param  mixed $variable  Name of the PHP variable to bind to the SQL statement parameter.
-     * @param  int $data_type [optional] Explicit data type for the parameter using the PDO::PARAM_*
-     * constants.
-     * @param  int $length [optional] Length of the data type. To indicate that a parameter is an OUT
-     * parameter from a stored procedure, you must explicitly set the length.
+     *
+     * @param  mixed $parameter      Parameter identifier. For a prepared statement using named
+     *                               placeholders, this will be a parameter name of the form :name. For a prepared
+     *                               statement using question mark placeholders, this will be the 1-indexed position of
+     *                               the parameter.
+     * @param  mixed $variable       Name of the PHP variable to bind to the SQL statement parameter.
+     * @param  int   $data_type      [optional] Explicit data type for the parameter using the PDO::PARAM_*
+     *                               constants.
+     * @param  int   $length         [optional] Length of the data type. To indicate that a parameter is an OUT
+     *                               parameter from a stored procedure, you must explicitly set the length.
      * @param  mixed $driver_options [optional]
+     *
      * @return bool TRUE on success or FALSE on failure.
      */
     public function bindParam($parameter, &$variable, $data_type = PDO::PARAM_STR, $length = null, $driver_options = null)
     {
         $this->boundParameters[$parameter] = $variable;
-        $args = array_merge(array($parameter, &$variable), array_slice(func_get_args(), 2));
-        return call_user_func_array(array("parent", 'bindParam'), $args);
+        $args                              = array_merge([$parameter, &$variable], array_slice(func_get_args(), 2));
+        return call_user_func_array(["parent", 'bindParam'], $args);
     }
 
     /**
      * Binds a value to a parameter
      *
      * @link   http://php.net/manual/en/pdostatement.bindvalue.php
+     *
      * @param  mixed $parameter Parameter identifier. For a prepared statement using named
-     * placeholders, this will be a parameter name of the form :name. For a prepared statement using
-     * question mark placeholders, this will be the 1-indexed position of the parameter.
-     * @param  mixed $value The value to bind to the parameter.
+     *                          placeholders, this will be a parameter name of the form :name. For a prepared statement
+     *                          using question mark placeholders, this will be the 1-indexed position of the parameter.
+     * @param  mixed $value     The value to bind to the parameter.
      * @param  int   $data_type [optional] Explicit data type for the parameter using the PDO::PARAM_*
-     * constants.
+     *                          constants.
+     *
      * @return bool TRUE on success or FALSE on failure.
      */
     public function bindValue($parameter, $value, $data_type = PDO::PARAM_STR)
     {
         $this->boundParameters[$parameter] = $value;
-        return call_user_func_array(array("parent", 'bindValue'), func_get_args());
+        return call_user_func_array(["parent", 'bindValue'], func_get_args());
     }
 
     /**
      * Executes a prepared statement
      *
      * @link   http://php.net/manual/en/pdostatement.execute.php
+     *
      * @param  array $input_parameters [optional] An array of values with as many elements as there
-     * are bound parameters in the SQL statement being executed. All values are treated as
-     * PDO::PARAM_STR.
+     *                                 are bound parameters in the SQL statement being executed. All values are treated
+     *                                 as PDO::PARAM_STR.
+     *
      * @return bool TRUE on success or FALSE on failure.
+     * @throws PDOException
      */
     public function execute($input_parameters = null)
     {
-        $preparedId = spl_object_hash($this);
+        $preparedId      = spl_object_hash($this);
         $boundParameters = $this->boundParameters;
         if (is_array($input_parameters)) {
             $boundParameters = array_merge($boundParameters, $input_parameters);
@@ -115,7 +125,7 @@ class TraceablePDOStatement extends PDOStatement
 
         if ($this->pdo->getAttribute(PDO::ATTR_ERRMODE) !== PDO::ERRMODE_EXCEPTION && $result === false) {
             $error = $this->errorInfo();
-            $ex = new PDOException($error[2], (int) $error[0]);
+            $ex    = new PDOException($error[2], (int) $error[0]);
         }
 
         $trace->end($ex, $this->rowCount());

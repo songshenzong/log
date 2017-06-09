@@ -26,9 +26,15 @@ use Monolog\Logger;
  */
 class MonologCollector extends AbstractProcessingHandler implements DataCollectorInterface, MessagesAggregateInterface
 {
+    /**
+     * @var string
+     */
     protected $name;
 
-    protected $records = array();
+    /**
+     * @var array
+     */
+    protected $records = [];
 
     /**
      * @param Logger  $logger
@@ -38,10 +44,10 @@ class MonologCollector extends AbstractProcessingHandler implements DataCollecto
      */
     public function __construct(Logger $logger = null, $level = Logger::DEBUG, $bubble = true, $name = 'monolog')
     {
-        parent ::__construct($level, $bubble);
-        $this -> name = $name;
+        parent::__construct($level, $bubble);
+        $this->name = $name;
         if ($logger !== null) {
-            $this -> addLogger($logger);
+            $this->addLogger($logger);
         }
     }
 
@@ -52,7 +58,7 @@ class MonologCollector extends AbstractProcessingHandler implements DataCollecto
      */
     public function addLogger(Logger $logger)
     {
-        $logger -> pushHandler($this);
+        $logger->pushHandler($this);
     }
 
     /**
@@ -60,12 +66,12 @@ class MonologCollector extends AbstractProcessingHandler implements DataCollecto
      */
     protected function write(array $record)
     {
-        $this -> records[] = array(
+        $this->records[] = [
             'message'   => $record['formatted'],
             'is_string' => true,
             'label'     => strtolower($record['level_name']),
-            'time'      => $record['datetime'] -> format('U'),
-        );
+            'time'      => $record['datetime']->format('U'),
+        ];
     }
 
     /**
@@ -73,7 +79,7 @@ class MonologCollector extends AbstractProcessingHandler implements DataCollecto
      */
     public function getMessages()
     {
-        return $this -> records;
+        return $this->records;
     }
 
     /**
@@ -81,10 +87,10 @@ class MonologCollector extends AbstractProcessingHandler implements DataCollecto
      */
     public function collect()
     {
-        return array(
-            'count'   => count($this -> records),
-            'records' => $this -> records,
-        );
+        return [
+            'count'   => count($this->records),
+            'records' => $this->records,
+        ];
     }
 
     /**
@@ -92,6 +98,6 @@ class MonologCollector extends AbstractProcessingHandler implements DataCollecto
      */
     public function getName()
     {
-        return $this -> name;
+        return $this->name;
     }
 }

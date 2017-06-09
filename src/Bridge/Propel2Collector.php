@@ -28,7 +28,8 @@ use Psr\Log\LoggerInterface;
  *
  * Example:
  * <code>
- * $debugbar->addCollector(new \Songshenzong\Log\Bridge\Propel2Collector(\Propel\Runtime\Propel::getServiceContainer()->getReadConnection()));
+ * $debugbar->addCollector(new
+ * \Songshenzong\Log\Bridge\Propel2Collector(\Propel\Runtime\Propel::getServiceContainer()->getReadConnection()));
  * </code>
  */
 class Propel2Collector extends DataCollector
@@ -46,12 +47,12 @@ class Propel2Collector extends DataCollector
     /**
      * @var array
      */
-    protected $config = array();
+    protected $config = [];
 
     /**
      * @var array
      */
-    protected $errors = array();
+    protected $errors = [];
 
     /**
      * @var int
@@ -60,10 +61,11 @@ class Propel2Collector extends DataCollector
 
     /**
      * @param ConnectionInterface $connection Propel connection
+     * @param array               $logMethods
      */
     public function __construct(
         ConnectionInterface $connection,
-        array $logMethods = array(
+        array $logMethods = [
             'beginTransaction',
             'commit',
             'rollBack',
@@ -71,8 +73,9 @@ class Propel2Collector extends DataCollector
             'exec',
             'query',
             'execute'
-        )
-    ) {
+        ]
+    )
+    {
         if ($connection instanceof ProfilerConnectionWrapper) {
             $connection->setLogMethods($logMethods);
 
@@ -134,44 +137,45 @@ class Propel2Collector extends DataCollector
     /**
      * @param array $records
      * @param array $config
+     *
      * @return array
      */
     protected function getStatements($records, $config)
     {
-        $statements = array();
+        $statements = [];
         foreach ($records as $record) {
             $duration = null;
-            $memory = null;
+            $memory   = null;
 
             $isSuccess = (LogLevel::INFO === strtolower($record['level_name']));
 
             $detailsCount = count($config['details']);
-            $parameters = explode($config['outerGlue'], $record['message'], $detailsCount + 1);
+            $parameters   = explode($config['outerGlue'], $record['message'], $detailsCount + 1);
             if (count($parameters) === ($detailsCount + 1)) {
                 $parameters = array_map('trim', $parameters);
-                $_details = array();
+                $_details   = [];
                 foreach (array_splice($parameters, 0, $detailsCount) as $string) {
                     list($key, $value) = array_map('trim', explode($config['innerGlue'], $string, 2));
                     $_details[$key] = $value;
                 }
 
-                $details = array();
+                $details = [];
                 foreach ($config['details'] as $key => $detail) {
                     if (isset($_details[$detail['name']])) {
                         $value = $_details[$detail['name']];
                         if ('time' === $key) {
                             if (substr_count($value, 'ms')) {
-                                $value = (float)$value / 1000;
+                                $value = (float) $value / 1000;
                             } else {
-                                $value = (float)$value;
+                                $value = (float) $value;
                             }
                         } else {
-                            $suffixes = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
-                            $suffix = substr($value, -2);
-                            $i = array_search($suffix, $suffixes, true);
-                            $i = (false === $i) ? 0 : $i;
+                            $suffixes = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+                            $suffix   = substr($value, -2);
+                            $i        = array_search($suffix, $suffixes, true);
+                            $i        = (false === $i) ? 0 : $i;
 
-                            $value = ((float)$value) * pow(1024, $i);
+                            $value = ((float) $value) * (1024 ** $i);
                         }
                         $details[$key] = $value;
                     }
@@ -193,18 +197,18 @@ class Propel2Collector extends DataCollector
                 $message = $record['message'];
             }
 
-            $statement = array(
-                'sql' => $message,
-                'is_success' => $isSuccess,
-                'duration' => $duration,
+            $statement = [
+                'sql'          => $message,
+                'is_success'   => $isSuccess,
+                'duration'     => $duration,
                 'duration_str' => $this->getDataFormatter()->formatDuration($duration),
-                'memory' => $memory,
-                'memory_str' => $this->getDataFormatter()->formatBytes($memory),
-            );
+                'memory'       => $memory,
+                'memory_str'   => $this->getDataFormatter()->formatBytes($memory),
+            ];
 
             if (false === $isSuccess) {
-                $statement['sql'] = '';
-                $statement['error_code'] = $record['level'];
+                $statement['sql']           = '';
+                $statement['error_code']    = $record['level'];
                 $statement['error_message'] = $message;
             }
 
@@ -219,42 +223,42 @@ class Propel2Collector extends DataCollector
     public function collect()
     {
         if (count($this->errors)) {
-            return array(
-                'statements' => array_map(function ($message) {
-                    return array('sql' => '', 'is_success' => false, 'error_code' => 500, 'error_message' => $message);
+            return [
+                'statements'           => array_map(function ($message) {
+                    return ['sql' => '', 'is_success' => false, 'error_code' => 500, 'error_message' => $message];
                 }, $this->errors),
-                'nb_statements' => 0,
+                'nb_statements'        => 0,
                 'nb_failed_statements' => count($this->errors),
-            );
+            ];
         }
 
         if ($this->getHandler() === null) {
-            return array();
+            return [];
         }
 
         $statements = $this->getStatements($this->getHandler()->getRecords(), $this->getConfig());
 
-        $failedStatement = count(array_filter($statements, function ($statement) {
+        $failedStatement     = count(array_filter($statements, function ($statement) {
             return false === $statement['is_success'];
         }));
         $accumulatedDuration = array_reduce($statements, function ($accumulatedDuration, $statement) {
             $time = isset($statement['duration']) ? $statement['duration'] : 0;
             return $accumulatedDuration += $time;
         });
-        $memoryUsage = array_reduce($statements, function ($memoryUsage, $statement) {
+        $memoryUsage         = array_reduce($statements, function ($memoryUsage, $statement) {
             $time = isset($statement['memory']) ? $statement['memory'] : 0;
             return $memoryUsage += $time;
         });
 
-        return array(
-            'nb_statements' => $this->getQueryCount(),
-            'nb_failed_statements' => $failedStatement,
-            'accumulated_duration' => $accumulatedDuration,
+        return [
+            'nb_statements'            => $this->getQueryCount(),
+            'nb_failed_statements'     => $failedStatement,
+            'accumulated_duration'     => $accumulatedDuration,
             'accumulated_duration_str' => $this->getDataFormatter()->formatDuration($accumulatedDuration),
-            'memory_usage' => $memoryUsage,
-            'memory_usage_str' => $this->getDataFormatter()->formatBytes($memoryUsage),
-            'statements' => $statements
-        );
+            'memory_usage'             => $memoryUsage,
+            'memory_usage_str'         => $this->getDataFormatter()->formatBytes($memoryUsage),
+            'statements'               => $statements
+        ];
     }
 
     /**
@@ -262,11 +266,11 @@ class Propel2Collector extends DataCollector
      */
     public function getName()
     {
-        $additionalName  = '';
+        $additionalName = '';
         if ($this->getLogger() !== $this->getDefaultLogger()) {
-            $additionalName = ' ('.$this->getLogger()->getName().')';
+            $additionalName = ' (' . $this->getLogger()->getName() . ')';
         }
 
-        return 'propel2'.$additionalName;
+        return 'propel2' . $additionalName;
     }
 }

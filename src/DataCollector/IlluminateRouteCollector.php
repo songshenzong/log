@@ -22,13 +22,20 @@ class IlluminateRouteCollector extends DataCollector
      */
     protected $router;
 
+    /**
+     * IlluminateRouteCollector constructor.
+     *
+     * @param Router $router
+     */
     public function __construct(Router $router)
     {
         $this->router = $router;
     }
 
     /**
-     * {@inheritDoc}
+     * Called by the DebugBar when data needs to be collected
+     *
+     * @return array Collected data
      */
     public function collect()
     {
@@ -40,6 +47,7 @@ class IlluminateRouteCollector extends DataCollector
      * Get the route information for a given route.
      *
      * @param  \Illuminate\Routing\Route $route
+     *
      * @return array
      */
     protected function getRouteInformation($route)
@@ -47,11 +55,11 @@ class IlluminateRouteCollector extends DataCollector
         if (!is_a($route, 'Illuminate\Routing\Route')) {
             return [];
         }
-        $uri = head($route->methods()) . ' ' . $route->uri();
+        $uri    = head($route->methods()) . ' ' . $route->uri();
         $action = $route->getAction();
 
         $result = [
-           'uri' => $uri ?: '-',
+            'uri' => $uri ?: '-',
         ];
 
         $result = array_merge($result, $action);
@@ -63,20 +71,19 @@ class IlluminateRouteCollector extends DataCollector
                 $reflector = new \ReflectionMethod($controller, $method);
             }
             unset($result['uses']);
-        } elseif (isset($action['uses']) && $action['uses'] instanceof \Closure) {
-            $reflector = new \ReflectionFunction($action['uses']);
+        } else if (isset($action['uses']) && $action['uses'] instanceof \Closure) {
+            $reflector      = new \ReflectionFunction($action['uses']);
             $result['uses'] = $this->formatVar($result['uses']);
         }
 
         if (isset($reflector)) {
-            $filename = ltrim(str_replace(base_path(), '', $reflector->getFileName()), '/');
+            $filename       = ltrim(str_replace(base_path(), '', $reflector->getFileName()), '/');
             $result['file'] = $filename . ':' . $reflector->getStartLine() . '-' . $reflector->getEndLine();
         }
 
         if ($middleware = $this->getMiddleware($route)) {
             $result['middleware'] = $middleware;
         }
-
 
 
         return $result;
@@ -86,6 +93,7 @@ class IlluminateRouteCollector extends DataCollector
      * Get middleware
      *
      * @param  \Illuminate\Routing\Route $route
+     *
      * @return string
      */
     protected function getMiddleware($route)
@@ -94,7 +102,9 @@ class IlluminateRouteCollector extends DataCollector
     }
 
     /**
-     * {@inheritDoc}
+     * Returns the unique name of the collector
+     *
+     * @return string
      */
     public function getName()
     {
@@ -102,11 +112,11 @@ class IlluminateRouteCollector extends DataCollector
     }
 
 
-
     /**
      * Display the route information on the console.
      *
      * @param  array $routes
+     *
      * @return void
      */
     protected function displayRoutes(array $routes)

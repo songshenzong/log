@@ -30,11 +30,16 @@ use Doctrine\ORM\EntityManager;
  */
 class DoctrineCollector extends DataCollector
 {
+    /**
+     * @var DebugStack
+     */
     protected $debugStack;
 
     /**
      * DoctrineCollector constructor.
+     *
      * @param $debugStackOrEntityManager
+     *
      * @throws DebugBarException
      */
     public function __construct($debugStackOrEntityManager)
@@ -53,24 +58,24 @@ class DoctrineCollector extends DataCollector
      */
     public function collect()
     {
-        $queries = array();
+        $queries       = [];
         $totalExecTime = 0;
         foreach ($this->debugStack->queries as $q) {
-            $queries[] = array(
-                'sql' => $q['sql'],
-                'params' => (object) $q['params'],
-                'duration' => $q['executionMS'],
+            $queries[]     = [
+                'sql'          => $q['sql'],
+                'params'       => (object) $q['params'],
+                'duration'     => $q['executionMS'],
                 'duration_str' => $this->formatDuration($q['executionMS'])
-            );
+            ];
             $totalExecTime += $q['executionMS'];
         }
 
-        return array(
-            'nb_statements' => count($queries),
-            'accumulated_duration' => $totalExecTime,
+        return [
+            'nb_statements'            => count($queries),
+            'accumulated_duration'     => $totalExecTime,
             'accumulated_duration_str' => $this->formatDuration($totalExecTime),
-            'statements' => $queries
-        );
+            'statements'               => $queries
+        ];
     }
 
     /**

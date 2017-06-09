@@ -30,13 +30,16 @@ class Stopwatch extends Twig_Extension
     }
 
     /**
-     * {@inheritDoc}
+     * @return string
      */
     public function getName()
     {
         return 'stopwatch';
     }
 
+    /**
+     * @return array
+     */
     public function getTokenParsers()
     {
         return [
@@ -49,6 +52,9 @@ class Stopwatch extends Twig_Extension
         ];
     }
 
+    /**
+     * @return null|\Songshenzong\Log\LaravelDebugbar
+     */
     public function getDebugbar()
     {
         return $this->debugbar;

@@ -40,10 +40,10 @@ class LocalizationCollector extends DataCollector
      */
     public function collect()
     {
-        return array(
-          'locale' => $this->getLocale(),
-          'domain' => $this->getDomain(),
-        );
+        return [
+            'locale' => $this->getLocale(),
+            'domain' => $this->getDomain(),
+        ];
     }
 
     /**

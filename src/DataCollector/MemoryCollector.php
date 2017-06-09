@@ -15,6 +15,9 @@ namespace Songshenzong\Log\DataCollector;
  */
 class MemoryCollector extends DataCollector
 {
+    /**
+     * @var int
+     */
     protected $peakUsage = 0;
 
     /**
@@ -41,10 +44,10 @@ class MemoryCollector extends DataCollector
     public function collect()
     {
         $this->updatePeakUsage();
-        return array(
-            'peak_usage' => $this->peakUsage,
+        return [
+            'peak_usage'     => $this->peakUsage,
             'peak_usage_str' => $this->getDataFormatter()->formatBytes($this->peakUsage)
-        );
+        ];
     }
 
     /**

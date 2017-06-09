@@ -15,18 +15,24 @@ namespace Songshenzong\Log\DataCollector;
  */
 class ConfigCollector extends DataCollector
 {
+    /**
+     * @var string
+     */
     protected $name;
 
+    /**
+     * @var array
+     */
     protected $data;
 
     /**
      * @param array  $data
      * @param string $name
      */
-    public function __construct(array $data = array(), $name = 'config')
+    public function __construct(array $data = [], $name = 'config')
     {
-        $this -> name = $name;
-        $this -> data = $data;
+        $this->name = $name;
+        $this->data = $data;
     }
 
     /**
@@ -36,7 +42,7 @@ class ConfigCollector extends DataCollector
      */
     public function setData(array $data)
     {
-        $this -> data = $data;
+        $this->data = $data;
     }
 
     /**
@@ -44,7 +50,7 @@ class ConfigCollector extends DataCollector
      */
     public function collect()
     {
-        return $this -> data;
+        return $this->data;
     }
 
     /**
@@ -52,6 +58,6 @@ class ConfigCollector extends DataCollector
      */
     public function getName()
     {
-        return $this -> name;
+        return $this->name;
     }
 }
