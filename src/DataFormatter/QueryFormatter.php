@@ -2,11 +2,6 @@
 
 namespace Songshenzong\Log\DataFormatter;
 
-/**
- * Class QueryFormatter
- *
- * @package Songshenzong\Log\DataFormatter
- */
 class QueryFormatter extends DataFormatter
 {
 
@@ -59,7 +54,7 @@ class QueryFormatter extends DataFormatter
     /**
      * Format a source object.
      *
-     * @param  mixed|null $source If the backtrace is disabled, the $source will be null.
+     * @param  object|null $source If the backtrace is disabled, the $source will be null.
      *
      * @return string
      */
@@ -71,13 +66,12 @@ class QueryFormatter extends DataFormatter
 
         $parts = [];
 
-        if ($source-> namespace) {
-        $parts['namespace'] = $source-> namespace .
-        '::';
+        if ($source -> namespace) {
+            $parts['namespace'] = $source -> namespace . '::';
         }
 
-        $parts['name'] = $source->name;
-        $parts['line'] = ':' . $source->line;
+        $parts['name'] = $source -> name;
+        $parts['line'] = ':' . $source -> line;
 
         return implode($parts);
     }

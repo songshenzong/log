@@ -9,26 +9,13 @@ use Songshenzong\Log\Twig\Node\StopwatchNode;
  */
 class StopwatchTokenParser extends \Twig_TokenParser
 {
-    /**
-     * @var
-     */
     protected $debugbarAvailable;
 
-    /**
-     * StopwatchTokenParser constructor.
-     *
-     * @param $debugbarAvailable
-     */
     public function __construct($debugbarAvailable)
     {
         $this->debugbarAvailable = $debugbarAvailable;
     }
 
-    /**
-     * @param \Twig_Token $token
-     *
-     * @return StopwatchNode
-     */
     public function parse(\Twig_Token $token)
     {
         $lineno = $token->getLine();
@@ -56,19 +43,11 @@ class StopwatchTokenParser extends \Twig_TokenParser
         return $body;
     }
 
-    /**
-     * @return string
-     */
     public function getTag()
     {
         return 'stopwatch';
     }
 
-    /**
-     * @param \Twig_Token $token
-     *
-     * @return mixed
-     */
     public function decideStopwatchEnd(\Twig_Token $token)
     {
         return $token->test('endstopwatch');

@@ -13,15 +13,6 @@ namespace Songshenzong\Log\DataFormatter;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
 
-/**
- * {@inheritDoc}
- */
-
-/**
- * Class DataFormatter
- *
- * @package Songshenzong\Log\DataFormatter
- */
 class DataFormatter implements DataFormatterInterface
 {
     /**
@@ -29,8 +20,8 @@ class DataFormatter implements DataFormatterInterface
      */
     public function __construct()
     {
-        $this->cloner = new VarCloner();
-        $this->dumper = new CliDumper();
+        $this -> cloner = new VarCloner();
+        $this -> dumper = new CliDumper();
     }
 
     /**
@@ -42,8 +33,8 @@ class DataFormatter implements DataFormatterInterface
     {
         $output = '';
 
-        $this->dumper->dump(
-            $this->cloner->cloneVar($data),
+        $this -> dumper -> dump(
+            $this -> cloner -> cloneVar($data),
             function ($line, $depth) use (&$output) {
                 // A negative depth means "end of dump"
                 if ($depth >= 0) {
@@ -65,7 +56,7 @@ class DataFormatter implements DataFormatterInterface
     {
         if ($seconds < 0.001) {
             return round($seconds * 1000000) . 'μs';
-        } else if ($seconds < 1) {
+        } elseif ($seconds < 1) {
             return round($seconds * 1000, 2) . 'ms';
         }
         return round($seconds, 2) . 's';
@@ -87,7 +78,7 @@ class DataFormatter implements DataFormatterInterface
         $size = abs($size);
 
         $base     = log($size) / log(1024);
-        $suffixes = ['B', 'KB', 'MB', 'GB', 'TB'];
-        return $sign . round(1024 ** ($base - floor($base)), $precision) . $suffixes[floor($base)];
+        $suffixes = array('B', 'KB', 'MB', 'GB', 'TB');
+        return $sign . round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
     }
 }

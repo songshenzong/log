@@ -6,24 +6,9 @@ use Songshenzong\Log\Bridge\Twig\TwigCollector;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\DataCollector\Util\ValueExporter;
 
-/**
- * {@inheritDoc}
- */
-
-/**
- * Class ViewCollector
- *
- * @package Songshenzong\Log\DataCollector
- */
 class ViewCollector extends TwigCollector
 {
-    /**
-     * @var array
-     */
     protected $templates = [];
-    /**
-     * @var bool
-     */
     protected $collect_data;
 
     /**
@@ -34,21 +19,16 @@ class ViewCollector extends TwigCollector
     public function __construct($collectData = true)
     {
         $this->collect_data = $collectData;
-        $this->name         = 'views';
-        $this->templates    = [];
-        $this->exporter     = new ValueExporter();
+        $this->name = 'views';
+        $this->templates = [];
+        $this->exporter = new ValueExporter();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'views';
     }
+
 
 
     /**
@@ -60,7 +40,7 @@ class ViewCollector extends TwigCollector
     {
         $name = $view->getName();
         $path = $view->getPath();
-
+        
         if (!is_object($path)) {
             if ($path) {
                 $path = ltrim(str_replace(base_path(), '', realpath($path)), '/');
@@ -87,26 +67,20 @@ class ViewCollector extends TwigCollector
         }
 
         $this->templates[] = [
-            'name'        => $path ? sprintf('%s (%s)', $name, $path) : $name,
+            'name' => $path ? sprintf('%s (%s)', $name, $path) : $name,
             'param_count' => count($params),
-            'params'      => $params,
-            'type'        => $type,
+            'params' => $params,
+            'type' => $type,
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    /**
-     * @return array
-     */
     public function collect()
     {
         $templates = $this->templates;
 
         return [
             'nb_templates' => count($templates),
-            'templates'    => $templates,
+            'templates' => $templates,
         ];
     }
 }

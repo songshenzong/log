@@ -9,11 +9,6 @@ use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 
-/**
- * Class TokenMiddleware
- *
- * @package Songshenzong\Log
- */
 class TokenMiddleware
 {
     /**
@@ -39,8 +34,8 @@ class TokenMiddleware
      */
     public function __construct(Container $container, LaravelDebugbar $songshenzong)
     {
-        $this->container    = $container;
-        $this->songshenzong = $songshenzong;
+        $this -> container    = $container;
+        $this -> songshenzong = $songshenzong;
     }
 
     /**
@@ -53,13 +48,13 @@ class TokenMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (isset($request->token)) {
+        if (isset($request -> token)) {
             $tokens = config('songshenzong-log.token', ['songshenzong']);
-            if (in_array($request->token, $tokens, true)) {
+            if (in_array($request -> token, $tokens)) {
                 return $next($request);
             }
-            return $this->songshenzong->json(403, $request->token . ' is Invalid Token !');
+            return $this -> songshenzong -> json(403, $request -> token . ' is Invalid Token !');
         }
-        return $this->songshenzong->json(403, 'No Token !');
+        return $this -> songshenzong -> json(403, 'No Token !');
     }
 }

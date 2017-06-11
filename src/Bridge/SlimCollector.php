@@ -22,24 +22,10 @@ use Slim\Slim;
  */
 class SlimCollector extends MessagesCollector
 {
-    /**
-     * @var Slim
-     */
     protected $slim;
 
-    /**
-     * @var
-     */
     protected $originalLogWriter;
 
-    /**
-     * {@inheritDoc}
-     */
-    /**
-     * SlimCollector constructor.
-     *
-     * @param Slim $slim
-     */
     public function __construct(Slim $slim)
     {
         $this->slim = $slim;
@@ -50,10 +36,6 @@ class SlimCollector extends MessagesCollector
         }
     }
 
-    /**
-     * @param $message
-     * @param $level
-     */
     public function write($message, $level)
     {
         if ($this->originalLogWriter) {
@@ -62,32 +44,21 @@ class SlimCollector extends MessagesCollector
         $this->addMessage($message, $this->getLevelName($level));
     }
 
-    /**
-     * @param $level
-     *
-     * @return mixed
-     */
     protected function getLevelName($level)
     {
-        $map = [
+        $map = array(
             Log::EMERGENCY => LogLevel::EMERGENCY,
-            Log::ALERT     => LogLevel::ALERT,
-            Log::CRITICAL  => LogLevel::CRITICAL,
-            Log::ERROR     => LogLevel::ERROR,
-            Log::WARN      => LogLevel::WARNING,
-            Log::NOTICE    => LogLevel::NOTICE,
-            Log::INFO      => LogLevel::INFO,
-            Log::DEBUG     => LogLevel::DEBUG
-        ];
+            Log::ALERT => LogLevel::ALERT,
+            Log::CRITICAL => LogLevel::CRITICAL,
+            Log::ERROR => LogLevel::ERROR,
+            Log::WARN => LogLevel::WARNING,
+            Log::NOTICE => LogLevel::NOTICE,
+            Log::INFO => LogLevel::INFO,
+            Log::DEBUG => LogLevel::DEBUG
+        );
         return $map[$level];
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'slim';

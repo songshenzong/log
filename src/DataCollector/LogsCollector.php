@@ -1,36 +1,14 @@
 <?php
-
 namespace Songshenzong\Log\DataCollector;
 
 use Songshenzong\Log\DataCollector\MessagesCollector;
 use Psr\Log\LogLevel;
 use ReflectionClass;
 
-/**
- * {@inheritDoc}
- */
-
-/**
- * Class LogsCollector
- *
- * @package Songshenzong\Log\DataCollector
- */
 class LogsCollector extends MessagesCollector
 {
-    /**
-     * @var int
-     */
     protected $lines = 124;
 
-    /**
-     * {@inheritDoc}
-     */
-    /**
-     * LogsCollector constructor.
-     *
-     * @param null   $path
-     * @param string $name
-     */
     public function __construct($path = null, $name = 'logs')
     {
         parent::__construct($name);
@@ -47,32 +25,31 @@ class LogsCollector extends MessagesCollector
     {
         // default daily rotating logs (Laravel 5.0)
         $path = storage_path() . '/logs/laravel-' . date('Y-m-d') . '.log';
-
+        
         // single file logs
         if (!file_exists($path)) {
             $path = storage_path() . '/logs/laravel.log';
         }
-
+        
         return $path;
     }
+
 
 
     /**
      * By Ain Tohvri (ain)
      * http://tekkie.flashbit.net/php/tail-functionality-in-php
-     *
      * @param string $file
-     * @param int    $lines
-     *
+     * @param int $lines
      * @return array
      */
     protected function tailFile($file, $lines)
     {
-        $handle      = fopen($file, "r");
+        $handle = fopen($file, "r");
         $linecounter = $lines;
-        $pos         = -2;
-        $beginning   = false;
-        $text        = [];
+        $pos = -2;
+        $beginning = false;
+        $text = [];
         while ($linecounter > 0) {
             $t = " ";
             while ($t != "\n") {
@@ -101,7 +78,6 @@ class LogsCollector extends MessagesCollector
      * Based on https://github.com/mikemand/logviewer/blob/master/src/Kmd/Logviewer/Logviewer.php by mikemand
      *
      * @param $file
-     *
      * @return array
      */
     public function getLogs($file)

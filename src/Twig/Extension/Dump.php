@@ -26,7 +26,7 @@ class Dump extends Twig_Extension
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getName()
     {
@@ -34,7 +34,7 @@ class Dump extends Twig_Extension
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getFunctions()
     {
@@ -52,7 +52,7 @@ class Dump extends Twig_Extension
      * (c) 2011 Fabien Potencier
      *
      * @param Twig_Environment $env
-     * @param                  $context
+     * @param $context
      *
      * @return string
      */
@@ -81,6 +81,6 @@ class Dump extends Twig_Extension
             }
         }
 
-        return '<pre>' . $output . '</pre>';
+        return '<pre>'.$output.'</pre>';
     }
 }

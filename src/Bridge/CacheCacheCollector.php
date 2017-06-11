@@ -29,18 +29,14 @@ use Monolog\Logger;
  */
 class CacheCacheCollector extends MonologCollector
 {
-    /**
-     * @var Logger|null
-     */
     protected $logger;
 
     /**
      * CacheCacheCollector constructor.
-     *
-     * @param Cache|null  $cache
+     * @param Cache|null $cache
      * @param Logger|null $logger
-     * @param bool        $level
-     * @param bool        $bubble
+     * @param bool $level
+     * @param bool $bubble
      */
     public function __construct(Cache $cache = null, Logger $logger = null, $level = Logger::DEBUG, $bubble = true)
     {

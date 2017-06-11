@@ -9,11 +9,6 @@ use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 
-/**
- * Class Middleware
- *
- * @package Songshenzong\Log
- */
 class Middleware
 {
     /**
@@ -38,8 +33,8 @@ class Middleware
      */
     public function __construct(Container $container, LaravelDebugbar $debugbar)
     {
-        $this->container = $container;
-        $this->debugbar  = $debugbar;
+        $this -> container = $container;
+        $this -> debugbar  = $debugbar;
     }
 
     /**
@@ -49,21 +44,19 @@ class Middleware
      * @param  Closure $next
      *
      * @return mixed
-     * @throws DebugBarException
-     * @throws Exception
      */
     public function handle($request, Closure $next)
     {
         try {
             $response = $next($request);
         } catch (Exception $e) {
-            $response = $this->handleException($request, $e);
+            $response = $this -> handleException($request, $e);
         } catch (Error $error) {
             $e        = new FatalThrowableError($error);
-            $response = $this->handleException($request, $e);
+            $response = $this -> handleException($request, $e);
         }
 
-        $this->debugbar->modifyResponse($request, $response);
+        $this -> debugbar -> modifyResponse($request, $response);
 
 
         return $response;
@@ -82,14 +75,14 @@ class Middleware
      */
     protected function handleException($passable, Exception $e)
     {
-        if (!$this->container->bound(ExceptionHandler::class) || !$passable instanceof Request) {
+        if (!$this -> container -> bound(ExceptionHandler::class) || !$passable instanceof Request) {
             throw $e;
         }
 
-        $handler = $this->container->make(ExceptionHandler::class);
+        $handler = $this -> container -> make(ExceptionHandler::class);
 
-        $handler->report($e);
+        $handler -> report($e);
 
-        return $handler->render($passable, $e);
+        return $handler -> render($passable, $e);
     }
 }

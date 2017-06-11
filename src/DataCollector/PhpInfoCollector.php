@@ -20,10 +20,10 @@ class PhpInfoCollector extends DataCollector
      */
     public function collect()
     {
-        return [
-            'version'   => PHP_VERSION,
+        return array(
+            'version' => PHP_VERSION,
             'interface' => PHP_SAPI
-        ];
+        );
     }
 
     /**

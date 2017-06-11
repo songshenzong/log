@@ -31,12 +31,12 @@ class TimeDataCollector extends DataCollector
     /**
      * @var array
      */
-    protected $startedMeasures = [];
+    protected $startedMeasures = array();
 
     /**
      * @var array
      */
-    protected $measures = [];
+    protected $measures = array();
 
     /**
      * @param float $requestStartTime
@@ -56,25 +56,24 @@ class TimeDataCollector extends DataCollector
     /**
      * Starts a measure
      *
-     * @param string      $name      Internal name, used to stop the measure
-     * @param string|null $label     Public name
+     * @param string $name Internal name, used to stop the measure
+     * @param string|null $label Public name
      * @param string|null $collector The source of the collector
      */
     public function startMeasure($name, $label = null, $collector = null)
     {
-        $start                        = microtime(true);
-        $this->startedMeasures[$name] = [
-            'label'     => $label ?: $name,
-            'start'     => $start,
+        $start = microtime(true);
+        $this->startedMeasures[$name] = array(
+            'label' => $label ?: $name,
+            'start' => $start,
             'collector' => $collector
-        ];
+        );
     }
 
     /**
      * Check a measure exists
      *
      * @param string $name
-     *
      * @return bool
      */
     public function hasStartedMeasure($name)
@@ -86,11 +85,10 @@ class TimeDataCollector extends DataCollector
      * Stops a measure
      *
      * @param string $name
-     * @param array  $params
-     *
+     * @param array $params
      * @throws DebugBarException
      */
-    public function stopMeasure($name, array $params = [])
+    public function stopMeasure($name, $params = array())
     {
         $end = microtime(true);
         if (!$this->hasStartedMeasure($name)) {
@@ -109,42 +107,40 @@ class TimeDataCollector extends DataCollector
     /**
      * Adds a measure
      *
-     * @param string      $label
-     * @param float       $start
-     * @param float       $end
-     * @param array       $params
+     * @param string $label
+     * @param float $start
+     * @param float $end
+     * @param array $params
      * @param string|null $collector
      */
-    public function addMeasure($label, $start, $end, array $params = [], $collector = null)
+    public function addMeasure($label, $start, $end, $params = array(), $collector = null)
     {
-        $this->measures[] = [
-            'label'          => $label,
-            'start'          => $start,
+        $this->measures[] = array(
+            'label' => $label,
+            'start' => $start,
             'relative_start' => $start - $this->requestStartTime,
-            'end'            => $end,
-            'relative_end'   => $end - $this->requestEndTime,
-            'duration'       => $end - $start,
-            'duration_str'   => $this->getDataFormatter()->formatDuration($end - $start),
-            'params'         => $params,
-            'collector'      => $collector
-        ];
+            'end' => $end,
+            'relative_end' => $end - $this->requestEndTime,
+            'duration' => $end - $start,
+            'duration_str' => $this->getDataFormatter()->formatDuration($end - $start),
+            'params' => $params,
+            'collector' => $collector
+        );
     }
 
     /**
      * Utility function to measure the execution of a Closure
      *
-     * @param string      $label
-     * @param \Closure    $closure
+     * @param string $label
+     * @param \Closure $closure
      * @param string|null $collector
-     *
-     * @throws DebugBarException
      */
     public function measure($label, \Closure $closure, $collector = null)
     {
         $name = spl_object_hash($closure);
         $this->startMeasure($name, $label, $collector);
         $result = $closure();
-        $params = is_array($result) ? $result : [];
+        $params = is_array($result) ? $result : array();
         $this->stopMeasure($name, $params);
     }
 
@@ -209,13 +205,13 @@ class TimeDataCollector extends DataCollector
             return $a['start'] < $b['start'] ? -1 : 1;
         });
 
-        return [
-            'start'        => $this->requestStartTime,
-            'end'          => $this->requestEndTime,
-            'duration'     => $this->getRequestDuration(),
+        return array(
+            'start' => $this->requestStartTime,
+            'end' => $this->requestEndTime,
+            'duration' => $this->getRequestDuration(),
             'duration_str' => $this->getDataFormatter()->formatDuration($this->getRequestDuration()),
-            'measures'     => array_values($this->measures)
-        ];
+            'measures' => array_values($this->measures)
+        );
     }
 
     /**

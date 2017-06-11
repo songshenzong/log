@@ -5,11 +5,6 @@ namespace Songshenzong\Log\Controllers;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Response;
 
-/**
- * Class WebController
- *
- * @package Songshenzong\Log\Controllers
- */
 class WebController extends BaseController
 {
 
@@ -26,7 +21,7 @@ class WebController extends BaseController
      */
     public function __construct(Application $app)
     {
-        $this->app = $app;
+        $this -> app = $app;
     }
 
 

@@ -38,7 +38,7 @@ if (!function_exists('debug')) {
     function debug($value)
     {
         foreach (func_get_args() as $value) {
-            app('songshenzongLog')->addMessage($value, 'debug');
+            app('songshenzongLog') -> addMessage($value, 'debug');
         }
     }
 }
@@ -50,13 +50,11 @@ if (!function_exists('addMessage')) {
      *
      * @param  mixed ...$value
      *
-     * @param string $label
-     *
      * @return string
      */
     function addMessage($value, $label = 'info')
     {
-        app('songshenzongLog')->addMessage($value, $label);
+        app('songshenzongLog') -> addMessage($value, $label);
     }
 }
 
@@ -70,7 +68,7 @@ if (!function_exists('start_measure')) {
      */
     function start_measure($name, $label = null)
     {
-        app('songshenzongLog')->startMeasure($name, $label);
+        app('songshenzongLog') -> startMeasure($name, $label);
     }
 }
 
@@ -83,7 +81,7 @@ if (!function_exists('stop_measure')) {
      */
     function stop_measure($name)
     {
-        app('songshenzongLog')->stopMeasure($name);
+        app('songshenzongLog') -> stopMeasure($name);
     }
 }
 
@@ -98,7 +96,7 @@ if (!function_exists('add_measure')) {
      */
     function add_measure($label, $start, $end)
     {
-        app('songshenzongLog')->addMeasure($label, $start, $end);
+        app('songshenzongLog') -> addMeasure($label, $start, $end);
     }
 }
 
@@ -112,6 +110,6 @@ if (!function_exists('measure')) {
      */
     function measure($label, \Closure $closure)
     {
-        app('songshenzongLog')->measure($label, $closure);
+        app('songshenzongLog') -> measure($label, $closure);
     }
 }

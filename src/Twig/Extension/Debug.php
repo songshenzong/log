@@ -4,7 +4,6 @@ use Illuminate\Foundation\Application;
 use Twig_Environment;
 use Twig_Extension;
 use Twig_SimpleFunction;
-use const false;
 
 /**
  * Access Laravels auth class in your Twig templates.
@@ -31,7 +30,7 @@ class Debug extends Twig_Extension
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getName()
     {
@@ -39,7 +38,7 @@ class Debug extends Twig_Extension
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getFunctions()
     {
@@ -57,10 +56,7 @@ class Debug extends Twig_Extension
      * (c) 2011 Fabien Potencier
      *
      * @param Twig_Environment $env
-     * @param                  $context
-     *
-     * @return bool
-     * @throws \Songshenzong\Log\DebugBarException
+     * @param $context
      */
     public function debug(Twig_Environment $env, $context)
     {
@@ -89,6 +85,6 @@ class Debug extends Twig_Extension
             }
         }
 
-        return false;
+        return;
     }
 }

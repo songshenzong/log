@@ -2,15 +2,10 @@
 
 namespace Songshenzong\Log;
 
-/**
- * Class Facade
- *
- * @package Songshenzong\Log
- */
 class Facade extends \Illuminate\Support\Facades\Facade
 {
     /**
-     * @return string
+     * {@inheritDoc}
      */
     protected static function getFacadeAccessor()
     {

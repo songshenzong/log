@@ -1,5 +1,4 @@
 <?php
-
 namespace Songshenzong\Log\DataCollector;
 
 use Songshenzong\Log\DataCollector\TimeDataCollector;
@@ -7,15 +6,6 @@ use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\DataCollector\Util\ValueExporter;
 
-/**
- * {@inheritDoc}
- */
-
-/**
- * Class EventCollector
- *
- * @package Songshenzong\Log\DataCollector
- */
 class EventCollector extends TimeDataCollector
 {
     /** @var Dispatcher */
@@ -24,14 +14,6 @@ class EventCollector extends TimeDataCollector
     /** @var ValueExporter */
     protected $exporter;
 
-    /**
-     * {@inheritDoc}
-     */
-    /**
-     * EventCollector constructor.
-     *
-     * @param null $requestStartTime
-     */
     public function __construct($requestStartTime = null)
     {
         parent::__construct($requestStartTime);
@@ -39,11 +21,7 @@ class EventCollector extends TimeDataCollector
         $this->exporter = new ValueExporter();
     }
 
-    /**
-     * @param null  $name
-     * @param array $data
-     */
-    public function onWildcardEvent($name = null, array $data = [])
+    public function onWildcardEvent($name = null, $data = [])
     {
         // Pre-Laravel 5.4, using 'firing' to get the current event name.
         if (method_exists($this->events, 'firing')) {
@@ -54,7 +32,7 @@ class EventCollector extends TimeDataCollector
         }
 
         $params = $this->prepareParams($data);
-        $time   = microtime(true);
+        $time = microtime(true);
 
         // Find all listeners for the current event
         foreach ($this->events->getListeners($name) as $i => $listener) {
@@ -70,8 +48,8 @@ class EventCollector extends TimeDataCollector
                 // Format the listener to readable format
                 $listener = get_class($class) . '@' . $method;
 
-                // Handle closures
-            } else if ($listener instanceof \Closure) {
+            // Handle closures
+            } elseif ($listener instanceof \Closure) {
                 $reflector = new \ReflectionFunction($listener);
 
                 // Skip our own listeners
@@ -92,26 +70,18 @@ class EventCollector extends TimeDataCollector
         $this->addMeasure($name, $time, $time, $params);
     }
 
-    /**
-     * @param Dispatcher $events
-     */
     public function subscribe(Dispatcher $events)
     {
         $this->events = $events;
         $events->listen('*', [$this, 'onWildcardEvent']);
     }
 
-    /**
-     * @param $params
-     *
-     * @return array
-     */
     protected function prepareParams($params)
     {
         $data = [];
         foreach ($params as $key => $value) {
             if (is_object($value) && Str::is('Illuminate\*\Events\*', get_class($value))) {
-                $value = $this->prepareParams(get_object_vars($value));
+                $value =  $this->prepareParams(get_object_vars($value));
             }
             $data[$key] = htmlentities($this->exporter->exportValue($value), ENT_QUOTES, 'UTF-8', false);
         }
@@ -119,27 +89,14 @@ class EventCollector extends TimeDataCollector
         return $data;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    /**
-     * @return array
-     * @throws \Songshenzong\Log\DebugBarException
-     */
     public function collect()
     {
-        $data                = parent::collect();
+        $data = parent::collect();
         $data['nb_measures'] = count($data['measures']);
 
         return $data;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'event';

@@ -10,15 +10,6 @@
 
 namespace Songshenzong\Log;
 
-/**
- * {@inheritDoc}
- */
-
-/**
- * Class DebugBarException
- *
- * @package Songshenzong\Log
- */
 class DebugBarException extends \Exception
 {
     //

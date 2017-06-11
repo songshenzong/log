@@ -26,7 +26,6 @@ class AuthCollector extends DataCollector
 
     /**
      * Set to show the users name/email
-     *
      * @param bool $showName
      */
     public function setShowName($showName)
@@ -49,15 +48,13 @@ class AuthCollector extends DataCollector
 
     /**
      * Get displayed user information
-     *
      * @param \Illuminate\Auth\UserInterface $user
-     *
      * @return array
      */
     protected function getUserInformation($user = null)
     {
         // Defaults
-        if (null === $user) {
+        if (is_null($user)) {
             return [
                 'name' => 'Guest',
                 'user' => ['guest' => true],
@@ -71,7 +68,7 @@ class AuthCollector extends DataCollector
             try {
                 if ($user->username) {
                     $identifier = $user->username;
-                } else if ($user->email) {
+                } elseif ($user->email) {
                     $identifier = $user->email;
                 }
             } catch (\Exception $e) {

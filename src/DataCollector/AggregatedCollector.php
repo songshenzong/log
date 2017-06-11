@@ -25,36 +25,24 @@ use Songshenzong\Log\DebugBarException;
  */
 class AggregatedCollector implements DataCollectorInterface, ArrayAccess
 {
-    /**
-     * @var string
-     */
     protected $name;
 
-    /**
-     * @var null|string
-     */
     protected $mergeProperty;
 
-    /**
-     * @var bool
-     */
     protected $sort;
 
-    /**
-     * @var array
-     */
-    protected $collectors = [];
+    protected $collectors = array();
 
     /**
-     * @param string  $name
-     * @param string  $mergeProperty
+     * @param string $name
+     * @param string $mergeProperty
      * @param boolean $sort
      */
     public function __construct($name, $mergeProperty = null, $sort = false)
     {
-        $this->name          = $name;
+        $this->name = $name;
         $this->mergeProperty = $mergeProperty;
-        $this->sort          = $sort;
+        $this->sort = $sort;
     }
 
     /**
@@ -117,7 +105,7 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
      */
     public function collect()
     {
-        $aggregate = [];
+        $aggregate = array();
         foreach ($this->collectors as $collector) {
             $data = $collector->collect();
             if ($this->mergeProperty !== null) {
@@ -133,7 +121,6 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
      * Sorts the collected data
      *
      * @param array $data
-     *
      * @return array
      */
     protected function sort($data)
@@ -146,7 +133,7 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
                 }
                 return $a[$p] < $b[$p] ? -1 : 1;
             });
-        } else if ($this->sort === true) {
+        } elseif ($this->sort === true) {
             sort($data);
         }
         return $data;
@@ -166,7 +153,6 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
     /**
      * @param mixed $key
      * @param mixed $value
-     *
      * @throws DebugBarException
      */
     public function offsetSet($key, $value)
@@ -176,7 +162,6 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
 
     /**
      * @param mixed $key
-     *
      * @return mixed
      */
     public function offsetGet($key)
@@ -186,7 +171,6 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
 
     /**
      * @param mixed $key
-     *
      * @return bool
      */
     public function offsetExists($key)
@@ -196,7 +180,6 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
 
     /**
      * @param mixed $key
-     *
      * @throws DebugBarException
      */
     public function offsetUnset($key)
