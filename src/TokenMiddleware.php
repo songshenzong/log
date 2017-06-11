@@ -55,7 +55,7 @@ class TokenMiddleware
     {
         if (isset($request -> token)) {
             $tokens = config('songshenzong-log.token', ['songshenzong']);
-            if (in_array($request -> token, $tokens)) {
+            if (in_array($request -> token, $tokens, true)) {
                 return $next($request);
             }
             return $this -> songshenzong -> json(403, $request -> token . ' is Invalid Token !');

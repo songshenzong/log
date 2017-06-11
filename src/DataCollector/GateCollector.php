@@ -34,10 +34,10 @@ class GateCollector extends MessagesCollector
         $label = $result ? 'success' : 'error';
 
         $this->addMessage([
-            'ability' => $ability,
-            'result' => $result,
-            'user' => $user->getAuthIdentifier(),
-            'arguments' => $arguments,
-        ], $label, false);
+                              'ability'   => $ability,
+                              'result'    => $result,
+                              'user'      => $user->getAuthIdentifier(),
+                              'arguments' => $arguments,
+                          ], $label, false);
     }
 }

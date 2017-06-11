@@ -1,4 +1,5 @@
 <?php
+
 namespace Songshenzong\Log\DataCollector;
 
 use Songshenzong\Log\DataCollector\TimeDataCollector;
@@ -46,7 +47,7 @@ class EventCollector extends TimeDataCollector
         }
 
         $params = $this->prepareParams($data);
-        $time = microtime(true);
+        $time   = microtime(true);
 
         // Find all listeners for the current event
         foreach ($this->events->getListeners($name) as $i => $listener) {
@@ -62,8 +63,8 @@ class EventCollector extends TimeDataCollector
                 // Format the listener to readable format
                 $listener = get_class($class) . '@' . $method;
 
-            // Handle closures
-            } elseif ($listener instanceof \Closure) {
+                // Handle closures
+            } else if ($listener instanceof \Closure) {
                 $reflector = new \ReflectionFunction($listener);
 
                 // Skip our own listeners
@@ -103,7 +104,7 @@ class EventCollector extends TimeDataCollector
         $data = [];
         foreach ($params as $key => $value) {
             if (is_object($value) && Str::is('Illuminate\*\Events\*', get_class($value))) {
-                $value =  $this->prepareParams(get_object_vars($value));
+                $value = $this->prepareParams(get_object_vars($value));
             }
             $data[$key] = htmlentities($this->exporter->exportValue($value), ENT_QUOTES, 'UTF-8', false);
         }
@@ -117,7 +118,7 @@ class EventCollector extends TimeDataCollector
      */
     public function collect()
     {
-        $data = parent::collect();
+        $data                = parent::collect();
         $data['nb_measures'] = count($data['measures']);
 
         return $data;

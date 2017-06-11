@@ -734,7 +734,7 @@ class LaravelDebugbar extends DebugBar
         if ($this -> enabled === null) {
             $environments = config('songshenzong-log.env', ['dev', 'local', 'production']);
 
-            $this -> enabled = in_array(env('APP_ENV'), $environments);
+            $this -> enabled = in_array(env('APP_ENV'), $environments, true);
         }
 
         return $this -> enabled;
@@ -909,7 +909,7 @@ class LaravelDebugbar extends DebugBar
     public function __call($method, $args)
     {
         $messageLevels = ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug', 'log'];
-        if (in_array($method, $messageLevels)) {
+        if (in_array($method, $messageLevels, true)) {
             foreach ($args as $arg) {
                 $this -> addMessage($arg, $method);
             }

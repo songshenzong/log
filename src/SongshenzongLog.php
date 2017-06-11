@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
  * Class SongshenzongLog
  *
  * @package Songshenzong\Log
+ * @property mixed $data
+ * @property mixed $time
  */
 class SongshenzongLog extends Model
 {

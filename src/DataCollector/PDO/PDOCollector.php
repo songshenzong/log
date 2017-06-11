@@ -145,7 +145,7 @@ class PDOCollector extends DataCollector
      */
     protected function collectPDO(TraceablePDO $pdo, TimeDataCollector $timeCollector = null, $connectionName = null)
     {
-        if (empty($connectionName) || $connectionName == 'default') {
+        if (null === $connectionName || $connectionName == 'default') {
             $connectionName = 'pdo';
         } else {
             $connectionName = 'pdo ' . $connectionName;

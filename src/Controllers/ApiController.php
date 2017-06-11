@@ -203,7 +203,7 @@ HEREDOC;
     {
         if ($request -> has('token')) {
             $tokens = config('songshenzong-log.token', ['songshenzong']);
-            if (in_array($request -> token, $tokens)) {
+            if (in_array($request -> token, $tokens, true)) {
                 return $this -> songshenzong -> json(200, 'OK');
             }
 

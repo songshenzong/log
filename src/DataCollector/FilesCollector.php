@@ -50,7 +50,7 @@ class FilesCollector extends DataCollector
             ) !== false
             ) {
                 continue;
-            } elseif (!in_array($file, $compiled)) {
+            } elseif (!in_array($file, $compiled, true)) {
                 $included[] = [
                     'message' => "'" . $this->stripBasePath($file) . "',",
                     // Use PHP syntax so we can copy-paste to compile config file.
