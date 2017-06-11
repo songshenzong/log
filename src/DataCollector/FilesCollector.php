@@ -6,10 +6,18 @@ use Songshenzong\Log\DataCollector\DataCollector;
 
 use Illuminate\Contracts\Foundation\Application;
 
+/**
+ * Class FilesCollector
+ *
+ * @package Songshenzong\Log\DataCollector
+ */
 class FilesCollector extends DataCollector
 {
     /** @var \Illuminate\Contracts\Foundation\Application */
     protected $app;
+    /**
+     * @var
+     */
     protected $basePath;
 
     /**
@@ -22,7 +30,9 @@ class FilesCollector extends DataCollector
     }
 
     /**
-     * {@inheritDoc}
+     * Called by the DebugBar when data needs to be collected
+     *
+     * @return array Collected data
      */
     public function collect()
     {
@@ -106,9 +116,10 @@ class FilesCollector extends DataCollector
     }
 
 
-
     /**
-     * {@inheritDoc}
+     * Returns the unique name of the collector
+     *
+     * @return string
      */
     public function getName()
     {

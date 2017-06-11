@@ -34,12 +34,24 @@ use Psr\Log\LoggerInterface;
  */
 class PropelCollector extends DataCollector implements BasicLogger
 {
+    /**
+     * @var LoggerInterface
+     */
     protected $logger;
 
+    /**
+     * @var array
+     */
     protected $statements = array();
 
+    /**
+     * @var int
+     */
     protected $accumulatedTime = 0;
 
+    /**
+     * @var int
+     */
     protected $peakMemory = 0;
 
     /**
@@ -83,57 +95,93 @@ class PropelCollector extends DataCollector implements BasicLogger
         $this->logQueriesToLogger = false;
     }
 
+    /**
+     * @param bool $enable
+     *
+     * @return $this
+     */
     public function setLogQueriesToLogger($enable = true)
     {
         $this->logQueriesToLogger = $enable;
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isLogQueriesToLogger()
     {
         return $this->logQueriesToLogger;
     }
 
+    /**
+     * @param $m
+     */
     public function emergency($m)
     {
         $this->log($m, Propel::LOG_EMERG);
     }
 
+    /**
+     * @param $m
+     */
     public function alert($m)
     {
         $this->log($m, Propel::LOG_ALERT);
     }
 
+    /**
+     * @param $m
+     */
     public function crit($m)
     {
         $this->log($m, Propel::LOG_CRIT);
     }
 
+    /**
+     * @param $m
+     */
     public function err($m)
     {
         $this->log($m, Propel::LOG_ERR);
     }
 
+    /**
+     * @param $m
+     */
     public function warning($m)
     {
         $this->log($m, Propel::LOG_WARNING);
     }
 
+    /**
+     * @param $m
+     */
     public function notice($m)
     {
         $this->log($m, Propel::LOG_NOTICE);
     }
 
+    /**
+     * @param $m
+     */
     public function info($m)
     {
         $this->log($m, Propel::LOG_INFO);
     }
 
+    /**
+     * @param $m
+     */
     public function debug($m)
     {
         $this->log($m, Propel::LOG_DEBUG);
     }
 
+    /**
+     * @param      $message
+     * @param null $severity
+     */
     public function log($message, $severity = null)
     {
         if (strpos($message, 'DebugPDOStatement::execute') !== false) {
@@ -173,6 +221,8 @@ class PropelCollector extends DataCollector implements BasicLogger
      * Parse a log line to extract query information
      *
      * @param string $message
+     *
+     * @return array
      */
     protected function parseAndLogSqlQuery($message)
     {
@@ -207,6 +257,9 @@ class PropelCollector extends DataCollector implements BasicLogger
         return array($sql, $this->formatDuration($duration));
     }
 
+    /**
+     * @return array
+     */
     public function collect()
     {
         return array(
@@ -220,6 +273,9 @@ class PropelCollector extends DataCollector implements BasicLogger
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'propel';

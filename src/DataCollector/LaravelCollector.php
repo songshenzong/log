@@ -5,6 +5,15 @@ namespace Songshenzong\Log\DataCollector;
 use Songshenzong\Log\DataCollector\DataCollector;
 use Illuminate\Foundation\Application;
 
+/**
+ * {@inheritDoc}
+ */
+
+/**
+ * Class LaravelCollector
+ *
+ * @package Songshenzong\Log\DataCollector
+ */
 class LaravelCollector extends DataCollector
 {
     /** @var \Illuminate\Foundation\Application $app */
@@ -19,7 +28,9 @@ class LaravelCollector extends DataCollector
     }
 
     /**
-     * {@inheritDoc}
+     * Called by the DebugBar when data needs to be collected
+     *
+     * @return array Collected data
      */
     public function collect()
     {
@@ -34,7 +45,9 @@ class LaravelCollector extends DataCollector
     }
 
     /**
-     * {@inheritDoc}
+     * Returns the unique name of the collector
+     *
+     * @return string
      */
     public function getName()
     {

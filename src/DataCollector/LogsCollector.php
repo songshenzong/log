@@ -5,10 +5,24 @@ use Songshenzong\Log\DataCollector\MessagesCollector;
 use Psr\Log\LogLevel;
 use ReflectionClass;
 
+/**
+ * Class LogsCollector
+ *
+ * @package Songshenzong\Log\DataCollector
+ */
 class LogsCollector extends MessagesCollector
 {
+    /**
+     * @var int
+     */
     protected $lines = 124;
 
+    /**
+     * LogsCollector constructor.
+     *
+     * @param null   $path
+     * @param string $name
+     */
     public function __construct($path = null, $name = 'logs')
     {
         parent::__construct($name);

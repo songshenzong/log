@@ -53,6 +53,9 @@ class LaravelDebugbar extends DebugBar
     protected $app;
 
 
+    /**
+     * @var
+     */
     protected $created;
     /**
      * Normalized Laravel Version
@@ -76,6 +79,9 @@ class LaravelDebugbar extends DebugBar
     protected $enabled = null;
 
 
+    /**
+     * @var string
+     */
     protected $collectLockFile;
     /**
      * True when this is a Lumen application
@@ -510,6 +516,12 @@ class LaravelDebugbar extends DebugBar
         $this -> booted = true;
     }
 
+    /**
+     * @param      $name
+     * @param bool $default
+     *
+     * @return mixed
+     */
     public function shouldCollect($name, $default = false)
     {
         return config('songshenzong-log.collectors.' . $name, $default);
@@ -524,6 +536,7 @@ class LaravelDebugbar extends DebugBar
      * @param int    $line
      * @param array  $context
      *
+     * @throws DebugBarException
      * @throws \ErrorException
      */
     public function handleError($level, $message, $file = '', $line = 0, $context = [])
@@ -540,6 +553,8 @@ class LaravelDebugbar extends DebugBar
      *
      * @param string $name  Internal name, used to stop the measure
      * @param string $label Public name
+     *
+     * @throws DebugBarException
      */
     public function startMeasure($name, $label = null)
     {
@@ -554,6 +569,8 @@ class LaravelDebugbar extends DebugBar
      * Stops a measure
      *
      * @param string $name
+     *
+     * @throws DebugBarException
      */
     public function stopMeasure($name)
     {
@@ -573,6 +590,7 @@ class LaravelDebugbar extends DebugBar
      *
      * @param Exception $e
      *
+     * @throws DebugBarException
      * @deprecated in favor of addThrowable
      */
     public function addException(Exception $e)
@@ -584,6 +602,8 @@ class LaravelDebugbar extends DebugBar
      * Adds an exception to be profiled in the debug bar
      *
      * @param Exception $e
+     *
+     * @throws DebugBarException
      */
     public function addThrowable($e)
     {
@@ -601,7 +621,8 @@ class LaravelDebugbar extends DebugBar
      * @param  \Symfony\Component\HttpFoundation\Request  $request
      * @param  \Symfony\Component\HttpFoundation\Response $response
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
+     * @throws DebugBarException
      */
     public function modifyResponse(Request $request, Response $response)
     {
@@ -810,6 +831,10 @@ class LaravelDebugbar extends DebugBar
 
 
     // Persist the collect information the database
+
+    /**
+     * @return mixed
+     */
     private function persistData()
     {
 
@@ -840,6 +865,8 @@ class LaravelDebugbar extends DebugBar
      * @param string $label
      * @param float  $start
      * @param float  $end
+     *
+     * @throws DebugBarException
      */
     public function addMeasure($label, $start, $end)
     {
@@ -855,6 +882,8 @@ class LaravelDebugbar extends DebugBar
      *
      * @param string   $label
      * @param \Closure $closure
+     *
+     * @throws DebugBarException
      */
     public function measure($label, \Closure $closure)
     {
@@ -875,6 +904,7 @@ class LaravelDebugbar extends DebugBar
      * @param array  $args
      *
      * @return mixed|void
+     * @throws DebugBarException
      */
     public function __call($method, $args)
     {
@@ -893,6 +923,8 @@ class LaravelDebugbar extends DebugBar
      *
      * @param mixed  $message
      * @param string $label
+     *
+     * @throws DebugBarException
      */
     public function addMessage($message, $label = 'info')
     {
@@ -916,6 +948,9 @@ class LaravelDebugbar extends DebugBar
         return version_compare($this -> version, $version, $operator);
     }
 
+    /**
+     * @return bool
+     */
     protected function isLumen()
     {
         return $this -> is_lumen;

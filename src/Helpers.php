@@ -50,6 +50,8 @@ if (!function_exists('addMessage')) {
      *
      * @param  mixed ...$value
      *
+     * @param string $label
+     *
      * @return string
      */
     function addMessage($value, $label = 'info')

@@ -36,7 +36,9 @@ class RequestCollector extends DataCollector implements DataCollectorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Returns the unique name of the collector
+     *
+     * @return string
      */
     public function getName()
     {
@@ -45,7 +47,10 @@ class RequestCollector extends DataCollector implements DataCollectorInterface
 
 
     /**
-     * {@inheritdoc}
+     * Called by the DebugBar when data needs to be collected
+     *
+     * @return array Collected data
+     * @throws \InvalidArgumentException
      */
     public function collect()
     {
@@ -109,6 +114,18 @@ class RequestCollector extends DataCollector implements DataCollectorInterface
         return $data;
     }
 
+    /**
+     * @param $name
+     * @param $value
+     * @param $expires
+     * @param $path
+     * @param $domain
+     * @param $secure
+     * @param $httponly
+     *
+     * @return string
+     * @throws \InvalidArgumentException
+     */
     private function getCookieHeader($name, $value, $expires, $path, $domain, $secure, $httponly)
     {
         $cookie = sprintf('%s=%s', $name, urlencode($value));

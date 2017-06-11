@@ -7,6 +7,15 @@
  */
 class StopwatchNode extends \Twig_Node
 {
+    /**
+     * StopwatchNode constructor.
+     *
+     * @param \Twig_NodeInterface              $name
+     * @param                                  $body
+     * @param \Twig_Node_Expression_AssignName $var
+     * @param int                              $lineno
+     * @param null                             $tag
+     */
     public function __construct(
         \Twig_NodeInterface $name,
         $body,
@@ -17,6 +26,9 @@ class StopwatchNode extends \Twig_Node
         parent::__construct(['body' => $body, 'name' => $name, 'var' => $var], [], $lineno, $tag);
     }
 
+    /**
+     * @param \Twig_Compiler $compiler
+     */
     public function compile(\Twig_Compiler $compiler)
     {
         $compiler

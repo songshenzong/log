@@ -21,14 +21,25 @@ use Swift_Plugins_MessageLogger;
  */
 class SwiftMailCollector extends DataCollector
 {
+    /**
+     * @var Swift_Plugins_MessageLogger
+     */
     protected $messagesLogger;
 
+    /**
+     * SwiftMailCollector constructor.
+     *
+     * @param Swift_Mailer $mailer
+     */
     public function __construct(Swift_Mailer $mailer)
     {
         $this->messagesLogger = new Swift_Plugins_MessageLogger();
         $mailer->registerPlugin($this->messagesLogger);
     }
 
+    /**
+     * @return array
+     */
     public function collect()
     {
         $mails = array();
@@ -45,6 +56,11 @@ class SwiftMailCollector extends DataCollector
         );
     }
 
+    /**
+     * @param $to
+     *
+     * @return string
+     */
     protected function formatTo($to)
     {
         if (!$to) {
@@ -58,6 +74,9 @@ class SwiftMailCollector extends DataCollector
         return implode(', ', $f);
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'swiftmailer_mails';

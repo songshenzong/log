@@ -131,9 +131,11 @@ class TimeDataCollector extends DataCollector
     /**
      * Utility function to measure the execution of a Closure
      *
-     * @param string $label
-     * @param \Closure $closure
+     * @param string      $label
+     * @param \Closure    $closure
      * @param string|null $collector
+     *
+     * @throws DebugBarException
      */
     public function measure($label, \Closure $closure, $collector = null)
     {

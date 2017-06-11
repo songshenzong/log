@@ -13,6 +13,15 @@ namespace Songshenzong\Log\DataFormatter;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
 
+/**
+ * {@inheritDoc}
+ */
+
+/**
+ * Class DataFormatter
+ *
+ * @package Songshenzong\Log\DataFormatter
+ */
 class DataFormatter implements DataFormatterInterface
 {
     /**

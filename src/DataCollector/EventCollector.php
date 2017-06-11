@@ -6,6 +6,11 @@ use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\DataCollector\Util\ValueExporter;
 
+/**
+ * Class EventCollector
+ *
+ * @package Songshenzong\Log\DataCollector
+ */
 class EventCollector extends TimeDataCollector
 {
     /** @var Dispatcher */
@@ -14,6 +19,11 @@ class EventCollector extends TimeDataCollector
     /** @var ValueExporter */
     protected $exporter;
 
+    /**
+     * EventCollector constructor.
+     *
+     * @param null $requestStartTime
+     */
     public function __construct($requestStartTime = null)
     {
         parent::__construct($requestStartTime);
@@ -21,6 +31,10 @@ class EventCollector extends TimeDataCollector
         $this->exporter = new ValueExporter();
     }
 
+    /**
+     * @param null  $name
+     * @param array $data
+     */
     public function onWildcardEvent($name = null, $data = [])
     {
         // Pre-Laravel 5.4, using 'firing' to get the current event name.
@@ -70,12 +84,20 @@ class EventCollector extends TimeDataCollector
         $this->addMeasure($name, $time, $time, $params);
     }
 
+    /**
+     * @param Dispatcher $events
+     */
     public function subscribe(Dispatcher $events)
     {
         $this->events = $events;
         $events->listen('*', [$this, 'onWildcardEvent']);
     }
 
+    /**
+     * @param $params
+     *
+     * @return array
+     */
     protected function prepareParams($params)
     {
         $data = [];
@@ -89,6 +111,10 @@ class EventCollector extends TimeDataCollector
         return $data;
     }
 
+    /**
+     * @return array
+     * @throws \Songshenzong\Log\DebugBarException
+     */
     public function collect()
     {
         $data = parent::collect();
@@ -97,6 +123,9 @@ class EventCollector extends TimeDataCollector
         return $data;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'event';

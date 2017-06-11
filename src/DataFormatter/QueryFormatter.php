@@ -2,6 +2,11 @@
 
 namespace Songshenzong\Log\DataFormatter;
 
+/**
+ * Class QueryFormatter
+ *
+ * @package Songshenzong\Log\DataFormatter
+ */
 class QueryFormatter extends DataFormatter
 {
 

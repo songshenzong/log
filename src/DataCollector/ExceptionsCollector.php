@@ -18,7 +18,13 @@ use Symfony\Component\Debug\Exception\FatalThrowableError;
  */
 class ExceptionsCollector extends DataCollector
 {
+    /**
+     * @var array
+     */
     protected $exceptions = array();
+    /**
+     * @var bool
+     */
     protected $chainExceptions = false;
 
     /**
@@ -65,6 +71,12 @@ class ExceptionsCollector extends DataCollector
         return $this->exceptions;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    /**
+     * @return array
+     */
     public function collect()
     {
         return array(

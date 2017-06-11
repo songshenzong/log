@@ -6,9 +6,20 @@ use Songshenzong\Log\Bridge\Twig\TwigCollector;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\DataCollector\Util\ValueExporter;
 
+/**
+ * Class ViewCollector
+ *
+ * @package Songshenzong\Log\DataCollector
+ */
 class ViewCollector extends TwigCollector
 {
+    /**
+     * @var array
+     */
     protected $templates = [];
+    /**
+     * @var bool
+     */
     protected $collect_data;
 
     /**
@@ -24,6 +35,9 @@ class ViewCollector extends TwigCollector
         $this->exporter = new ValueExporter();
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'views';
@@ -74,6 +88,9 @@ class ViewCollector extends TwigCollector
         ];
     }
 
+    /**
+     * @return array
+     */
     public function collect()
     {
         $templates = $this->templates;

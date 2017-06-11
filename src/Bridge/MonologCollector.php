@@ -26,8 +26,14 @@ use Monolog\Logger;
  */
 class MonologCollector extends AbstractProcessingHandler implements DataCollectorInterface, MessagesAggregateInterface
 {
+    /**
+     * @var string
+     */
     protected $name;
 
+    /**
+     * @var array
+     */
     protected $records = array();
 
     /**

@@ -29,6 +29,9 @@ use Monolog\Logger;
  */
 class CacheCacheCollector extends MonologCollector
 {
+    /**
+     * @var Logger|null
+     */
     protected $logger;
 
     /**

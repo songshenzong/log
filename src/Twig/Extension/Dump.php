@@ -26,7 +26,7 @@ class Dump extends Twig_Extension
     }
 
     /**
-     * {@inheritDoc}
+     * @return string
      */
     public function getName()
     {
@@ -34,7 +34,7 @@ class Dump extends Twig_Extension
     }
 
     /**
-     * {@inheritDoc}
+     * @return array
      */
     public function getFunctions()
     {

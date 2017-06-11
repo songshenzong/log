@@ -18,12 +18,24 @@ use Songshenzong\Log\DataFormatter\DataFormatterInterface;
  */
 class MessagesCollector extends AbstractLogger implements DataCollectorInterface, MessagesAggregateInterface
 {
+    /**
+     * @var string
+     */
     protected $name;
 
+    /**
+     * @var array
+     */
     protected $messages = [];
 
+    /**
+     * @var array
+     */
     protected $aggregates = [];
 
+    /**
+     * @var
+     */
     protected $dataFormater;
 
     /**
@@ -65,6 +77,7 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
      *
      * @param mixed  $message
      * @param string $label
+     * @param bool   $isString
      */
     public function addMessage($message, $label = 'info', $isString = true)
     {

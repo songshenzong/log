@@ -16,6 +16,12 @@ class SymfonyHttpDriver implements HttpDriverInterface
     /** @var \Symfony\Component\HttpFoundation\Response */
     protected $response;
 
+    /**
+     * SymfonyHttpDriver constructor.
+     *
+     * @param      $session
+     * @param null $response
+     */
     public function __construct($session, $response = null)
     {
         $this -> session  = $session;
@@ -23,7 +29,10 @@ class SymfonyHttpDriver implements HttpDriverInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Sets HTTP headers
+     *
+     * @param array $headers
+     *
      */
     public function setHeaders(array $headers)
     {
@@ -33,7 +42,9 @@ class SymfonyHttpDriver implements HttpDriverInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Checks if the session is started
+     *
+     * @return boolean
      */
     public function isSessionStarted()
     {
@@ -44,7 +55,10 @@ class SymfonyHttpDriver implements HttpDriverInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Sets a value in the session
+     *
+     * @param string $name
+     * @param string $value
      */
     public function setSessionValue($name, $value)
     {
@@ -59,7 +73,11 @@ class SymfonyHttpDriver implements HttpDriverInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Checks if a value is in the session
+     *
+     * @param string $name
+     *
+     * @return boolean
      */
     public function hasSessionValue($name)
     {
@@ -67,7 +85,11 @@ class SymfonyHttpDriver implements HttpDriverInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Returns a value from the session
+     *
+     * @param string $name
+     *
+     * @return mixed
      */
     public function getSessionValue($name)
     {
@@ -75,7 +97,9 @@ class SymfonyHttpDriver implements HttpDriverInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Deletes a value from the session
+     *
+     * @param string $name
      */
     public function deleteSessionValue($name)
     {

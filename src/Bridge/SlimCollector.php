@@ -22,10 +22,21 @@ use Slim\Slim;
  */
 class SlimCollector extends MessagesCollector
 {
+    /**
+     * @var Slim
+     */
     protected $slim;
 
+    /**
+     * @var
+     */
     protected $originalLogWriter;
 
+    /**
+     * SlimCollector constructor.
+     *
+     * @param Slim $slim
+     */
     public function __construct(Slim $slim)
     {
         $this->slim = $slim;
@@ -36,6 +47,10 @@ class SlimCollector extends MessagesCollector
         }
     }
 
+    /**
+     * @param $message
+     * @param $level
+     */
     public function write($message, $level)
     {
         if ($this->originalLogWriter) {
@@ -44,6 +59,11 @@ class SlimCollector extends MessagesCollector
         $this->addMessage($message, $this->getLevelName($level));
     }
 
+    /**
+     * @param $level
+     *
+     * @return mixed
+     */
     protected function getLevelName($level)
     {
         $map = array(
@@ -59,6 +79,9 @@ class SlimCollector extends MessagesCollector
         return $map[$level];
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'slim';

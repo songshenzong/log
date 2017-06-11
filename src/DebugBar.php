@@ -25,18 +25,39 @@ use Songshenzong\Log\DataCollector\DataCollectorInterface;
  */
 class DebugBar implements ArrayAccess
 {
+    /**
+     * @var array
+     */
     protected $collectors = [];
 
+    /**
+     * @var
+     */
     protected $data;
 
 
+    /**
+     * @var
+     */
     protected $meta;
+    /**
+     * @var
+     */
     protected $storage;
 
+    /**
+     * @var
+     */
     protected $httpDriver;
 
+    /**
+     * @var string
+     */
     protected $stackSessionNamespace = 'PHPDEBUGBAR_STACK_DATA';
 
+    /**
+     * @var bool
+     */
     protected $stackAlwaysUseSessionStorage = false;
 
     /**
@@ -174,6 +195,7 @@ class DebugBar implements ArrayAccess
      * @param boolean $delete Whether to delete the data in the session
      *
      * @return array
+     * @throws DebugBarException
      */
     public function getStackedData($delete = true)
     {
@@ -246,21 +268,43 @@ class DebugBar implements ArrayAccess
     // --------------------------------------------
     // ArrayAccess implementation
 
+    /**
+     * @param mixed $key
+     * @param mixed $value
+     *
+     * @throws DebugBarException
+     */
     public function offsetSet($key, $value)
     {
         throw new DebugBarException("Songshenzong[] is read-only");
     }
 
+    /**
+     * @param mixed $key
+     *
+     * @return DataCollectorInterface
+     * @throws DebugBarException
+     */
     public function offsetGet($key)
     {
         return $this -> getCollector($key);
     }
 
+    /**
+     * @param mixed $key
+     *
+     * @return bool
+     */
     public function offsetExists($key)
     {
         return $this -> hasCollector($key);
     }
 
+    /**
+     * @param mixed $key
+     *
+     * @throws DebugBarException
+     */
     public function offsetUnset($key)
     {
         throw new DebugBarException("Songshenzong[] is read-only");

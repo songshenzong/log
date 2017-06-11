@@ -3,6 +3,11 @@
 use Illuminate\Session\SessionManager;
 use Illuminate\Contracts\Http\Kernel;
 
+/**
+ * Class ServiceProvider
+ *
+ * @package Songshenzong\Log
+ */
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     /**

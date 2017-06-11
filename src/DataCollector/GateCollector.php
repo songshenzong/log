@@ -23,6 +23,12 @@ class GateCollector extends MessagesCollector
         }
     }
 
+    /**
+     * @param Authenticatable $user
+     * @param                 $ability
+     * @param                 $result
+     * @param array           $arguments
+     */
     public function addCheck(Authenticatable $user, $ability, $result, $arguments = [])
     {
         $label = $result ? 'success' : 'error';

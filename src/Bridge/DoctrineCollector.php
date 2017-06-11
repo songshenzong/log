@@ -30,6 +30,9 @@ use Doctrine\ORM\EntityManager;
  */
 class DoctrineCollector extends DataCollector
 {
+    /**
+     * @var DebugStack
+     */
     protected $debugStack;
 
     /**

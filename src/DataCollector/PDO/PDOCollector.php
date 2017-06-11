@@ -11,12 +11,24 @@ use Songshenzong\Log\DataCollector\TimeDataCollector;
  */
 class PDOCollector extends DataCollector
 {
+    /**
+     * @var array
+     */
     protected $connections = array();
 
+    /**
+     * @var TimeDataCollector
+     */
     protected $timeCollector;
 
+    /**
+     * @var bool
+     */
     protected $renderSqlWithParams = false;
 
+    /**
+     * @var string
+     */
     protected $sqlQuotationChar = '<>';
 
     /**
@@ -35,6 +47,7 @@ class PDOCollector extends DataCollector
      * Renders the SQL of traced statements with params embeded
      *
      * @param boolean $enabled
+     * @param string  $quotationChar
      */
     public function setRenderSqlWithParams($enabled = true, $quotationChar = '<>')
     {

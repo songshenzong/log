@@ -53,6 +53,11 @@ class MultiAuthCollector extends AuthCollector
         return $data;
     }
 
+    /**
+     * @param Guard $guard
+     *
+     * @return mixed
+     */
     private function resolveUser(Guard $guard)
     {
         // if we're logging in using remember token

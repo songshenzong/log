@@ -15,8 +15,14 @@ namespace Songshenzong\Log\DataCollector;
  */
 class ConfigCollector extends DataCollector
 {
+    /**
+     * @var string
+     */
     protected $name;
 
+    /**
+     * @var array
+     */
     protected $data;
 
     /**

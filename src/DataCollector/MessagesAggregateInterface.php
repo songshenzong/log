@@ -10,6 +10,11 @@
 
 namespace Songshenzong\Log\DataCollector;
 
+/**
+ * Interface MessagesAggregateInterface
+ *
+ * @package Songshenzong\Log\DataCollector
+ */
 interface MessagesAggregateInterface
 {
     /**

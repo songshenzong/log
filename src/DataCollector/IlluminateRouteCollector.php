@@ -22,13 +22,20 @@ class IlluminateRouteCollector extends DataCollector
      */
     protected $router;
 
+    /**
+     * IlluminateRouteCollector constructor.
+     *
+     * @param Router $router
+     */
     public function __construct(Router $router)
     {
         $this->router = $router;
     }
 
     /**
-     * {@inheritDoc}
+     * Called by the DebugBar when data needs to be collected
+     *
+     * @return array Collected data
      */
     public function collect()
     {
@@ -94,7 +101,9 @@ class IlluminateRouteCollector extends DataCollector
     }
 
     /**
-     * {@inheritDoc}
+     * Returns the unique name of the collector
+     *
+     * @return string
      */
     public function getName()
     {

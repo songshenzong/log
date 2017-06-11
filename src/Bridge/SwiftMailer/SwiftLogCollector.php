@@ -22,21 +22,35 @@ use Swift_Plugins_LoggerPlugin;
  */
 class SwiftLogCollector extends MessagesCollector implements Swift_Plugins_Logger
 {
+    /**
+     * SwiftLogCollector constructor.
+     *
+     * @param Swift_Mailer $mailer
+     */
     public function __construct(Swift_Mailer $mailer)
     {
         $mailer->registerPlugin(new Swift_Plugins_LoggerPlugin($this));
     }
 
+    /**
+     * @param $entry
+     */
     public function add($entry)
     {
         $this->addMessage($entry);
     }
 
+    /**
+     * @return string
+     */
     public function dump()
     {
         return implode(PHP_EOL, $this->_log);
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'swiftmailer_logs';

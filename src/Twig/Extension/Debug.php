@@ -30,7 +30,7 @@ class Debug extends Twig_Extension
     }
 
     /**
-     * {@inheritDoc}
+     * @return string
      */
     public function getName()
     {
@@ -38,7 +38,7 @@ class Debug extends Twig_Extension
     }
 
     /**
-     * {@inheritDoc}
+     * @return array
      */
     public function getFunctions()
     {
@@ -56,7 +56,9 @@ class Debug extends Twig_Extension
      * (c) 2011 Fabien Potencier
      *
      * @param Twig_Environment $env
-     * @param $context
+     * @param                  $context
+     *
+     * @throws \Songshenzong\Log\DebugBarException
      */
     public function debug(Twig_Environment $env, $context)
     {

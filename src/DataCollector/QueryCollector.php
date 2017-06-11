@@ -10,14 +10,41 @@ use Songshenzong\Log\DataCollector\TimeDataCollector;
  */
 class QueryCollector extends PDOCollector
 {
+    /**
+     * @var \Songshenzong\Log\DataCollector\TimeDataCollector
+     */
     protected $timeCollector;
+    /**
+     * @var array
+     */
     protected $queries = [];
+    /**
+     * @var bool
+     */
     protected $renderSqlWithParams = false;
+    /**
+     * @var bool
+     */
     protected $findSource = false;
+    /**
+     * @var array
+     */
     protected $middleware = [];
+    /**
+     * @var bool
+     */
     protected $explainQuery = false;
+    /**
+     * @var array
+     */
     protected $explainTypes = ['SELECT']; // ['SELECT', 'INSERT', 'UPDATE', 'DELETE']; for MySQL 5.6.3+
+    /**
+     * @var bool
+     */
     protected $showHints = false;
+    /**
+     * @var array
+     */
     protected $reflection = [];
 
     /**
@@ -377,7 +404,7 @@ class QueryCollector extends PDOCollector
     }
 
     /**
-     * {@inheritDoc}
+     * @return array
      */
     public function collect()
     {
@@ -428,7 +455,7 @@ class QueryCollector extends PDOCollector
     }
 
     /**
-     * {@inheritDoc}
+     * @return string
      */
     public function getName()
     {

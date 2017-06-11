@@ -17,6 +17,11 @@ class TraceablePDO extends PDO
     /** @var array */
     protected $executedStatements = array();
 
+    /**
+     * TraceablePDO constructor.
+     *
+     * @param PDO $pdo
+     */
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
@@ -71,11 +76,14 @@ class TraceablePDO extends PDO
      * Execute an SQL statement and return the number of affected rows
      *
      * @link   http://php.net/manual/en/pdo.exec.php
-     * @param  string   $statement
-     * @return int|bool PDO::exec returns the number of rows that were modified or deleted by the
+     *
+     * @param  string $statement
+     *
+     * @return bool|int PDO::exec returns the number of rows that were modified or deleted by the
      * SQL statement you issued. If no rows were affected, PDO::exec returns 0. This function may
      * return Boolean FALSE, but may also return a non-Boolean value which evaluates to FALSE.
      * Please read the section on Booleans for more information
+     * @throws PDOException
      */
     public function exec($statement)
     {
@@ -137,12 +145,15 @@ class TraceablePDO extends PDO
 
     /**
      * Executes an SQL statement, returning a result set as a PDOStatement object
-   *
+     *
      * @link   http://php.net/manual/en/pdo.query.php
+     *
      * @param  string $statement
-     * @return TraceablePDOStatement|bool PDO::query returns a PDOStatement object, or FALSE on
-   * failure.
-   */
+     *
+     * @return bool|\Songshenzong\Log\DataCollector\PDO\TraceablePDOStatement PDO::query returns a PDOStatement object, or FALSE on
+     * failure.
+     * @throws PDOException
+     */
     public function query($statement)
     {
         return $this->profileCall('query', $statement, func_get_args());
@@ -193,7 +204,9 @@ class TraceablePDO extends PDO
      * @param  string $method
      * @param  string $sql
      * @param  array  $args
-     * @return mixed  The result of the call
+     *
+     * @return mixed The result of the call
+     * @throws PDOException
      */
     protected function profileCall($method, $sql, array $args)
     {

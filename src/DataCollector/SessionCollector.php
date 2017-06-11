@@ -5,6 +5,15 @@ namespace Songshenzong\Log\DataCollector;
 use Songshenzong\Log\DataCollector\DataCollector;
 use Songshenzong\Log\DataCollector\DataCollectorInterface;
 
+/**
+ * {@inheritDoc}
+ */
+
+/**
+ * Class SessionCollector
+ *
+ * @package Songshenzong\Log\DataCollector
+ */
 class SessionCollector extends DataCollector implements DataCollectorInterface
 {
     /** @var  \Symfony\Component\HttpFoundation\Session\SessionInterface|\Illuminate\Contracts\Session\Session $session */
@@ -21,7 +30,9 @@ class SessionCollector extends DataCollector implements DataCollectorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Called by the DebugBar when data needs to be collected
+     *
+     * @return array Collected data
      */
     public function collect()
     {
@@ -29,7 +40,9 @@ class SessionCollector extends DataCollector implements DataCollectorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Returns the unique name of the collector
+     *
+     * @return string
      */
     public function getName()
     {

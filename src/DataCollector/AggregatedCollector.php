@@ -25,12 +25,24 @@ use Songshenzong\Log\DebugBarException;
  */
 class AggregatedCollector implements DataCollectorInterface, ArrayAccess
 {
+    /**
+     * @var string
+     */
     protected $name;
 
+    /**
+     * @var null|string
+     */
     protected $mergeProperty;
 
+    /**
+     * @var bool
+     */
     protected $sort;
 
+    /**
+     * @var array
+     */
     protected $collectors = array();
 
     /**

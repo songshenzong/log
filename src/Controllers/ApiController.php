@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 use Songshenzong\Log\SongshenzongLog;
 use Songshenzong\Log\LaravelDebugbar;
 
+/**
+ * Class ApiController
+ *
+ * @package Songshenzong\Log\Controllers
+ */
 class ApiController extends BaseController
 {
 
@@ -35,6 +40,7 @@ class ApiController extends BaseController
      * CurrentController constructor.
      *
      * @param \Illuminate\Contracts\Foundation\Application $app
+     * @param LaravelDebugbar                              $songshenzong
      */
     public function __construct(Application $app, LaravelDebugbar $songshenzong)
     {
@@ -110,6 +116,8 @@ HEREDOC;
 
 
     /**
+     * @param SongshenzongLog $songshenzong_log
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(SongshenzongLog $songshenzong_log)

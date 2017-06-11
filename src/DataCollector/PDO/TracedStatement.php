@@ -7,24 +7,54 @@ namespace Songshenzong\Log\DataCollector\PDO;
  */
 class TracedStatement
 {
+    /**
+     * @var string
+     */
     protected $sql;
 
+    /**
+     * @var
+     */
     protected $rowCount;
 
+    /**
+     * @var mixed
+     */
     protected $parameters;
 
+    /**
+     * @var
+     */
     protected $startTime;
 
+    /**
+     * @var
+     */
     protected $endTime;
 
+    /**
+     * @var
+     */
     protected $duration;
 
+    /**
+     * @var
+     */
     protected $startMemory;
 
+    /**
+     * @var
+     */
     protected $endMemory;
 
+    /**
+     * @var
+     */
     protected $memoryDelta;
 
+    /**
+     * @var
+     */
     protected $exception;
 
     /**

@@ -4,6 +4,11 @@ namespace Songshenzong\Log;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class SongshenzongLog
+ *
+ * @package Songshenzong\Log
+ */
 class SongshenzongLog extends Model
 {
 
@@ -20,6 +25,9 @@ class SongshenzongLog extends Model
         'data',
     ];
 
+    /**
+     * @var array
+     */
     protected $casts = [
         'data' => 'array',
     ];

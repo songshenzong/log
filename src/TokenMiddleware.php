@@ -9,6 +9,11 @@ use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 
+/**
+ * Class TokenMiddleware
+ *
+ * @package Songshenzong\Log
+ */
 class TokenMiddleware
 {
     /**

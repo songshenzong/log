@@ -60,6 +60,7 @@ class Propel2Collector extends DataCollector
 
     /**
      * @param ConnectionInterface $connection Propel connection
+     * @param array               $logMethods
      */
     public function __construct(
         ConnectionInterface $connection,

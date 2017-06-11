@@ -15,6 +15,9 @@ namespace Songshenzong\Log\DataCollector;
  */
 class MemoryCollector extends DataCollector
 {
+    /**
+     * @var int
+     */
     protected $peakUsage = 0;
 
     /**

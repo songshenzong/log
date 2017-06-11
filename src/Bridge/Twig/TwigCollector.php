@@ -27,11 +27,19 @@ use Songshenzong\Log\DataCollector\DataCollector;
  */
 class TwigCollector extends DataCollector
 {
+    /**
+     * TwigCollector constructor.
+     *
+     * @param TraceableTwigEnvironment $twig
+     */
     public function __construct(TraceableTwigEnvironment $twig)
     {
         $this->twig = $twig;
     }
 
+    /**
+     * @return array
+     */
     public function collect()
     {
         $templates = array();
@@ -54,6 +62,9 @@ class TwigCollector extends DataCollector
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'twig';

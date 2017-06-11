@@ -9,6 +9,11 @@ use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 
+/**
+ * Class Middleware
+ *
+ * @package Songshenzong\Log
+ */
 class Middleware
 {
     /**
@@ -44,6 +49,8 @@ class Middleware
      * @param  Closure $next
      *
      * @return mixed
+     * @throws DebugBarException
+     * @throws Exception
      */
     public function handle($request, Closure $next)
     {
