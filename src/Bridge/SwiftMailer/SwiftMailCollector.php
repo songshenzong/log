@@ -42,18 +42,18 @@ class SwiftMailCollector extends DataCollector
      */
     public function collect()
     {
-        $mails = array();
+        $mails = [];
         foreach ($this->messagesLogger->getMessages() as $msg) {
-            $mails[] = array(
-                'to' => $this->formatTo($msg->getTo()),
+            $mails[] = [
+                'to'      => $this->formatTo($msg->getTo()),
                 'subject' => $msg->getSubject(),
                 'headers' => $msg->getHeaders()->toString()
-            );
+            ];
         }
-        return array(
+        return [
             'count' => count($mails),
             'mails' => $mails
-        );
+        ];
     }
 
     /**
@@ -67,7 +67,7 @@ class SwiftMailCollector extends DataCollector
             return '';
         }
 
-        $f = array();
+        $f = [];
         foreach ($to as $k => $v) {
             $f[] = (empty($v) ? '' : "$v ") . "<$k>";
         }

@@ -26,7 +26,7 @@ class SessionCollector extends DataCollector implements DataCollectorInterface
      */
     public function __construct($session)
     {
-        $this -> session = $session;
+        $this->session = $session;
     }
 
     /**
@@ -36,7 +36,7 @@ class SessionCollector extends DataCollector implements DataCollectorInterface
      */
     public function collect()
     {
-        return $this -> session -> all();
+        return $this->session->all();
     }
 
     /**

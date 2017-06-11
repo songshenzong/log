@@ -1,4 +1,5 @@
 <?php
+
 namespace Songshenzong\Log\DataCollector;
 
 use Songshenzong\Log\DataCollector\MessagesCollector;
@@ -39,33 +40,34 @@ class LogsCollector extends MessagesCollector
     {
         // default daily rotating logs (Laravel 5.0)
         $path = storage_path() . '/logs/laravel-' . date('Y-m-d') . '.log';
-        
+
         // single file logs
         if (!file_exists($path)) {
             $path = storage_path() . '/logs/laravel.log';
         }
-        
+
         return $path;
     }
-
 
 
     /**
      * By Ain Tohvri (ain)
      * http://tekkie.flashbit.net/php/tail-functionality-in-php
+     *
      * @param string $file
-     * @param int $lines
+     * @param int    $lines
+     *
      * @return array
      */
     protected function tailFile($file, $lines)
     {
-        $handle = fopen($file, "r");
+        $handle      = fopen($file, 'rb');
         $linecounter = $lines;
-        $pos = -2;
-        $beginning = false;
-        $text = [];
+        $pos         = -2;
+        $beginning   = false;
+        $text        = [];
         while ($linecounter > 0) {
-            $t = " ";
+            $t = ' ';
             while ($t != "\n") {
                 if (fseek($handle, $pos, SEEK_END) == -1) {
                     $beginning = true;
@@ -92,6 +94,7 @@ class LogsCollector extends MessagesCollector
      * Based on https://github.com/mikemand/logviewer/blob/master/src/Kmd/Logviewer/Logviewer.php by mikemand
      *
      * @param $file
+     *
      * @return array
      */
     public function getLogs($file)

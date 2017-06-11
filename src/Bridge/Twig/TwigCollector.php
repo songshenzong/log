@@ -42,24 +42,24 @@ class TwigCollector extends DataCollector
      */
     public function collect()
     {
-        $templates = array();
+        $templates      = [];
         $accuRenderTime = 0;
 
         foreach ($this->twig->getRenderedTemplates() as $tpl) {
             $accuRenderTime += $tpl['render_time'];
-            $templates[] = array(
-                'name' => $tpl['name'],
-                'render_time' => $tpl['render_time'],
+            $templates[]    = [
+                'name'            => $tpl['name'],
+                'render_time'     => $tpl['render_time'],
                 'render_time_str' => $this->formatDuration($tpl['render_time'])
-            );
+            ];
         }
 
-        return array(
-            'nb_templates' => count($templates),
-            'templates' => $templates,
-            'accumulated_render_time' => $accuRenderTime,
+        return [
+            'nb_templates'                => count($templates),
+            'templates'                   => $templates,
+            'accumulated_render_time'     => $accuRenderTime,
             'accumulated_render_time_str' => $this->formatDuration($accuRenderTime)
-        );
+        ];
     }
 
     /**

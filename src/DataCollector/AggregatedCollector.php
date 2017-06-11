@@ -43,18 +43,18 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
     /**
      * @var array
      */
-    protected $collectors = array();
+    protected $collectors = [];
 
     /**
-     * @param string $name
-     * @param string $mergeProperty
+     * @param string  $name
+     * @param string  $mergeProperty
      * @param boolean $sort
      */
     public function __construct($name, $mergeProperty = null, $sort = false)
     {
-        $this->name = $name;
+        $this->name          = $name;
         $this->mergeProperty = $mergeProperty;
-        $this->sort = $sort;
+        $this->sort          = $sort;
     }
 
     /**
@@ -117,7 +117,7 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
      */
     public function collect()
     {
-        $aggregate = array();
+        $aggregate = [];
         foreach ($this->collectors as $collector) {
             $data = $collector->collect();
             if ($this->mergeProperty !== null) {
@@ -133,6 +133,7 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
      * Sorts the collected data
      *
      * @param array $data
+     *
      * @return array
      */
     protected function sort($data)
@@ -145,7 +146,7 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
                 }
                 return $a[$p] < $b[$p] ? -1 : 1;
             });
-        } elseif ($this->sort === true) {
+        } else if ($this->sort === true) {
             sort($data);
         }
         return $data;
@@ -165,15 +166,17 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
     /**
      * @param mixed $key
      * @param mixed $value
+     *
      * @throws DebugBarException
      */
     public function offsetSet($key, $value)
     {
-        throw new DebugBarException("AggregatedCollector[] is read-only");
+        throw new DebugBarException('AggregatedCollector[] is read-only');
     }
 
     /**
      * @param mixed $key
+     *
      * @return mixed
      */
     public function offsetGet($key)
@@ -183,6 +186,7 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
 
     /**
      * @param mixed $key
+     *
      * @return bool
      */
     public function offsetExists($key)
@@ -192,10 +196,11 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
 
     /**
      * @param mixed $key
+     *
      * @throws DebugBarException
      */
     public function offsetUnset($key)
     {
-        throw new DebugBarException("AggregatedCollector[] is read-only");
+        throw new DebugBarException('AggregatedCollector[] is read-only');
     }
 }

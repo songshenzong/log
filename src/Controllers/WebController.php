@@ -26,7 +26,7 @@ class WebController extends BaseController
      */
     public function __construct(Application $app)
     {
-        $this -> app = $app;
+        $this->app = $app;
     }
 
 

@@ -25,10 +25,10 @@ if (class_exists('Illuminate\Routing\Controller')) {
          */
         public function __construct(Request $request, LaravelDebugbar $debugbar)
         {
-            $this -> debugbar = $debugbar;
+            $this->debugbar = $debugbar;
 
-            if ($request -> hasSession()) {
-                $request -> session() -> reflash();
+            if ($request->hasSession()) {
+                $request->session()->reflash();
             }
         }
     }
@@ -53,10 +53,10 @@ if (class_exists('Illuminate\Routing\Controller')) {
          */
         public function __construct(Request $request, LaravelDebugbar $debugbar)
         {
-            $this -> debugbar = $debugbar;
+            $this->debugbar = $debugbar;
 
-            if ($request -> hasSession()) {
-                $request -> session() -> reflash();
+            if ($request->hasSession()) {
+                $request->session()->reflash();
             }
         }
     }

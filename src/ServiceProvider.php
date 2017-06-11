@@ -33,24 +33,24 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
-        $this -> app -> alias(
+        $this->app->alias(
             'Songshenzong\Log\DataFormatter\DataFormatter',
             'Songshenzong\Log\DataFormatter\DataFormatterInterface'
         );
 
-        $this -> app -> singleton('songshenzongLog', function ($app) {
+        $this->app->singleton('songshenzongLog', function ($app) {
             $debugbar = new LaravelDebugbar($app);
 
-            if ($app -> bound(SessionManager::class)) {
-                $sessionManager = $app -> make(SessionManager::class);
+            if ($app->bound(SessionManager::class)) {
+                $sessionManager = $app->make(SessionManager::class);
                 $httpDriver     = new SymfonyHttpDriver($sessionManager);
-                $debugbar -> setHttpDriver($httpDriver);
+                $debugbar->setHttpDriver($httpDriver);
             }
 
             return $debugbar;
         });
 
-        $this -> app -> alias('songshenzongLog', 'Songshenzong\Log\LaravelDebugbar');
+        $this->app->alias('songshenzongLog', 'Songshenzong\Log\LaravelDebugbar');
     }
 
 
@@ -61,12 +61,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function isEnabled()
     {
-        if ($this -> enabled === null) {
-            $environments    = config('songshenzong-log.env', ['dev', 'local', 'production']);
-            $this -> enabled = in_array(env('APP_ENV'), $environments, true);
+        if ($this->enabled === null) {
+            $environments  = config('songshenzong-log.env', ['dev', 'local', 'production']);
+            $this->enabled = in_array(env('APP_ENV'), $environments, true);
         }
 
-        return $this -> enabled;
+        return $this->enabled;
     }
 
 
@@ -78,16 +78,16 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         $configPath = __DIR__ . '/../config/songshenzong-log.php';
-        $this -> publishes([$configPath => config_path('songshenzong-log.php')], 'config');
+        $this->publishes([$configPath => config_path('songshenzong-log.php')], 'config');
 
 
-        if (!$this -> isEnabled()) {
+        if (!$this->isEnabled()) {
             return;
         }
 
 
-        $kernel = $this -> app -> make(Kernel::class);
-        $kernel -> prependMiddleware(Middleware::class);
+        $kernel = $this->app->make(Kernel::class);
+        $kernel->prependMiddleware(Middleware::class);
 
 
         $routeConfig = [
@@ -95,27 +95,27 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             'prefix'    => config('songshenzong-log.route_prefix', 'songshenzong/log'),
         ];
 
-        app('router') -> group($routeConfig, function ($router) {
-            $router -> get('', 'WebController@index');
-            $router -> get('login', 'WebController@login');
-            $router -> get('api/login', 'ApiController@login');
-            $router -> group(['middleware' => 'Songshenzong\Log\TokenMiddleware'], function ($router) {
-                $router -> get('logs', 'ApiController@getList');
-                $router -> get('logs/{id}', 'ApiController@getItem') -> where('id', '[0-9\.]+');
-                $router -> get('destroy', 'ApiController@destroy');
-                $router -> get('create', 'ApiController@createTable');
-                $router -> get('collect/status', 'ApiController@getOrSetCollectStatus');
-                $router -> get('table/status', 'ApiController@getTableStatus');
+        app('router')->group($routeConfig, function ($router) {
+            $router->get('', 'WebController@index');
+            $router->get('login', 'WebController@login');
+            $router->get('api/login', 'ApiController@login');
+            $router->group(['middleware' => 'Songshenzong\Log\TokenMiddleware'], function ($router) {
+                $router->get('logs', 'ApiController@getList');
+                $router->get('logs/{id}', 'ApiController@getItem')->where('id', '[0-9\.]+');
+                $router->get('destroy', 'ApiController@destroy');
+                $router->get('create', 'ApiController@createTable');
+                $router->get('collect/status', 'ApiController@getOrSetCollectStatus');
+                $router->get('table/status', 'ApiController@getTableStatus');
             });
         });
 
-        if (app() -> runningInConsole() || app() -> environment('testing')) {
+        if (app()->runningInConsole() || app()->environment('testing')) {
             return;
         }
 
 
-        app('songshenzongLog') -> enable();
-        app('songshenzongLog') -> boot();
+        app('songshenzongLog')->enable();
+        app('songshenzongLog')->boot();
     }
 
 
@@ -137,6 +137,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     protected function publishConfig($configPath)
     {
-        $this -> publishes([$configPath => config_path('songshenzong-log.php')], 'config');
+        $this->publishes([$configPath => config_path('songshenzong-log.php')], 'config');
     }
 }

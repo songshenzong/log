@@ -22,7 +22,8 @@ class StopwatchNode extends \Twig_Node
         \Twig_Node_Expression_AssignName $var,
         $lineno = 0,
         $tag = null
-    ) {
+    )
+    {
         parent::__construct(['body' => $body, 'name' => $name, 'var' => $var], [], $lineno, $tag);
     }
 

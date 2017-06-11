@@ -38,9 +38,9 @@ class LaravelCollector extends DataCollector
         $app = $this->app ?: app();
 
         return [
-            "version" => $app::VERSION,
-            "environment" => $app->environment(),
-            "locale" => $app->getLocale(),
+            'version'     => $app::VERSION,
+            'environment' => $app->environment(),
+            'locale'      => $app->getLocale(),
         ];
     }
 

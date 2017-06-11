@@ -25,11 +25,11 @@ class TraceableTwigTemplate implements Twig_TemplateInterface
 
     /**
      * @param TraceableTwigEnvironment $env
-     * @param Twig_Template $template
+     * @param Twig_Template            $template
      */
     public function __construct(TraceableTwigEnvironment $env, Twig_Template $template)
     {
-        $this->env = $env;
+        $this->env      = $env;
         $this->template = $template;
     }
 
@@ -41,7 +41,7 @@ class TraceableTwigTemplate implements Twig_TemplateInterface
      */
     public function __call($name, $arguments)
     {
-        return call_user_func_array(array($this->template, $name), $arguments);
+        return call_user_func_array([$this->template, $name], $arguments);
     }
 
     /**
@@ -83,7 +83,7 @@ class TraceableTwigTemplate implements Twig_TemplateInterface
      * @param array $context
      * @param array $blocks
      */
-    public function displayParentBlock($name, array $context, array $blocks = array())
+    public function displayParentBlock($name, array $context, array $blocks = [])
     {
         $this->template->displayParentBlock($name, $context, $blocks);
     }
@@ -94,7 +94,7 @@ class TraceableTwigTemplate implements Twig_TemplateInterface
      * @param array $blocks
      * @param bool  $useBlocks
      */
-    public function displayBlock($name, array $context, array $blocks = array(), $useBlocks = true)
+    public function displayBlock($name, array $context, array $blocks = [], $useBlocks = true)
     {
         $this->template->displayBlock($name, $context, $blocks, $useBlocks);
     }
@@ -106,7 +106,7 @@ class TraceableTwigTemplate implements Twig_TemplateInterface
      *
      * @return mixed
      */
-    public function renderParentBlock($name, array $context, array $blocks = array())
+    public function renderParentBlock($name, array $context, array $blocks = [])
     {
         return $this->template->renderParentBlock($name, $context, $blocks);
     }
@@ -119,7 +119,7 @@ class TraceableTwigTemplate implements Twig_TemplateInterface
      *
      * @return mixed
      */
-    public function renderBlock($name, array $context, array $blocks = array(), $useBlocks = true)
+    public function renderBlock($name, array $context, array $blocks = [], $useBlocks = true)
     {
         return $this->template->renderBlock($name, $context, $blocks, $useBlocks);
     }
@@ -154,21 +154,21 @@ class TraceableTwigTemplate implements Twig_TemplateInterface
      * @param array $context
      * @param array $blocks
      */
-    public function display(array $context, array $blocks = array())
+    public function display(array $context, array $blocks = [])
     {
         $start = microtime(true);
         $this->template->display($context, $blocks);
         $end = microtime(true);
 
         if ($timeDataCollector = $this->env->getTimeDataCollector()) {
-            $name = sprintf("twig.render(%s)", $this->template->getTemplateName());
+            $name = sprintf('twig.render(%s)', $this->template->getTemplateName());
             $timeDataCollector->addMeasure($name, $start, $end);
         }
 
-        $this->env->addRenderedTemplate(array(
-            'name' => $this->template->getTemplateName(),
-            'render_time' => $end - $start
-        ));
+        $this->env->addRenderedTemplate([
+                                            'name'        => $this->template->getTemplateName(),
+                                            'render_time' => $end - $start
+                                        ]);
     }
 
     /**

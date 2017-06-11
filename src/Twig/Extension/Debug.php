@@ -74,7 +74,7 @@ class Debug extends Twig_Extension
                     if (method_exists($value, 'toArray')) {
                         $data[$key] = $value->toArray();
                     } else {
-                        $data[$key] = "Object (" . get_class($value) . ")";
+                        $data[$key] = 'Object (' . get_class($value) . ')';
                     }
                 } else {
                     $data[$key] = $value;

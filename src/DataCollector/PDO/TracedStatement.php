@@ -59,12 +59,12 @@ class TracedStatement
 
     /**
      * @param string $sql
-     * @param array $params
+     * @param array  $params
      * @param string $preparedId
      */
-    public function __construct($sql, array $params = array(), $preparedId = null)
+    public function __construct($sql, array $params = [], $preparedId = null)
     {
-        $this->sql = $sql;
+        $this->sql        = $sql;
         $this->parameters = $this->checkParameters($params);
         $this->preparedId = $preparedId;
     }
@@ -75,30 +75,31 @@ class TracedStatement
      */
     public function start($startTime = null, $startMemory = null)
     {
-        $this->startTime = $startTime ?: microtime(true);
+        $this->startTime   = $startTime ?: microtime(true);
         $this->startMemory = $startMemory ?: memory_get_usage(true);
     }
 
     /**
      * @param \Exception|null $exception
-     * @param int $rowCount
-     * @param null $endTime
-     * @param null $endMemory
+     * @param int             $rowCount
+     * @param null            $endTime
+     * @param null            $endMemory
      */
     public function end(\Exception $exception = null, $rowCount = 0, $endTime = null, $endMemory = null)
     {
-        $this->endTime = $endTime ?: microtime(true);
-        $this->duration = $this->endTime - $this->startTime;
-        $this->endMemory = $endMemory ?: memory_get_usage(true);
+        $this->endTime     = $endTime ?: microtime(true);
+        $this->duration    = $this->endTime - $this->startTime;
+        $this->endMemory   = $endMemory ?: memory_get_usage(true);
         $this->memoryDelta = $this->endMemory - $this->startMemory;
-        $this->exception = $exception;
-        $this->rowCount = $rowCount;
+        $this->exception   = $exception;
+        $this->rowCount    = $rowCount;
     }
 
     /**
      * Check parameters for illegal (non UTF-8) strings, like Binary data.
      *
      * @param $params
+     *
      * @return mixed
      */
     public function checkParameters($params)
@@ -125,12 +126,13 @@ class TracedStatement
      * Returns the SQL string with any parameters used embedded
      *
      * @param string $quotationChar
+     *
      * @return string
      */
     public function getSqlWithParams($quotationChar = '<>')
     {
         if (($l = strlen($quotationChar)) > 1) {
-            $quoteLeft = substr($quotationChar, 0, $l / 2);
+            $quoteLeft  = substr($quotationChar, 0, $l / 2);
             $quoteRight = substr($quotationChar, $l / 2);
         } else {
             $quoteLeft = $quoteRight = $quotationChar;
@@ -142,8 +144,8 @@ class TracedStatement
             if (!is_numeric($k)) {
                 $sql = str_replace($k, $v, $sql);
             } else {
-                $p = strpos($sql, '?');
-                $sql = substr($sql, 0, $p) . $v. substr($sql, $p + 1);
+                $p   = strpos($sql, '?');
+                $sql = substr($sql, 0, $p) . $v . substr($sql, $p + 1);
             }
         }
         return $sql;
@@ -166,7 +168,7 @@ class TracedStatement
      */
     public function getParameters()
     {
-        $params = array();
+        $params = [];
         foreach ($this->parameters as $name => $param) {
             $params[$name] = htmlentities($param, ENT_QUOTES, 'UTF-8', false);
         }

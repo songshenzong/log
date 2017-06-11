@@ -25,7 +25,7 @@ class FilesCollector extends DataCollector
      */
     public function __construct(Application $app = null)
     {
-        $this->app = $app;
+        $this->app      = $app;
         $this->basePath = base_path();
     }
 
@@ -36,29 +36,29 @@ class FilesCollector extends DataCollector
      */
     public function collect()
     {
-        $files = $this->getIncludedFiles();
+        $files    = $this->getIncludedFiles();
         $compiled = $this->getCompiledFiles();
 
-        $included = [];
+        $included        = [];
         $alreadyCompiled = [];
         foreach ($files as $file) {
             // Skip the files from Debugbar, they are only loaded for Debugging and confuse the output.
             // Of course some files are stil always loaded (ServiceProvider, Facade etc)
             if (strpos($file, 'vendor/maximebf/debugbar/src') !== false || strpos(
-                $file,
-                'vendor/barryvdh/laravel-debugbar/src'
-            ) !== false
+                                                                               $file,
+                                                                               'vendor/barryvdh/laravel-debugbar/src'
+                                                                           ) !== false
             ) {
                 continue;
-            } elseif (!in_array($file, $compiled, true)) {
+            } else if (!in_array($file, $compiled, true)) {
                 $included[] = [
-                    'message' => "'" . $this->stripBasePath($file) . "',",
+                    'message'   => "'" . $this->stripBasePath($file) . "',",
                     // Use PHP syntax so we can copy-paste to compile config file.
                     'is_string' => true,
                 ];
             } else {
                 $alreadyCompiled[] = [
-                    'message' => "* '" . $this->stripBasePath($file) . "',",
+                    'message'   => "* '" . $this->stripBasePath($file) . "',",
                     // Mark with *, so know they are compiled anyways.
                     'is_string' => true,
                 ];
@@ -70,7 +70,7 @@ class FilesCollector extends DataCollector
 
         return [
             'messages' => $messages,
-            'count' => count($included),
+            'count'    => count($included),
         ];
     }
 
@@ -93,10 +93,10 @@ class FilesCollector extends DataCollector
     {
         if ($this->app && class_exists('Illuminate\Foundation\Console\OptimizeCommand')) {
             $reflector = new \ReflectionClass('Illuminate\Foundation\Console\OptimizeCommand');
-            $path = dirname($reflector->getFileName()) . '/Optimize/config.php';
+            $path      = dirname($reflector->getFileName()) . '/Optimize/config.php';
 
             if (file_exists($path)) {
-                $app = $this->app;
+                $app  = $this->app;
                 $core = require $path;
                 return array_merge($core, $app['config']['compile']);
             }
@@ -108,6 +108,7 @@ class FilesCollector extends DataCollector
      * Remove the basePath from the paths, so they are relative to the base
      *
      * @param $path
+     *
      * @return string
      */
     protected function stripBasePath($path)

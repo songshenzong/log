@@ -66,16 +66,16 @@ class SlimCollector extends MessagesCollector
      */
     protected function getLevelName($level)
     {
-        $map = array(
+        $map = [
             Log::EMERGENCY => LogLevel::EMERGENCY,
-            Log::ALERT => LogLevel::ALERT,
-            Log::CRITICAL => LogLevel::CRITICAL,
-            Log::ERROR => LogLevel::ERROR,
-            Log::WARN => LogLevel::WARNING,
-            Log::NOTICE => LogLevel::NOTICE,
-            Log::INFO => LogLevel::INFO,
-            Log::DEBUG => LogLevel::DEBUG
-        );
+            Log::ALERT     => LogLevel::ALERT,
+            Log::CRITICAL  => LogLevel::CRITICAL,
+            Log::ERROR     => LogLevel::ERROR,
+            Log::WARN      => LogLevel::WARNING,
+            Log::NOTICE    => LogLevel::NOTICE,
+            Log::INFO      => LogLevel::INFO,
+            Log::DEBUG     => LogLevel::DEBUG
+        ];
         return $map[$level];
     }
 

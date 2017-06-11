@@ -55,6 +55,7 @@ abstract class DataCollector implements DataCollectorInterface
      * Sets the data formater instance used by this collector
      *
      * @param DataFormatterInterface $formater
+     *
      * @return $this
      */
     public function setDataFormatter(DataFormatterInterface $formater)

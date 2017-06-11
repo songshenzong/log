@@ -71,12 +71,12 @@ class QueryFormatter extends DataFormatter
 
         $parts = [];
 
-        if ($source -> namespace) {
-            $parts['namespace'] = $source -> namespace . '::';
+        if ($source->namespace) {
+            $parts['namespace'] = $source->namespace . '::';
         }
 
-        $parts['name'] = $source -> name;
-        $parts['line'] = ':' . $source -> line;
+        $parts['name'] = $source->name;
+        $parts['line'] = ':' . $source->line;
 
         return implode($parts);
     }

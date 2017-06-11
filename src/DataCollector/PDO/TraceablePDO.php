@@ -15,7 +15,7 @@ class TraceablePDO extends PDO
     protected $pdo;
 
     /** @var array */
-    protected $executedStatements = array();
+    protected $executedStatements = [];
 
     /**
      * TraceablePDO constructor.
@@ -25,12 +25,12 @@ class TraceablePDO extends PDO
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
-        $this->pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('Songshenzong\Log\DataCollector\PDO\TraceablePDOStatement', array($this)));
+        $this->pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, ['Songshenzong\Log\DataCollector\PDO\TraceablePDOStatement', [$this]]);
     }
 
     /**
      * Initiates a transaction
-         *
+     *
      * @link   http://php.net/manual/en/pdo.begintransaction.php
      * @return bool TRUE on success or FALSE on failure.
      */
@@ -94,7 +94,9 @@ class TraceablePDO extends PDO
      * Retrieve a database connection attribute
      *
      * @link   http://php.net/manual/en/pdo.getattribute.php
-     * @param  int   $attribute One of the PDO::ATTR_* constants
+     *
+     * @param  int $attribute One of the PDO::ATTR_* constants
+     *
      * @return mixed A successful call returns the value of the requested PDO attribute.
      * An unsuccessful call returns null.
      */
@@ -118,7 +120,9 @@ class TraceablePDO extends PDO
      * Returns the ID of the last inserted row or sequence value
      *
      * @link   http://php.net/manual/en/pdo.lastinsertid.php
+     *
      * @param  string $name [optional]
+     *
      * @return string If a sequence name was not specified for the name parameter, PDO::lastInsertId
      * returns a string representing the row ID of the last row that was inserted into the database.
      */
@@ -129,16 +133,18 @@ class TraceablePDO extends PDO
 
     /**
      * Prepares a statement for execution and returns a statement object
-   *
+     *
      * @link   http://php.net/manual/en/pdo.prepare.php
-     * @param  string $statement This must be a valid SQL statement template for the target DB server.
+     *
+     * @param  string $statement      This must be a valid SQL statement template for the target DB server.
      * @param  array  $driver_options [optional] This array holds one or more key=&gt;value pairs to
-     * set attribute values for the PDOStatement object that this method returns.
+     *                                set attribute values for the PDOStatement object that this method returns.
+     *
      * @return TraceablePDOStatement|bool If the database server successfully prepares the statement,
-   * PDO::prepare returns a PDOStatement object. If the database server cannot successfully prepare
-   * the statement, PDO::prepare returns FALSE or emits PDOException (depending on error handling).
+     * PDO::prepare returns a PDOStatement object. If the database server cannot successfully prepare
+     * the statement, PDO::prepare returns FALSE or emits PDOException (depending on error handling).
      */
-    public function prepare($statement, $driver_options = array())
+    public function prepare($statement, $driver_options = [])
     {
         return $this->pdo->prepare($statement, $driver_options);
     }
@@ -150,8 +156,8 @@ class TraceablePDO extends PDO
      *
      * @param  string $statement
      *
-     * @return bool|\Songshenzong\Log\DataCollector\PDO\TraceablePDOStatement PDO::query returns a PDOStatement object, or FALSE on
-     * failure.
+     * @return bool|\Songshenzong\Log\DataCollector\PDO\TraceablePDOStatement PDO::query returns a PDOStatement object,
+     *                                                                        or FALSE on failure.
      * @throws PDOException
      */
     public function query($statement)
@@ -163,9 +169,11 @@ class TraceablePDO extends PDO
      * Quotes a string for use in a query.
      *
      * @link   http://php.net/manual/en/pdo.quote.php
-     * @param  string $string The string to be quoted.
+     *
+     * @param  string $string         The string to be quoted.
      * @param  int    $parameter_type [optional] Provides a data type hint for drivers that have
-     * alternate quoting styles.
+     *                                alternate quoting styles.
+     *
      * @return string|bool A quoted string that is theoretically safe to pass into an SQL statement.
      * Returns FALSE if the driver does not support quoting in this way.
      */
@@ -189,8 +197,10 @@ class TraceablePDO extends PDO
      * Set an attribute
      *
      * @link   http://php.net/manual/en/pdo.setattribute.php
-     * @param  int $attribute
+     *
+     * @param  int   $attribute
      * @param  mixed $value
+     *
      * @return bool TRUE on success or FALSE on failure.
      */
     public function setAttribute($attribute, $value)
@@ -215,14 +225,14 @@ class TraceablePDO extends PDO
 
         $ex = null;
         try {
-            $result = call_user_func_array(array($this->pdo, $method), $args);
+            $result = call_user_func_array([$this->pdo, $method], $args);
         } catch (PDOException $e) {
             $ex = $e;
         }
 
         if ($this->pdo->getAttribute(PDO::ATTR_ERRMODE) !== PDO::ERRMODE_EXCEPTION && $result === false) {
             $error = $this->pdo->errorInfo();
-            $ex = new PDOException($error[2], $error[0]);
+            $ex    = new PDOException($error[2], $error[0]);
         }
 
         $trace->end($ex);
@@ -305,6 +315,7 @@ class TraceablePDO extends PDO
 
     /**
      * @param $name
+     *
      * @return mixed
      */
     public function __get($name)
@@ -324,10 +335,11 @@ class TraceablePDO extends PDO
     /**
      * @param $name
      * @param $args
+     *
      * @return mixed
      */
     public function __call($name, $args)
     {
-        return call_user_func_array(array($this->pdo, $name), $args);
+        return call_user_func_array([$this->pdo, $name], $args);
     }
 }

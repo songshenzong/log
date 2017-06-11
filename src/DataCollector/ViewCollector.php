@@ -30,9 +30,9 @@ class ViewCollector extends TwigCollector
     public function __construct($collectData = true)
     {
         $this->collect_data = $collectData;
-        $this->name = 'views';
-        $this->templates = [];
-        $this->exporter = new ValueExporter();
+        $this->name         = 'views';
+        $this->templates    = [];
+        $this->exporter     = new ValueExporter();
     }
 
     /**
@@ -44,7 +44,6 @@ class ViewCollector extends TwigCollector
     }
 
 
-
     /**
      * Add a View instance to the Collector
      *
@@ -54,7 +53,7 @@ class ViewCollector extends TwigCollector
     {
         $name = $view->getName();
         $path = $view->getPath();
-        
+
         if (!is_object($path)) {
             if ($path) {
                 $path = ltrim(str_replace(base_path(), '', realpath($path)), '/');
@@ -81,10 +80,10 @@ class ViewCollector extends TwigCollector
         }
 
         $this->templates[] = [
-            'name' => $path ? sprintf('%s (%s)', $name, $path) : $name,
+            'name'        => $path ? sprintf('%s (%s)', $name, $path) : $name,
             'param_count' => count($params),
-            'params' => $params,
-            'type' => $type,
+            'params'      => $params,
+            'type'        => $type,
         ];
     }
 
@@ -97,7 +96,7 @@ class ViewCollector extends TwigCollector
 
         return [
             'nb_templates' => count($templates),
-            'templates' => $templates,
+            'templates'    => $templates,
         ];
     }
 }

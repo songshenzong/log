@@ -35,7 +35,7 @@ class TraceableTwigEnvironment extends Twig_Environment
     /**
      * @var array
      */
-    protected $renderedTemplates = array();
+    protected $renderedTemplates = [];
 
     /**
      * @var TimeDataCollector
@@ -43,12 +43,12 @@ class TraceableTwigEnvironment extends Twig_Environment
     protected $timeDataCollector;
 
     /**
-     * @param Twig_Environment $twig
+     * @param Twig_Environment  $twig
      * @param TimeDataCollector $timeDataCollector
      */
     public function __construct(Twig_Environment $twig, TimeDataCollector $timeDataCollector = null)
     {
-        $this->twig = $twig;
+        $this->twig              = $twig;
         $this->timeDataCollector = $timeDataCollector;
     }
 
@@ -60,7 +60,7 @@ class TraceableTwigEnvironment extends Twig_Environment
      */
     public function __call($name, $arguments)
     {
-        return call_user_func_array(array($this->twig, $name), $arguments);
+        return call_user_func_array([$this->twig, $name], $arguments);
     }
 
     /**
@@ -211,7 +211,7 @@ class TraceableTwigEnvironment extends Twig_Environment
      * @return string
      * @throws \Exception
      */
-    public function render($name, array $context = array())
+    public function render($name, array $context = [])
     {
         return $this->loadTemplate($name)->render($context);
     }
@@ -220,7 +220,7 @@ class TraceableTwigEnvironment extends Twig_Environment
      * @param       $name
      * @param array $context
      */
-    public function display($name, array $context = array())
+    public function display($name, array $context = [])
     {
         $this->loadTemplate($name)->display($context);
     }
@@ -241,7 +241,7 @@ class TraceableTwigEnvironment extends Twig_Environment
 
         if (!class_exists($cls, false)) {
             if (false === $cache = $this->getCacheFilename($name)) {
-                eval('?>'.$this->compileSource($this->getLoader()->getSource($name), $name));
+                eval('?>' . $this->compileSource($this->getLoader()->getSource($name), $name));
             } else {
                 if (!is_file($cache) || ($this->isAutoReload() && !$this->isTemplateFresh($name, filemtime($cache)))) {
                     $this->writeCacheFile($cache, $this->compileSource($this->getLoader()->getSource($name), $name));

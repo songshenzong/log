@@ -52,7 +52,7 @@ class Dump extends Twig_Extension
      * (c) 2011 Fabien Potencier
      *
      * @param Twig_Environment $env
-     * @param $context
+     * @param                  $context
      *
      * @return string
      */
@@ -68,7 +68,7 @@ class Dump extends Twig_Extension
                     if (method_exists($value, 'toArray')) {
                         $data[$key] = $value->toArray();
                     } else {
-                        $data[$key] = "Object (" . get_class($value) . ")";
+                        $data[$key] = 'Object (' . get_class($value) . ')';
                     }
                 } else {
                     $data[$key] = $value;
@@ -81,6 +81,6 @@ class Dump extends Twig_Extension
             }
         }
 
-        return '<pre>'.$output.'</pre>';
+        return '<pre>' . $output . '</pre>';
     }
 }

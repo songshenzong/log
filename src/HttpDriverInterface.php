@@ -20,6 +20,7 @@ interface HttpDriverInterface
      * Sets HTTP headers
      *
      * @param array $headers
+     *
      * @return
      */
     public function setHeaders(array $headers);
@@ -43,6 +44,7 @@ interface HttpDriverInterface
      * Checks if a value is in the session
      *
      * @param string $name
+     *
      * @return boolean
      */
     public function hasSessionValue($name);
@@ -51,6 +53,7 @@ interface HttpDriverInterface
      * Returns a value from the session
      *
      * @param string $name
+     *
      * @return mixed
      */
     public function getSessionValue($name);

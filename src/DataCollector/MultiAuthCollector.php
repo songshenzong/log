@@ -19,8 +19,8 @@ class MultiAuthCollector extends AuthCollector
      */
     public function __construct($auth, $guards)
     {
-        parent ::__construct($auth);
-        $this -> guards = $guards;
+        parent::__construct($auth);
+        $this->guards = $guards;
     }
 
 
@@ -32,19 +32,19 @@ class MultiAuthCollector extends AuthCollector
         $data  = [];
         $names = '';
 
-        foreach ($this -> guards as $guardName) {
-            $user = $this -> resolveUser($this -> auth -> guard($guardName));
+        foreach ($this->guards as $guardName) {
+            $user = $this->resolveUser($this->auth->guard($guardName));
 
-            $data['guards'][$guardName] = $this -> getUserInformation($user);
+            $data['guards'][$guardName] = $this->getUserInformation($user);
 
             if (!is_null($user)) {
-                $names .= $guardName . ": " . $data['guards'][$guardName]['name'] . ', ';
+                $names .= $guardName . ': ' . $data['guards'][$guardName]['name'] . ', ';
             }
         }
 
         foreach ($data['guards'] as $key => $var) {
             if (!is_string($data['guards'][$key])) {
-                $data['guards'][$key] = $this -> formatVar($var);
+                $data['guards'][$key] = $this->formatVar($var);
             }
         }
 
@@ -65,13 +65,13 @@ class MultiAuthCollector extends AuthCollector
         // to prevent csrf token regeneration
 
         $usingSession = $guard instanceof SessionGuard;
-        $recaller     = $usingSession ? $guard -> getRequest() -> cookies -> get($guard -> getRecallerName()) : null;
+        $recaller     = $usingSession ? $guard->getRequest()->cookies->get($guard->getRecallerName()) : null;
 
         if ($usingSession && !is_null($recaller)) {
             list($id, $token) = explode('|', $recaller);
-            return $guard -> getProvider() -> retrieveByToken($id, $token);
+            return $guard->getProvider()->retrieveByToken($id, $token);
         } else {
-            return $guard -> user();
+            return $guard->user();
         }
     }
 }
