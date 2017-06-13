@@ -19,13 +19,7 @@ class SongshenzongLog extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'time',
-        'ip',
-        'method',
-        'uri',
-        'data',
-    ];
+    protected $guarded = ['id'];
 
     /**
      * @var array

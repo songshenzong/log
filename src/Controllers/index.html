@@ -103,7 +103,7 @@
 
 
         function checkTableStatus() {
-            if (tableStatus == false) {
+            if (tableStatus === false) {
                 information('Please Create Logs Table First.');
                 exit;
             }
@@ -147,7 +147,7 @@
                                         return 'success';
                                     } else if (status_code >= 500 && status_code < 600) {
                                         return 'danger';
-                                    } else if (status_code == 404 || status_code == 405) {
+                                    } else if (status_code === 404 || status_code === 405) {
                                         return 'warning';
                                     } else if (status_code >= 400 && status_code < 500) {
                                         return 'info';
@@ -187,7 +187,7 @@
          *   Verify method.
          *---------------------------------------------------------*/
         function verify(data) {
-            if (data.status_code != 200) {
+            if (data.status_code !== 200) {
                 information(data.message);
                 return false;
             }
@@ -224,7 +224,7 @@
         function createTable() {
             jQuery.getJSON(route + 'create', function (result) {
                     layer.msg(result.message);
-                    if (result.status_code == 200) {
+                    if (result.status_code === 200) {
                         window.location.reload();
                     }
                 }
@@ -238,14 +238,14 @@
             var isSet = arguments[0] ? 'true' : 'false';
             jQuery.getJSON(route + 'collect/status', {set: isSet}, function (result) {
 
-                    if (result.status_code != 200) {
+                    if (result.status_code !== 200) {
                         window.location.href = route + 'login';
                     }
 
                     layer.msg(result.message);
 
                     jQuery("#collectStatus").html(result.message).show();
-                    if (result.data.enable == false) {
+                    if (result.data.enable === false) {
                         jQuery("#collectStatus").addClass("btn-warning");
                     } else {
                         jQuery("#collectStatus").removeClass("btn-warning");
@@ -272,7 +272,7 @@
                      *   Get list of the logs.
                      *---------------------------------------------------------*/
                     tableStatus = result.data.enable;
-                    if (tableStatus == true) {
+                    if (tableStatus === true) {
                         logList(route + 'logs');
                     }
 

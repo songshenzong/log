@@ -93,7 +93,7 @@
 
             jQuery.getJSON(route + 'api/login', function (result) {
 
-                    if (result.status_code != 200) {
+                    if (result.status_code !== 200) {
                         information(result.message);
                         return false;
                     }
