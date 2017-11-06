@@ -167,7 +167,7 @@ class TraceableTwigTemplate implements Twig_TemplateInterface
 
         $this->env->addRenderedTemplate([
                                             'name'        => $this->template->getTemplateName(),
-                                            'render_time' => $end - $start
+                                            'render_time' => $end - $start,
                                         ]);
     }
 

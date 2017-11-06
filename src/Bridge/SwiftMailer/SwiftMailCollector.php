@@ -47,12 +47,12 @@ class SwiftMailCollector extends DataCollector
             $mails[] = [
                 'to'      => $this->formatTo($msg->getTo()),
                 'subject' => $msg->getSubject(),
-                'headers' => $msg->getHeaders()->toString()
+                'headers' => $msg->getHeaders()->toString(),
             ];
         }
         return [
             'count' => count($mails),
-            'mails' => $mails
+            'mails' => $mails,
         ];
     }
 

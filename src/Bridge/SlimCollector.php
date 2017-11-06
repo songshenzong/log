@@ -74,7 +74,7 @@ class SlimCollector extends MessagesCollector
             Log::WARN      => LogLevel::WARNING,
             Log::NOTICE    => LogLevel::NOTICE,
             Log::INFO      => LogLevel::INFO,
-            Log::DEBUG     => LogLevel::DEBUG
+            Log::DEBUG     => LogLevel::DEBUG,
         ];
         return $map[$level];
     }

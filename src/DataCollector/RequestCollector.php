@@ -133,7 +133,7 @@ class RequestCollector extends DataCollector implements DataCollectorInterface
         if (0 !== $expires) {
             if (is_numeric($expires)) {
                 $expires = (int) $expires;
-            } else if ($expires instanceof \DateTime) {
+            } elseif ($expires instanceof \DateTime) {
                 $expires = $expires->getTimestamp();
             } else {
                 $expires = strtotime($expires);

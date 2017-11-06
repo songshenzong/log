@@ -25,7 +25,8 @@ class TraceablePDO extends PDO
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
-        $this->pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, ['Songshenzong\Log\DataCollector\PDO\TraceablePDOStatement', [$this]]);
+        $this->pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, ['Songshenzong\Log\DataCollector\PDO\TraceablePDOStatement',
+                                                             [$this]]);
     }
 
     /**

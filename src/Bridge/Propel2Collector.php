@@ -72,7 +72,7 @@ class Propel2Collector extends DataCollector
             'forceRollBack',
             'exec',
             'query',
-            'execute'
+            'execute',
         ]
     )
     {
@@ -257,7 +257,7 @@ class Propel2Collector extends DataCollector
             'accumulated_duration_str' => $this->getDataFormatter()->formatDuration($accumulatedDuration),
             'memory_usage'             => $memoryUsage,
             'memory_usage_str'         => $this->getDataFormatter()->formatBytes($memoryUsage),
-            'statements'               => $statements
+            'statements'               => $statements,
         ];
     }
 

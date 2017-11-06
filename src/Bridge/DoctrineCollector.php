@@ -65,7 +65,7 @@ class DoctrineCollector extends DataCollector
                 'sql'          => $q['sql'],
                 'params'       => (object) $q['params'],
                 'duration'     => $q['executionMS'],
-                'duration_str' => $this->formatDuration($q['executionMS'])
+                'duration_str' => $this->formatDuration($q['executionMS']),
             ];
             $totalExecTime += $q['executionMS'];
         }
@@ -74,7 +74,7 @@ class DoctrineCollector extends DataCollector
             'nb_statements'            => count($queries),
             'accumulated_duration'     => $totalExecTime,
             'accumulated_duration_str' => $this->formatDuration($totalExecTime),
-            'statements'               => $queries
+            'statements'               => $queries,
         ];
     }
 

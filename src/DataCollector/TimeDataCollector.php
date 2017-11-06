@@ -66,7 +66,7 @@ class TimeDataCollector extends DataCollector
         $this->startedMeasures[$name] = [
             'label'     => $label ?: $name,
             'start'     => $start,
-            'collector' => $collector
+            'collector' => $collector,
         ];
     }
 
@@ -126,7 +126,7 @@ class TimeDataCollector extends DataCollector
             'duration'       => $end - $start,
             'duration_str'   => $this->getDataFormatter()->formatDuration($end - $start),
             'params'         => $params,
-            'collector'      => $collector
+            'collector'      => $collector,
         ];
     }
 
@@ -214,7 +214,7 @@ class TimeDataCollector extends DataCollector
             'end'          => $this->requestEndTime,
             'duration'     => $this->getRequestDuration(),
             'duration_str' => $this->getDataFormatter()->formatDuration($this->getRequestDuration()),
-            'measures'     => array_values($this->measures)
+            'measures'     => array_values($this->measures),
         ];
     }
 

@@ -106,7 +106,7 @@ class PDOCollector extends DataCollector
             'accumulated_duration' => 0,
             'memory_usage'         => 0,
             'peak_memory_usage'    => 0,
-            'statements'           => []
+            'statements'           => [],
         ];
 
         foreach ($this->connections as $name => $pdo) {
@@ -167,7 +167,7 @@ class PDOCollector extends DataCollector
                 'end_memory_str' => $this->getDataFormatter()->formatBytes($stmt->getEndMemory()),
                 'is_success'     => $stmt->isSuccess(),
                 'error_code'     => $stmt->getErrorCode(),
-                'error_message'  => $stmt->getErrorMessage()
+                'error_message'  => $stmt->getErrorMessage(),
             ];
             if ($timeCollector !== null) {
                 $timeCollector->addMeasure($stmt->getSql(), $stmt->getStartTime(), $stmt->getEndTime(), [], $connectionName);
@@ -183,7 +183,7 @@ class PDOCollector extends DataCollector
             'memory_usage_str'         => $this->getDataFormatter()->formatBytes($pdo->getPeakMemoryUsage()),
             'peak_memory_usage'        => $pdo->getPeakMemoryUsage(),
             'peak_memory_usage_str'    => $this->getDataFormatter()->formatBytes($pdo->getPeakMemoryUsage()),
-            'statements'               => $stmts
+            'statements'               => $stmts,
         ];
     }
 

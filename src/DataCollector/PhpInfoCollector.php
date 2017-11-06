@@ -22,7 +22,7 @@ class PhpInfoCollector extends DataCollector
     {
         return [
             'version'   => PHP_VERSION,
-            'interface' => PHP_SAPI
+            'interface' => PHP_SAPI,
         ];
     }
 

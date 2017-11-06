@@ -50,7 +50,7 @@ class TwigCollector extends DataCollector
             $templates[]    = [
                 'name'            => $tpl['name'],
                 'render_time'     => $tpl['render_time'],
-                'render_time_str' => $this->formatDuration($tpl['render_time'])
+                'render_time_str' => $this->formatDuration($tpl['render_time']),
             ];
         }
 
@@ -58,7 +58,7 @@ class TwigCollector extends DataCollector
             'nb_templates'                => count($templates),
             'templates'                   => $templates,
             'accumulated_render_time'     => $accuRenderTime,
-            'accumulated_render_time_str' => $this->formatDuration($accuRenderTime)
+            'accumulated_render_time_str' => $this->formatDuration($accuRenderTime),
         ];
     }
 

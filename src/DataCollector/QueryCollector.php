@@ -260,7 +260,7 @@ class QueryCollector extends PDOCollector
 
             if (isset($trace['object']) && is_a($trace['object'], 'Twig_Template')) {
                 list($file, $frame->line) = $this->getTwigInfo($trace);
-            } else if (strpos($file, storage_path()) !== false) {
+            } elseif (strpos($file, storage_path()) !== false) {
                 $hash = pathinfo($file, PATHINFO_FILENAME);
 
                 if (!$frame->name = $this->findViewFromHash($hash)) {
@@ -270,7 +270,7 @@ class QueryCollector extends PDOCollector
                 $frame->namespace = 'view';
 
                 return $frame;
-            } else if (strpos($file, 'Middleware') !== false) {
+            } elseif (strpos($file, 'Middleware') !== false) {
                 $frame->name = $this->findMiddlewareFromFile($file);
 
                 if ($frame->name) {
@@ -458,7 +458,7 @@ class QueryCollector extends PDOCollector
             'nb_failed_statements'     => 0,
             'accumulated_duration'     => $totalTime,
             'accumulated_duration_str' => $this->formatDuration($totalTime),
-            'statements'               => $statements
+            'statements'               => $statements,
         ];
         return $data;
     }

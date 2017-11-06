@@ -146,7 +146,7 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
                 }
                 return $a[$p] < $b[$p] ? -1 : 1;
             });
-        } else if ($this->sort === true) {
+        } elseif ($this->sort === true) {
             sort($data);
         }
         return $data;

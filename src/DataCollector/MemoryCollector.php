@@ -46,7 +46,7 @@ class MemoryCollector extends DataCollector
         $this->updatePeakUsage();
         return [
             'peak_usage'     => $this->peakUsage,
-            'peak_usage_str' => $this->getDataFormatter()->formatBytes($this->peakUsage)
+            'peak_usage_str' => $this->getDataFormatter()->formatBytes($this->peakUsage),
         ];
     }
 

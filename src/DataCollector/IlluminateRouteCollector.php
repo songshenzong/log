@@ -71,7 +71,7 @@ class IlluminateRouteCollector extends DataCollector
                 $reflector = new \ReflectionMethod($controller, $method);
             }
             unset($result['uses']);
-        } else if (isset($action['uses']) && $action['uses'] instanceof \Closure) {
+        } elseif (isset($action['uses']) && $action['uses'] instanceof \Closure) {
             $reflector      = new \ReflectionFunction($action['uses']);
             $result['uses'] = $this->formatVar($result['uses']);
         }

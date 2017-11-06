@@ -213,7 +213,7 @@ class PropelCollector extends DataCollector implements BasicLogger
             Propel::LOG_ERR     => LogLevel::ERROR,
             Propel::LOG_WARNING => LogLevel::WARNING,
             Propel::LOG_NOTICE  => LogLevel::NOTICE,
-            Propel::LOG_DEBUG   => LogLevel::DEBUG
+            Propel::LOG_DEBUG   => LogLevel::DEBUG,
         ];
         return $map[$level];
     }
@@ -240,7 +240,7 @@ class PropelCollector extends DataCollector implements BasicLogger
             $memory = (float) $matches[1];
             if ($matches[2] == 'KB') {
                 $memory *= 1024;
-            } else if ($matches[2] == 'MB') {
+            } elseif ($matches[2] == 'MB') {
                 $memory *= 1024 * 1024;
             }
         }
@@ -251,7 +251,7 @@ class PropelCollector extends DataCollector implements BasicLogger
             'duration'     => $duration,
             'duration_str' => $this->formatDuration($duration),
             'memory'       => $memory,
-            'memory_str'   => $this->formatBytes($memory)
+            'memory_str'   => $this->formatBytes($memory),
         ];
         $this->accumulatedTime += $duration;
         $this->peakMemory      = max($this->peakMemory, $memory);
@@ -270,7 +270,7 @@ class PropelCollector extends DataCollector implements BasicLogger
             'accumulated_duration_str' => $this->formatDuration($this->accumulatedTime),
             'peak_memory_usage'        => $this->peakMemory,
             'peak_memory_usage_str'    => $this->formatBytes($this->peakMemory),
-            'statements'               => $this->statements
+            'statements'               => $this->statements,
         ];
     }
 

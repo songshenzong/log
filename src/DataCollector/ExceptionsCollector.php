@@ -82,7 +82,7 @@ class ExceptionsCollector extends DataCollector
     {
         return [
             'count'      => count($this->exceptions),
-            'exceptions' => array_map([$this, 'formatThrowableData'], $this->exceptions)
+            'exceptions' => array_map([$this, 'formatThrowableData'], $this->exceptions),
         ];
     }
 
@@ -123,7 +123,7 @@ class ExceptionsCollector extends DataCollector
             'code'              => $e->getCode(),
             'file'              => $filePath,
             'line'              => $e->getLine(),
-            'surrounding_lines' => $lines
+            'surrounding_lines' => $lines,
         ];
     }
 

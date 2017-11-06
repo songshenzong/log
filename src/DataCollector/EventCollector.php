@@ -64,7 +64,7 @@ class EventCollector extends TimeDataCollector
                 $listener = get_class($class) . '@' . $method;
 
                 // Handle closures
-            } else if ($listener instanceof \Closure) {
+            } elseif ($listener instanceof \Closure) {
                 $reflector = new \ReflectionFunction($listener);
 
                 // Skip our own listeners
