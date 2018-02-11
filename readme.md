@@ -1,10 +1,9 @@
-<p align="center"><a href="https://songshenzong.com" target="_blank"><img src="https://songshenzong.com/images/logo.png"></a></p>
+[![Songshenzong](https://songshenzong.com/images/logo.png)](https://songshenzong.com)
 
-<p align="center">
-<a href="https://packagist.org/packages/songshenzong/log"><img src="https://poser.pugx.org/songshenzong/log/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/songshenzong/log"><img src="https://poser.pugx.org/songshenzong/log/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/songshenzong/log"><img src="https://poser.pugx.org/songshenzong/log/license.svg" alt="License"></a>
-</p>
+[![Total Downloads](https://poser.pugx.org/songshenzong/log/d/total.svg)](https://packagist.org/packages/songshenzong/log)
+[![Latest Stable Version](https://poser.pugx.org/songshenzong/log/v/stable.svg)](https://packagist.org/packages/songshenzong/log)
+[![License](https://poser.pugx.org/songshenzong/log/license.svg)](https://packagist.org/packages/songshenzong/log)
+[![PHP Version](https://img.shields.io/packagist/php-v/songshenzong/log.svg)](https://packagist.org/packages/songshenzong/log)
 
 
 # About Log
