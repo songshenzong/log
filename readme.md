@@ -1,4 +1,13 @@
-# Songshenzong Log
+<p align="center"><a href="https://songshenzong.com" target="_blank"><img src="https://songshenzong.com/images/logo.png"></a></p>
+
+<p align="center">
+<a href="https://packagist.org/packages/songshenzong/log"><img src="https://poser.pugx.org/songshenzong/log/d/total.svg" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/songshenzong/log"><img src="https://poser.pugx.org/songshenzong/log/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/songshenzong/log"><img src="https://poser.pugx.org/songshenzong/log/license.svg" alt="License"></a>
+</p>
+
+
+# About Log
 
 Log Request & Debug for Laravel
 
@@ -12,7 +21,7 @@ composer require songshenzong/log
 
 
 
-## Laravel 5.x
+## Before Laravel 5.5
 
 After updating composer, add the ServiceProvider to the providers array in `config/app.php`
 
@@ -27,7 +36,12 @@ If you want to use the facade to log messages, add this to your facades in `conf
 'SongshenzongLog' => Songshenzong\Log\Facade::class,
 ```
 
-> If you use a `dingo/api` route, make sure you load the Middleware in `config/api.php`.
+
+
+## Middleware
+
+If you use a `dingo/api` route, make sure you load the Middleware in `config/api.php`.
+
 ```php
     'middleware' => [
         'Songshenzong\Log\Middleware',
