@@ -6,7 +6,7 @@
 [![PHP Version](https://img.shields.io/packagist/php-v/songshenzong/log.svg)](https://packagist.org/packages/songshenzong/log)
 
 
-# About Log
+## About
 
 Log Request & Debug for Laravel
 
