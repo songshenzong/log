@@ -33,9 +33,9 @@ php artisan vendor:publish --provider="Songshenzong\Log\ServiceProvider"
 If you use a `dingo/api` route, make sure you load the Middleware in `config/api.php`.
 
 ```php
-    'middleware' => [
-        'Songshenzong\Log\Middleware',
-    ],
+'middleware' => [
+    'Songshenzong\Log\Middleware',
+],
 ```
 
 
@@ -51,6 +51,8 @@ Copy the package config to your local config with the publish command:
 ```shell
 php artisan vendor:publish --provider="Songshenzong\Log\ServiceProvider"
 ```
+
+
 ## Let's start
 ```
 http://your.domain/songshenzong
