@@ -77,8 +77,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        $configPath = __DIR__ . '/../config/songshenzong-log.php';
-        $this->publishes([$configPath => config_path('songshenzong-log.php')], 'config');
+        $this->publishes([
+                             __DIR__ . '/../config/songshenzong-log.php' => config_path('songshenzong-log.php')
+                         ], 'config');
 
 
         if (!$this->isEnabled()) {

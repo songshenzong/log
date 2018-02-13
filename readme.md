@@ -19,22 +19,13 @@ composer require songshenzong/log
 ```
 
 
+## Laravel
 
-## Before Laravel 5.5
+Publish configuration files. If not, They can not be serialized correctly when you execute the `config:cache` Artisan command.
 
-After updating composer, add the ServiceProvider to the providers array in `config/app.php`
-
-
-```php
-Songshenzong\Log\ServiceProvider::class,
+```shell
+php artisan vendor:publish --provider="Songshenzong\Log\ServiceProvider"
 ```
-
-If you want to use the facade to log messages, add this to your facades in `config/app.php`:
-
-```php
-'SongshenzongLog' => Songshenzong\Log\Facade::class,
-```
-
 
 
 ## Middleware
@@ -73,7 +64,7 @@ You can now add messages using the Facade (when added), using the PSR-3 levels (
 Songshenzong::info($object);
 Songshenzong::error('Error!');
 Songshenzong::warning('Watch out…');
-Songshenzong::addMessage('Another message', 'mylabel');
+Songshenzong::addMessage('Another message', 'myLabel');
 ```
 
 And start/stop timing:
